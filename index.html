@@ -330,6 +330,7 @@
             font-weight: 400;
             color: var(--text-muted);
             letter-spacing: 0.01em;
+            display: none; /* Hidden in collapsed view */
         }
 
         .card-tech span { color: var(--text-secondary); }
@@ -886,7 +887,7 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">Desktop application consolidating Jira, Confluence, Bitbucket, and Box into single AI chat interface</p>
+                <p class="card-tagline">Ibis transforms enterprise workflows that required navigating five separate systems (project tracking, documentation, code repositories, file storage, and execution planning) and 30-50 manual steps into single conversational requests, achieving 44.7x measured average speedup. This turns previously impractical work into routine practice — multi-hour comprehensive tasks now complete in minutes.</p>
                 <p class="card-tech"><span>TypeScript</span> · <span>Electron</span> · <span>React</span> · <span>Python</span> · <span>FastAPI</span></p>
             </div>
         </div>
@@ -929,16 +930,16 @@
             <div class="detail-info-split">
                 <div class="detail-split-left">
                     <h2 class="detail-title">Ibis</h2>
-                    <p class="detail-tagline">Desktop application consolidating Jira, Confluence, Bitbucket, and Box into single AI chat interface</p>
-                    <p class="detail-description">Built as a productivity experiment, Ibis demonstrates rapid full-stack development by shipping a complete desktop application in one week. Integrates with enterprise tools through a unified chat interface, allowing developers to query Jira tickets, search Confluence documentation, browse Bitbucket repositories, and access Box files without context switching.</p>
+                    <p class="detail-tagline">Where traditional software gives you a fixed feature set, Ibis lets users define new workflows in plain English</p>
+                    <p class="detail-description">Beyond speed, Ibis surfaces what manual search misses: pages buried in personal wiki spaces, context scattered across Jira epics and commit histories, and hidden connections between systems that require multiple searches to discover.</p>
                 </div>
                 <div class="detail-split-zip"></div>
                 <div class="detail-split-right">
                     <ul class="detail-features">
-                        <li>Jira integration: search tickets, view details, update status via natural language</li>
-                        <li>Confluence search with markdown rendering of documentation</li>
-                        <li>Three-tier safety system: read-only, user approval, destructive action blocking</li>
-                        <li>Encrypted credential storage with macOS Keychain integration</li>
+                        <li>Finds buried information humans miss — personal wiki spaces, cross-system connections, scattered commit histories</li>
+                        <li>Understands Jira workflow rules: navigates required transitions, prompts for mandatory fields at each step</li>
+                        <li>Extensible by non-developers: plain-English instructions serve as both automation and documentation</li>
+                        <li>Built-in safety guardrails: read-only actions run freely, but any action that changes or deletes data requires explicit user approval before proceeding</li>
                     </ul>
                     <p class="detail-tech-stack"><span>TypeScript</span> · <span>Electron</span> · <span>React</span> · <span>Python</span> · <span>FastAPI</span></p>
                     <p class="detail-meta">2026</p>
@@ -956,7 +957,7 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">Native macOS SQLite Browser</p>
+                <p class="card-tagline">Strix is a native macOS SQLite database browser and editor published on the Mac App Store. It provides inline cell editing with a staged change-tracking system (insert, update, delete with undo/redo), a SQL query editor with real-time syntax highlighting via NSTextStorageDelegate, and dual-mode search combining LIKE pattern matching with FTS5 full-text search — including automatic temporary index building for tables that lack FTS indexes.</p>
                 <p class="card-tech"><span>Swift</span> · <span>SwiftUI</span> · <span>GRDB</span> · <span>AppKit</span></p>
             </div>
         </div>
@@ -1026,7 +1027,7 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">Automated brand survey generation platform cutting creation from ~4 hours to under 15 minutes</p>
+                <p class="card-tagline">Sparrow Chat is an AI-powered market research platform that automates the creation of forced-exposure brand study surveys. Researchers upload advertising videos and campaign briefs, and the system generates complete three-section survey questionnaires — qualification screening, ad exposure measurement, and outcome measures — using dual-pass LLM video analysis, Pydantic-based parameter extraction, and domain-specific few-shot prompting from real-world survey templates (Amex, Nissan, Sunglass Hut, Sensodyne). The platform replaces a manual workflow where market researchers would watch video ads, manually transcribe them, write strategic analyses, and hand-craft dozens of survey questions with answer keys, randomization logic, and trap questions.</p>
                 <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>Google GenAI</span> · <span>Docker</span></p>
             </div>
         </div>
@@ -1096,7 +1097,7 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">Synthetic Data Generation Framework</p>
+                <p class="card-tagline">Budgie is a general-purpose, template-driven framework for generating synthetic AI/ML training data at scale using LLMs. Data scientists define what to generate by writing a Jinja2 YAML template describing the desired output format and constraints — no Python required — and the framework handles async batch processing, multi-stage validation (parse → quantity check → uniqueness/quality check), intelligent retry with accumulation-aware re-prompting, taxonomy hierarchy enforcement, and JSONL-based crash recovery. The framework supports pluggable LLM providers (OpenAI async with structured output, MLX for local Apple Silicon inference) and ships with five concrete task types: taxonomy-aware synthetic URL generation at three specificity levels, tracking-parameter-enriched URLs, Connected TV URLs, hard negative URL generation, and text classification dataset generation. Current production deployment generates synthetic URL training data across 19+ content verticals for the Pelican classification model, but the architecture is designed to produce any structured synthetic data — click fraud patterns, bot traffic signatures, survey responses — by swapping templates alone.</p>
                 <p class="card-tech"><span>Python</span> · <span>asyncio</span> · <span>OpenAI</span> · <span>Pydantic</span></p>
             </div>
         </div>
@@ -1128,7 +1129,7 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">Survey response quality analyzer cutting data cleaning from ~4 hours to under 20 minutes</p>
+                <p class="card-tagline">Magpie is an internal survey data quality platform that automates the detection of gibberish, low-quality, and fraudulent duplicate responses in Forsta/Decipher brand study surveys. Researchers enter a survey ID, and the system downloads SPSS data via the Forsta API, automatically classifies open-ended vs. closed-ended questions using LLM inference, then runs user-selected analysis passes: gibberish detection (via a fine-tuned GPT-4o-mini model), response quality rating on a 0–5 scale with brand-and-category-aware criteria, exact duplicate flagging, and similar-response clustering using bigram cosine similarity with graph-based connected component grouping. Processing progress streams to the browser in real time via WebSocket-driven HTMX out-of-band swaps, and results export as an annotated CSV with quality flags joined back to the original survey data.</p>
                 <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>OpenAI</span> · <span>Polars</span></p>
             </div>
         </div>
@@ -1198,7 +1199,7 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">Self-serve behavioral analytics platform replacing legacy Flash tool — 5 years in production</p>
+                <p class="card-tagline">Mallard Tools is a self-service audience behavioral analytics platform that replaced an aging Adobe Flash-based tool called "Deep Dive" at VDX.tv. Researchers and analysts use it to query behavioral profile datasets — selecting topics from a hierarchical taxonomy of 1st-party, 3rd-party, and contextual behaviors — and get back lift analysis, reach counts, and geographic breakdowns. The system automatically provisions ephemeral 15-node Spark clusters on EC2 to process queries against S3-stored Parquet behavioral data, then presents results through an interactive Plotly Dash exploration dashboard with scatter plots, choropleth maps, and downloadable CSV exports. The platform handles the full lifecycle: query validation with date-boundary and geo-filtering logic, async job orchestration via Dramatiq, Spark cluster provisioning and teardown via a custom Flintrock fork, and email notifications on completion.</p>
                 <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>Spark</span> · <span>AWS</span></p>
             </div>
         </div>
