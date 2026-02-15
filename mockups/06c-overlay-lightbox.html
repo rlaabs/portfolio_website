@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robert Laabs — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ibis: #D4A843;
+  --strix: #4A9EF5;
+  --sparrow: #C85A3A;
+  --magpie: #2EA77A;
+  --mallard: #3CC9A8;
+  --budgie: #9B7ED8;
+  --bg: #0A0A0F;
+  --panel: #0E0E16;
+  --text: #E0DFE4;
+  --text-dim: rgba(224, 223, 228, 0.5);
+  --text-muted: rgba(224, 223, 228, 0.3);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+body.overlay-open {
+  overflow: hidden;
+}
+
+/* ── Noise overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+}
+
+/* ═══════════════════════════════════
+   HERO — 70vh Editorial
+   ═══════════════════════════════════ */
+.hero {
+  position: relative;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px 60px;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+}
+
+/* atmospheric glow */
+.hero-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.04;
+  pointer-events: none;
+}
+.hero-glow-1 { top: 10%; right: 15%; background: var(--ibis); }
+.hero-glow-2 { bottom: 10%; left: 10%; background: var(--strix); }
+
+.hero-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.7s ease-out 0.2s forwards;
+}
+
+.hero-name {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: #fff;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.8s ease-out 0.35s forwards;
+}
+
+.hero-tagline {
+  font-size: clamp(15px, 1.8vw, 19px);
+  font-weight: 300;
+  color: var(--text-dim);
+  max-width: 480px;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease-out 0.55s forwards;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease-out 1s forwards;
+  z-index: 1;
+}
+
+.hero-scroll span {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+  animation: scrollPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.15); }
+}
+
+/* ═══════════════════════════════════
+   PROJECTS — 3x2 Text Grid
+   ═══════════════════════════════════ */
+.projects {
+  padding: 20px 24px 120px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ── Card ── */
+.card {
+  position: relative;
+  background: rgba(18, 18, 26, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 28px 24px 24px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 12px 12px 0 0;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+.card-number {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  opacity: 0.7;
+  margin-bottom: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.card-name {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.card-type {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.card-tagline {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-dim);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.card-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.card-tech span {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════
+   OVERLAY / LIGHTBOX
+   ═══════════════════════════════════ */
+.overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: rgba(5, 5, 10, 0.92);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.overlay-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-container {
+  position: fixed;
+  inset: 0;
+  z-index: 5001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: 24px;
+}
+
+.overlay-container.active {
+  pointer-events: auto;
+}
+
+.overlay-panel {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  max-height: 85vh;
+  background: var(--panel);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 3px solid var(--accent);
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.overlay-panel::-webkit-scrollbar { width: 6px; }
+.overlay-panel::-webkit-scrollbar-track { background: transparent; }
+.overlay-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+.overlay-panel.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Close button ── */
+.overlay-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.overlay-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* ── Prev/Next project nav ── */
+.overlay-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5002;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  background: rgba(14, 14, 22, 0.85);
+  backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.overlay-nav:hover {
+  background: rgba(30, 30, 42, 0.95);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.overlay-nav.active { display: flex; }
+.overlay-nav-prev { left: max(12px, calc(50% - 590px)); }
+.overlay-nav-next { right: max(12px, calc(50% - 590px)); }
+
+/* ── Visual area — screenshot gallery ── */
+.overlay-visual {
+  position: relative;
+  width: 100%;
+  padding: 32px 32px 0;
+}
+
+.gallery-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 8px;
+}
+
+.gallery-track::-webkit-scrollbar { display: none; }
+
+.gallery-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+  aspect-ratio: 16 / 10;
+}
+
+.gallery-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.6) contrast(1.05) brightness(0.9);
+  transition: filter 0.6s ease;
+}
+
+.gallery-slide:hover img {
+  filter: saturate(1) contrast(1) brightness(1);
+}
+
+/* gradient overlay on slides */
+.gallery-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 60%,
+    rgba(0, 0, 0, 0.2) 80%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* accent tint */
+.gallery-slide::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, var(--accent), transparent);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.gallery-slide .caption {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  z-index: 2;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.02em;
+}
+
+/* gallery arrows */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  background: rgba(14, 14, 22, 0.75);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.gallery-arrow:hover { background: rgba(30, 30, 42, 0.9); color: #fff; }
+.gallery-arrow-prev { left: 44px; }
+.gallery-arrow-next { right: 44px; }
+
+/* dots */
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0 8px;
+}
+
+.gallery-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  padding: 0;
+}
+
+.gallery-dot.active {
+  background: var(--accent);
+  transform: scale(1.3);
+}
+
+/* ── Info area ── */
+.overlay-info {
+  padding: 32px 40px 40px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+}
+
+.overlay-info .project-title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.overlay-info .project-tagline {
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.overlay-info .project-description {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(224, 223, 228, 0.7);
+  line-height: 1.75;
+}
+
+.overlay-info .info-right {}
+
+.info-block {
+  margin-bottom: 24px;
+}
+
+.info-block:last-child { margin-bottom: 0; }
+
+.info-block-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.info-block .feature-item {
+  font-size: 13px;
+  color: rgba(224, 223, 228, 0.65);
+  line-height: 1.7;
+  padding-left: 16px;
+  position: relative;
+}
+
+.info-block .feature-item::before {
+  content: '\2014';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tech-tags span {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-dim);
+}
+
+.info-meta {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════
+   BUDGIE — Pipeline Visualization
+   ═══════════════════════════════════ */
+.budgie-visual {
+  position: relative;
+  width: 100%;
+  padding: 40px 32px 24px;
+}
+
+.pipeline-container {
+  position: relative;
+  background: radial-gradient(ellipse at center, rgba(155, 126, 216, 0.1) 0%, rgba(14, 14, 22, 0.95) 70%);
+  border-radius: 12px;
+  border: 1px solid rgba(155, 126, 216, 0.12);
+  padding: 48px 32px 40px;
+  overflow: hidden;
+}
+
+.pipeline-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 150px 150px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.pipeline-title {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(155, 126, 216, 0.5);
+  margin-bottom: 36px;
+  position: relative;
+}
+
+.pipeline-stages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+}
+
+.pipeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.pipeline-node-box {
+  width: 140px;
+  padding: 16px 12px;
+  border: 1.5px solid rgba(155, 126, 216, 0.35);
+  border-radius: 10px;
+  background: rgba(155, 126, 216, 0.06);
+  text-align: center;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.pipeline-node-box:hover {
+  border-color: rgba(155, 126, 216, 0.6);
+  background: rgba(155, 126, 216, 0.12);
+}
+
+.pipeline-node-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #C4B5E0;
+  letter-spacing: 0.01em;
+  margin-bottom: 4px;
+}
+
+.pipeline-node-sub {
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(155, 126, 216, 0.5);
+  letter-spacing: 0.02em;
+}
+
+.pipeline-connector {
+  width: 40px;
+  height: 2px;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: -20px;
+}
+
+.pipeline-connector::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-top: 2px dashed rgba(155, 126, 216, 0.3);
+  animation: dashFlow 1.5s linear infinite;
+}
+
+.pipeline-connector::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid rgba(155, 126, 216, 0.4);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+@keyframes dashFlow {
+  to { background-position: 20px 0; }
+}
+
+/* code snippet below pipeline */
+.budgie-code {
+  margin-top: 28px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(155, 126, 216, 0.1);
+  border-radius: 8px;
+  padding: 20px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.budgie-code-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(155, 126, 216, 0.4);
+  margin-bottom: 12px;
+}
+
+.budgie-code pre {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(196, 181, 224, 0.7);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.budgie-code .kw { color: #C792EA; }
+.budgie-code .fn { color: #82AAFF; }
+.budgie-code .str { color: #C3E88D; }
+.budgie-code .cm { color: rgba(155, 126, 216, 0.35); font-style: italic; }
+.budgie-code .op { color: #89DDFF; }
+.budgie-code .var { color: #F78C6C; }
+
+/* ═══════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════ */
+.footer {
+  padding: 60px 24px 40px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.footer-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════ */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .overlay-info {
+    grid-template-columns: 1fr;
+    padding: 24px 24px 32px;
+  }
+
+  .overlay-nav-prev { left: 8px; }
+  .overlay-nav-next { right: 8px; }
+
+  .pipeline-stages {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .pipeline-connector {
+    width: 24px;
+  }
+
+  .gallery-arrow-prev { left: 12px; }
+  .gallery-arrow-next { right: 12px; }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-name {
+    font-size: 44px;
+  }
+
+  .overlay-visual { padding: 20px 16px 0; }
+  .overlay-info { padding: 20px 16px 28px; gap: 24px; }
+
+  .overlay-info .project-title { font-size: 24px; }
+
+  .pipeline-node-box { width: 110px; padding: 12px 8px; }
+  .pipeline-connector { width: 16px; }
+
+  .overlay-nav { width: 36px; height: 36px; font-size: 14px; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .overlay-panel {
+    transform: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  .card {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+  }
+
+  .card:hover {
+    transform: none !important;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.2s !important;
+  }
+
+  .pipeline-connector::before {
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="hero-label">Software Engineer</div>
+  <h1 class="hero-name">Robert Laabs</h1>
+  <p class="hero-tagline">Building thoughtful tools with clean architecture, from desktop apps to ML pipelines.</p>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS GRID ═══ -->
+<section class="projects" id="projects">
+  <div class="section-label">Selected Projects</div>
+  <div class="grid" id="projectGrid"></div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <p class="footer-text">Robert Laabs — 2026</p>
+</footer>
+
+<!-- ═══ Overlay elements (injected by JS) ═══ -->
+
+<script>
+(function() {
+  'use strict';
+
+  /* ── Project Data ── */
+  const PROJECTS = [
+    {
+      id: 'ibis',
+      name: 'Ibis',
+      number: '01',
+      type: 'Desktop App',
+      accent: '#D4A843',
+      tagline: 'Intelligent document management with semantic search and automated tagging.',
+      description: 'A cross-platform desktop application that combines a local-first document vault with AI-powered semantic search. Built with Electron for the shell, React for the interface, and a Python backend for ML inference. Designed for researchers and writers who need to manage thousands of documents without relying on cloud services.',
+      tech: ['TypeScript', 'Electron', 'React', 'Python'],
+      features: [
+        'Semantic full-text search across PDF, DOCX, and Markdown',
+        'Auto-tagging with fine-tuned classification model',
+        'Local vector database for offline similarity queries',
+        'Drag-and-drop import with batch processing'
+      ],
+      screenshots: [
+        { src: 'sample-screenshots/ibis-hero.png', caption: 'Main workspace with document browser' },
+        { src: 'sample-screenshots/ibis-02.png', caption: 'Semantic search results panel' },
+        { src: 'sample-screenshots/ibis-03.png', caption: 'Document detail and tag editor' }
+      ],
+      year: '2025',
+      role: 'Solo developer'
+    },
+    {
+      id: 'strix',
+      name: 'Strix',
+      number: '02',
+      type: 'macOS App',
+      accent: '#4A9EF5',
+      tagline: 'Native macOS note-taking with structured databases and smart linking.',
+      description: 'A native macOS application for structured note-taking that combines the flexibility of free-form text with the power of relational databases. Built with SwiftUI for the interface and GRDB for local SQLite persistence. Features smart bi-directional links, live Markdown preview, and a graph view of note connections.',
+      tech: ['Swift', 'SwiftUI', 'GRDB', 'AppKit'],
+      features: [
+        'Bi-directional linking with automatic backlink detection',
+        'Structured query views across note properties',
+        'Real-time Markdown rendering with syntax highlighting',
+        'Graph visualization of note relationships'
+      ],
+      screenshots: [
+        { src: 'sample-screenshots/strix-hero.png', caption: 'Editor with sidebar navigation' },
+        { src: 'sample-screenshots/strix-02.png', caption: 'Graph view of linked notes' },
+        { src: 'sample-screenshots/strix-03.png', caption: 'Query builder and results' }
+      ],
+      year: '2024',
+      role: 'Solo developer'
+    },
+    {
+      id: 'sparrow',
+      name: 'Sparrow',
+      number: '03',
+      type: 'Web Platform',
+      accent: '#C85A3A',
+      tagline: 'AI-assisted content generation platform with editorial workflows.',
+      description: 'A web platform that streamlines content creation by combining AI generation with human editorial oversight. Built on Django with Google GenAI integration, it provides templates, tone control, and collaborative review flows. Containerized with Docker for consistent deployment across environments.',
+      tech: ['Python', 'Django', 'Google GenAI', 'Docker'],
+      features: [
+        'Template-driven content generation with tone controls',
+        'Multi-stage editorial review and approval workflow',
+        'Version history with diff comparison',
+        'Role-based access and team collaboration'
+      ],
+      screenshots: [
+        { src: 'sample-screenshots/sparrow-hero.png', caption: 'Dashboard with content pipeline' }
+      ],
+      year: '2024',
+      role: 'Lead developer'
+    },
+    {
+      id: 'magpie',
+      name: 'Magpie',
+      number: '04',
+      type: 'Web Platform',
+      accent: '#2EA77A',
+      tagline: 'Data aggregation and analysis tool for competitive intelligence.',
+      description: 'A web platform for collecting, cleaning, and analyzing structured data from multiple sources. Uses OpenAI for entity extraction and Polars for high-performance DataFrame operations. Designed for analysts who need to track market movements and competitor activity across fragmented data sources.',
+      tech: ['Python', 'Django', 'OpenAI', 'Polars'],
+      features: [
+        'Multi-source data ingestion with deduplication',
+        'AI-powered entity extraction and normalization',
+        'Interactive pivot tables and trend analysis',
+        'Scheduled data refresh with change detection'
+      ],
+      screenshots: [
+        { src: 'sample-screenshots/magpie-hero.png', caption: 'Analytics dashboard overview' }
+      ],
+      year: '2024',
+      role: 'Solo developer'
+    },
+    {
+      id: 'mallard',
+      name: 'Mallard',
+      number: '05',
+      type: 'Web Platform',
+      accent: '#3CC9A8',
+      tagline: 'Large-scale data processing pipeline with cloud-native orchestration.',
+      description: 'A web-based data processing platform built for large-scale ETL workflows. Integrates Django for job management with Apache Spark for distributed computation and AWS services for storage and orchestration. Handles terabytes of data with fault-tolerant pipeline execution.',
+      tech: ['Python', 'Django', 'Spark', 'AWS'],
+      features: [
+        'Distributed ETL pipeline with Spark execution engine',
+        'Visual DAG editor for workflow composition',
+        'Auto-scaling compute with spot instance management',
+        'Comprehensive job monitoring and alerting'
+      ],
+      screenshots: [
+        { src: 'sample-screenshots/mallard-hero.png', caption: 'Pipeline orchestration view' }
+      ],
+      year: '2023',
+      role: 'Lead developer'
+    },
+    {
+      id: 'budgie',
+      name: 'Budgie',
+      number: '06',
+      type: 'ML Framework',
+      accent: '#9B7ED8',
+      tagline: 'Async LLM data generation framework with structured validation.',
+      description: 'A Python framework for generating structured datasets via LLM APIs. Defines output schemas with Pydantic, sends async batch requests, validates every response against the schema, retries failures, and accumulates results into clean JSONL files. Built for ML engineers who need high-quality training data at scale.',
+      tech: ['Python', 'asyncio', 'OpenAI', 'Pydantic'],
+      features: [
+        'Schema-driven output definition with Pydantic models',
+        'Async batch generation with configurable concurrency',
+        'Automatic validation and retry on malformed outputs',
+        'JSONL export with provenance metadata'
+      ],
+      screenshots: [],
+      isBudgie: true,
+      year: '2025',
+      role: 'Solo developer'
+    }
+  ];
+
+  /* ── Build Grid ── */
+  const grid = document.getElementById('projectGrid');
+
+  PROJECTS.forEach(function(proj, idx) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.setProperty('--accent', proj.accent);
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', 'View ' + proj.name + ' project details');
+
+    var num = document.createElement('div');
+    num.className = 'card-number';
+    num.textContent = proj.number;
+    card.appendChild(num);
+
+    var name = document.createElement('div');
+    name.className = 'card-name';
+    name.textContent = proj.name;
+    card.appendChild(name);
+
+    var type = document.createElement('div');
+    type.className = 'card-type';
+    type.textContent = proj.type;
+    card.appendChild(type);
+
+    var tagline = document.createElement('div');
+    tagline.className = 'card-tagline';
+    tagline.textContent = proj.tagline;
+    card.appendChild(tagline);
+
+    var techWrap = document.createElement('div');
+    techWrap.className = 'card-tech';
+    proj.tech.forEach(function(t) {
+      var sp = document.createElement('span');
+      sp.textContent = t;
+      techWrap.appendChild(sp);
+    });
+    card.appendChild(techWrap);
+
+    card.addEventListener('click', function() { openOverlay(idx); });
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openOverlay(idx); }
+    });
+
+    grid.appendChild(card);
+  });
+
+  /* ── Overlay DOM ── */
+  var backdrop = document.createElement('div');
+  backdrop.className = 'overlay-backdrop';
+  document.body.appendChild(backdrop);
+
+  var container = document.createElement('div');
+  container.className = 'overlay-container';
+  document.body.appendChild(container);
+
+  var panel = document.createElement('div');
+  panel.className = 'overlay-panel';
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-modal', 'true');
+  container.appendChild(panel);
+
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'overlay-close';
+  closeBtn.setAttribute('aria-label', 'Close overlay');
+  closeBtn.textContent = '\u00D7';
+  panel.appendChild(closeBtn);
+
+  var prevBtn = document.createElement('button');
+  prevBtn.className = 'overlay-nav overlay-nav-prev';
+  prevBtn.setAttribute('aria-label', 'Previous project');
+  prevBtn.textContent = '\u2039';
+  document.body.appendChild(prevBtn);
+
+  var nextBtn = document.createElement('button');
+  nextBtn.className = 'overlay-nav overlay-nav-next';
+  nextBtn.setAttribute('aria-label', 'Next project');
+  nextBtn.textContent = '\u203A';
+  document.body.appendChild(nextBtn);
+
+  var currentIndex = -1;
+  var currentGalleryIndex = 0;
+
+  /* ── Open Overlay ── */
+  function openOverlay(idx) {
+    currentIndex = idx;
+    var proj = PROJECTS[idx];
+
+    /* clear panel (except close btn) */
+    while (panel.childNodes.length > 1) {
+      panel.removeChild(panel.lastChild);
+    }
+    panel.style.setProperty('--accent', proj.accent);
+    panel.style.borderTopColor = proj.accent;
+
+    /* scroll to top */
+    panel.scrollTop = 0;
+
+    /* ── Visual area ── */
+    if (proj.isBudgie) {
+      buildBudgieVisual(panel, proj);
+    } else {
+      buildGallery(panel, proj);
+    }
+
+    /* ── Info area ── */
+    buildInfoArea(panel, proj);
+
+    /* show */
+    backdrop.classList.add('active');
+    container.classList.add('active');
+    prevBtn.classList.add('active');
+    nextBtn.classList.add('active');
+    document.body.classList.add('overlay-open');
+
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        panel.classList.add('active');
+      });
+    });
+  }
+
+  /* ── Close Overlay ── */
+  function closeOverlay() {
+    panel.classList.remove('active');
+    backdrop.classList.remove('active');
+    prevBtn.classList.remove('active');
+    nextBtn.classList.remove('active');
+
+    setTimeout(function() {
+      container.classList.remove('active');
+      document.body.classList.remove('overlay-open');
+    }, 400);
+
+    currentIndex = -1;
+  }
+
+  /* ── Navigate ── */
+  function navigateTo(dir) {
+    if (currentIndex < 0) return;
+    var next = currentIndex + dir;
+    if (next < 0) next = PROJECTS.length - 1;
+    if (next >= PROJECTS.length) next = 0;
+    panel.classList.remove('active');
+    setTimeout(function() {
+      openOverlay(next);
+    }, 200);
+  }
+
+  /* ── Events ── */
+  closeBtn.addEventListener('click', closeOverlay);
+  backdrop.addEventListener('click', closeOverlay);
+  prevBtn.addEventListener('click', function() { navigateTo(-1); });
+  nextBtn.addEventListener('click', function() { navigateTo(1); });
+
+  document.addEventListener('keydown', function(e) {
+    if (currentIndex < 0) return;
+    if (e.key === 'Escape') closeOverlay();
+    if (e.key === 'ArrowLeft') navigateTo(-1);
+    if (e.key === 'ArrowRight') navigateTo(1);
+  });
+
+  /* prevent clicks inside panel from closing */
+  panel.addEventListener('click', function(e) { e.stopPropagation(); });
+
+  /* ── Build Gallery ── */
+  function buildGallery(parent, proj) {
+    var visual = document.createElement('div');
+    visual.className = 'overlay-visual';
+
+    var track = document.createElement('div');
+    track.className = 'gallery-track';
+
+    proj.screenshots.forEach(function(ss, i) {
+      var slide = document.createElement('div');
+      slide.className = 'gallery-slide';
+
+      var img = document.createElement('img');
+      img.src = ss.src;
+      img.alt = proj.name + ' screenshot ' + (i + 1);
+      img.loading = 'lazy';
+      slide.appendChild(img);
+
+      if (ss.caption) {
+        var cap = document.createElement('div');
+        cap.className = 'caption';
+        cap.textContent = ss.caption;
+        slide.appendChild(cap);
+      }
+
+      track.appendChild(slide);
+    });
+
+    visual.appendChild(track);
+
+    currentGalleryIndex = 0;
+
+    /* arrows (only if multiple) */
+    if (proj.screenshots.length > 1) {
+      var arrowPrev = document.createElement('button');
+      arrowPrev.className = 'gallery-arrow gallery-arrow-prev';
+      arrowPrev.textContent = '\u2039';
+      arrowPrev.setAttribute('aria-label', 'Previous screenshot');
+      visual.appendChild(arrowPrev);
+
+      var arrowNext = document.createElement('button');
+      arrowNext.className = 'gallery-arrow gallery-arrow-next';
+      arrowNext.textContent = '\u203A';
+      arrowNext.setAttribute('aria-label', 'Next screenshot');
+      visual.appendChild(arrowNext);
+
+      var dots = document.createElement('div');
+      dots.className = 'gallery-dots';
+
+      proj.screenshots.forEach(function(_, di) {
+        var dot = document.createElement('button');
+        dot.className = 'gallery-dot' + (di === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to screenshot ' + (di + 1));
+        dot.addEventListener('click', function() { scrollToSlide(track, di, dots); });
+        dots.appendChild(dot);
+      });
+
+      visual.appendChild(dots);
+
+      arrowPrev.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var newIdx = Math.max(0, currentGalleryIndex - 1);
+        scrollToSlide(track, newIdx, dots);
+      });
+
+      arrowNext.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var newIdx = Math.min(proj.screenshots.length - 1, currentGalleryIndex + 1);
+        scrollToSlide(track, newIdx, dots);
+      });
+    }
+
+    parent.appendChild(visual);
+  }
+
+  function scrollToSlide(track, idx, dotsContainer) {
+    currentGalleryIndex = idx;
+    var slides = track.querySelectorAll('.gallery-slide');
+    if (slides[idx]) {
+      slides[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    var allDots = dotsContainer.querySelectorAll('.gallery-dot');
+    allDots.forEach(function(d, di) {
+      if (di === idx) d.classList.add('active');
+      else d.classList.remove('active');
+    });
+  }
+
+  /* ── Build Budgie Visual ── */
+  function buildBudgieVisual(parent, proj) {
+    var visual = document.createElement('div');
+    visual.className = 'budgie-visual';
+
+    var container = document.createElement('div');
+    container.className = 'pipeline-container';
+
+    var title = document.createElement('div');
+    title.className = 'pipeline-title';
+    title.textContent = 'Data Generation Pipeline';
+    container.appendChild(title);
+
+    var stages = document.createElement('div');
+    stages.className = 'pipeline-stages';
+
+    var stageData = [
+      { label: 'Define Template', sub: 'Pydantic schema' },
+      { label: 'Generate via LLM', sub: 'async batch requests' },
+      { label: 'Validate Output', sub: 'schema enforcement' },
+      { label: 'Retry / Accumulate', sub: 'fault tolerance' },
+      { label: 'JSONL Export', sub: 'clean dataset' }
+    ];
+
+    stageData.forEach(function(s, i) {
+      var node = document.createElement('div');
+      node.className = 'pipeline-node';
+
+      var box = document.createElement('div');
+      box.className = 'pipeline-node-box';
+
+      var lbl = document.createElement('div');
+      lbl.className = 'pipeline-node-label';
+      lbl.textContent = s.label;
+      box.appendChild(lbl);
+
+      var sub = document.createElement('div');
+      sub.className = 'pipeline-node-sub';
+      sub.textContent = s.sub;
+      box.appendChild(sub);
+
+      node.appendChild(box);
+      stages.appendChild(node);
+
+      if (i < stageData.length - 1) {
+        var conn = document.createElement('div');
+        conn.className = 'pipeline-connector';
+        stages.appendChild(conn);
+      }
+    });
+
+    container.appendChild(stages);
+
+    /* code snippet */
+    var codeBlock = document.createElement('div');
+    codeBlock.className = 'budgie-code';
+
+    var codeLabel = document.createElement('div');
+    codeLabel.className = 'budgie-code-label';
+    codeLabel.textContent = 'Example Usage';
+    codeBlock.appendChild(codeLabel);
+
+    var pre = document.createElement('pre');
+    /* Build code with syntax highlighting spans using safe DOM */
+    var codeLines = [
+      { parts: [
+        { cls: 'kw', text: 'from' }, { text: ' budgie ' }, { cls: 'kw', text: 'import' }, { text: ' Pipeline, Template' }
+      ]},
+      { text: '' },
+      { parts: [
+        { cls: 'var', text: 'template' }, { text: ' ' }, { cls: 'op', text: '=' }, { text: ' Template(' }
+      ]},
+      { parts: [
+        { text: '    model' }, { cls: 'op', text: '=' }, { cls: 'str', text: '"gpt-4o"' }, { cls: 'op', text: ',' }
+      ]},
+      { parts: [
+        { text: '    schema' }, { cls: 'op', text: '=' }, { text: 'QAPair' }, { cls: 'op', text: ',' }
+      ]},
+      { parts: [
+        { text: '    prompt' }, { cls: 'op', text: '=' }, { cls: 'str', text: '"Generate a question-answer pair..."' }
+      ]},
+      { text: ')' },
+      { text: '' },
+      { parts: [
+        { cls: 'cm', text: '# Generate 1000 validated samples' }
+      ]},
+      { parts: [
+        { cls: 'kw', text: 'async with' }, { text: ' Pipeline(template, ' }, { cls: 'var', text: 'n' }, { cls: 'op', text: '=' }, { cls: 'var', text: '1000' }, { text: ') ' }, { cls: 'kw', text: 'as' }, { text: ' pipe:' }
+      ]},
+      { parts: [
+        { text: '    dataset ' }, { cls: 'op', text: '=' }, { text: ' ' }, { cls: 'kw', text: 'await' }, { text: ' pipe.' }, { cls: 'fn', text: 'run' }, { text: '()' }
+      ]},
+      { parts: [
+        { text: '    dataset.' }, { cls: 'fn', text: 'to_jsonl' }, { text: '(' }, { cls: 'str', text: '"output.jsonl"' }, { text: ')' }
+      ]}
+    ];
+
+    codeLines.forEach(function(line, lineIdx) {
+      if (line.text !== undefined && !line.parts) {
+        pre.appendChild(document.createTextNode(line.text));
+      } else if (line.parts) {
+        line.parts.forEach(function(part) {
+          if (part.cls) {
+            var sp = document.createElement('span');
+            sp.className = part.cls;
+            sp.textContent = part.text;
+            pre.appendChild(sp);
+          } else {
+            pre.appendChild(document.createTextNode(part.text));
+          }
+        });
+      }
+      if (lineIdx < codeLines.length - 1) {
+        pre.appendChild(document.createTextNode('\n'));
+      }
+    });
+
+    codeBlock.appendChild(pre);
+    container.appendChild(codeBlock);
+
+    visual.appendChild(container);
+    parent.appendChild(visual);
+  }
+
+  /* ── Build Info Area ── */
+  function buildInfoArea(parent, proj) {
+    var info = document.createElement('div');
+    info.className = 'overlay-info';
+
+    /* left column */
+    var left = document.createElement('div');
+    left.className = 'info-left';
+
+    var titleEl = document.createElement('div');
+    titleEl.className = 'project-title';
+    titleEl.textContent = proj.name;
+    titleEl.style.color = proj.accent;
+    left.appendChild(titleEl);
+
+    var tagEl = document.createElement('div');
+    tagEl.className = 'project-tagline';
+    tagEl.textContent = proj.tagline;
+    left.appendChild(tagEl);
+
+    var descEl = document.createElement('div');
+    descEl.className = 'project-description';
+    descEl.textContent = proj.description;
+    left.appendChild(descEl);
+
+    info.appendChild(left);
+
+    /* right column */
+    var right = document.createElement('div');
+    right.className = 'info-right';
+
+    /* features */
+    var featBlock = document.createElement('div');
+    featBlock.className = 'info-block';
+
+    var featLabel = document.createElement('div');
+    featLabel.className = 'info-block-label';
+    featLabel.textContent = 'Features';
+    featBlock.appendChild(featLabel);
+
+    proj.features.forEach(function(f) {
+      var item = document.createElement('div');
+      item.className = 'feature-item';
+      item.textContent = f;
+      featBlock.appendChild(item);
+    });
+
+    right.appendChild(featBlock);
+
+    /* tech stack */
+    var techBlock = document.createElement('div');
+    techBlock.className = 'info-block';
+
+    var techLabel = document.createElement('div');
+    techLabel.className = 'info-block-label';
+    techLabel.textContent = 'Tech Stack';
+    techBlock.appendChild(techLabel);
+
+    var tags = document.createElement('div');
+    tags.className = 'tech-tags';
+    proj.tech.forEach(function(t) {
+      var sp = document.createElement('span');
+      sp.textContent = t;
+      tags.appendChild(sp);
+    });
+    techBlock.appendChild(tags);
+    right.appendChild(techBlock);
+
+    /* year and role */
+    var metaBlock = document.createElement('div');
+    metaBlock.className = 'info-block';
+
+    var metaLabel = document.createElement('div');
+    metaLabel.className = 'info-block-label';
+    metaLabel.textContent = 'Details';
+    metaBlock.appendChild(metaLabel);
+
+    var meta = document.createElement('div');
+    meta.className = 'info-meta';
+
+    var yearLine = document.createElement('div');
+    yearLine.textContent = 'Year: ' + proj.year;
+    meta.appendChild(yearLine);
+
+    var roleLine = document.createElement('div');
+    roleLine.textContent = 'Role: ' + proj.role;
+    meta.appendChild(roleLine);
+
+    metaBlock.appendChild(meta);
+    right.appendChild(metaBlock);
+
+    info.appendChild(right);
+    parent.appendChild(info);
+  }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robert Laabs — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0A0A0F;
+    --surface: #111118;
+    --text: #E8E8ED;
+    --text-muted: #6B6B78;
+    --text-dim: #4A4A55;
+    --rule: rgba(255,255,255,0.06);
+    --rule-hover: rgba(255,255,255,0.12);
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .hero {
+    padding: 6rem 4rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-name {
+    font-size: clamp(4rem, 7vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name .first { font-weight: 300; display: block; }
+  .hero-name .last  { font-weight: 700; display: block; }
+
+  .hero-tagline {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    max-width: 420px;
+  }
+
+  .section-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 4rem 1rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+  }
+
+  .section-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .projects {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4rem 4rem;
+  }
+
+  .project-row {
+    border-top: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .project-row:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .project-row:hover {
+    background: rgba(255,255,255,0.015);
+  }
+
+  .row-top {
+    display: grid;
+    grid-template-columns: 48px 1fr auto auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 0.5rem;
+    height: 88px;
+    transition: height 0.3s ease;
+  }
+
+  .project-row:hover .row-top {
+    height: 96px;
+  }
+
+  .row-num {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .row-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .row-name {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+  }
+
+  .row-tagline {
+    font-size: 0.8rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  .row-tech {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin-top: 0;
+  }
+
+  .project-row:hover .row-tech {
+    max-height: 24px;
+    opacity: 1;
+    margin-top: 3px;
+  }
+
+  .row-badge {
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.3em 0.9em;
+    border-radius: 100px;
+    border: 1px solid var(--rule);
+    color: var(--text-muted);
+    white-space: nowrap;
+    transition: border-color 0.3s ease;
+  }
+
+  .project-row:hover .row-badge {
+    border-color: var(--rule-hover);
+  }
+
+  .row-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .project-row:hover .row-dot {
+    transform: scale(1.3);
+  }
+
+  .project-row.active .row-dot {
+    box-shadow: 0 0 12px currentColor;
+  }
+
+  .row-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease;
+    opacity: 0;
+    padding: 0 0.5rem;
+  }
+
+  .project-row.active .row-detail {
+    max-height: 600px;
+    opacity: 1;
+    padding: 1.5rem 0.5rem 2.5rem;
+  }
+
+  .detail-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .detail-visual {
+    aspect-ratio: 16/10;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .detail-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.02), transparent);
+  }
+
+  .detail-content h3 {
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .detail-content p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .detail-features {
+    list-style: none;
+    padding: 0;
+  }
+
+  .detail-features li {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    padding: 0.35em 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .detail-features li .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .pipeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 1rem 0;
+  }
+
+  .pipeline-step {
+    width: 240px;
+    border: 1px solid rgba(155, 126, 216, 0.25);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    background: rgba(155, 126, 216, 0.04);
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+
+  .pipeline-step:hover {
+    border-color: rgba(155, 126, 216, 0.5);
+    background: rgba(155, 126, 216, 0.08);
+  }
+
+  .pipeline-step-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9B7ED8;
+    margin-bottom: 0.3rem;
+  }
+
+  .pipeline-step-desc {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--text-muted);
+  }
+
+  .pipeline-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 28px;
+    justify-content: center;
+  }
+
+  .pipeline-arrow-line {
+    width: 1px;
+    height: 10px;
+    background: rgba(155, 126, 216, 0.25);
+  }
+
+  .pipeline-arrow-head {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid rgba(155, 126, 216, 0.4);
+    margin-top: 1px;
+  }
+
+  footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 4rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+  }
+
+  footer span {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  @media (max-width: 768px) {
+    .hero { padding: 4rem 2rem 2rem; }
+    .section-header { padding: 1.5rem 2rem 0.75rem; }
+    .projects { padding: 0 2rem 3rem; }
+    footer { padding: 2rem; }
+
+    .row-top {
+      grid-template-columns: 36px 1fr auto;
+      gap: 1rem;
+      height: auto;
+      padding: 1rem 0.25rem;
+    }
+
+    .row-dot { display: none; }
+
+    .detail-inner {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1 class="hero-name">
+      <span class="first">Robert</span>
+      <span class="last">Laabs</span>
+    </h1>
+    <p class="hero-tagline">Software engineer building desktop apps, web platforms, and ML tooling.</p>
+  </header>
+
+  <div class="section-header">
+    <h2>Selected Projects</h2>
+    <div class="line"></div>
+  </div>
+
+  <section class="projects" id="projects"></section>
+
+  <footer>
+    <span>&copy; 2026 Robert Laabs</span>
+    <div class="footer-links">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Email</a>
+    </div>
+  </footer>
+
+<script>
+(function() {
+  var projects = [
+    {
+      num: '01', name: 'Ibis', color: '#D4A843',
+      tagline: 'Enterprise AI Desktop Assistant', badge: 'Desktop App',
+      tech: 'TypeScript \u00b7 Electron \u00b7 React \u00b7 Python',
+      desc: 'A cross-platform desktop application that integrates large language models into enterprise workflows, enabling teams to process documents, generate reports, and automate repetitive tasks through a conversational interface.',
+      features: ['Real-time streaming AI responses with context persistence','Multi-document ingestion and cross-reference analysis','Enterprise SSO integration and role-based access control','Offline-capable with local model fallback']
+    },
+    {
+      num: '02', name: 'Strix', color: '#4A9EF5',
+      tagline: 'Native macOS SQLite Browser', badge: 'macOS App',
+      tech: 'Swift \u00b7 SwiftUI \u00b7 GRDB \u00b7 AppKit',
+      desc: 'A native macOS application for browsing, querying, and editing SQLite databases. Designed for developers who need a fast, lightweight alternative to heavy database GUIs, with full keyboard-driven navigation.',
+      features: ['Native SwiftUI interface with AppKit integration','Syntax-highlighted SQL editor with autocomplete','Real-time query execution and result streaming','Schema visualization and data export tools']
+    },
+    {
+      num: '03', name: 'Sparrow', color: '#C85A3A',
+      tagline: 'AI Market Research Platform', badge: 'Web Platform',
+      tech: 'Python \u00b7 Django \u00b7 Google GenAI \u00b7 Docker',
+      desc: 'A web platform that automates market research by synthesizing data from multiple sources using generative AI. Analysts define research briefs and receive structured reports with cited findings.',
+      features: ['Automated multi-source data collection and synthesis','AI-generated research reports with source citations','Collaborative brief editor with version history','Docker-based deployment with horizontal scaling']
+    },
+    {
+      num: '04', name: 'Magpie', color: '#2EA77A',
+      tagline: 'Survey Response Quality Analyzer', badge: 'Web Platform',
+      tech: 'Python \u00b7 Django \u00b7 OpenAI \u00b7 Polars',
+      desc: 'Analyzes open-ended survey responses at scale, detecting low-quality answers, identifying thematic patterns, and producing executive summaries that surface actionable insights from qualitative data.',
+      features: ['High-throughput response classification with OpenAI','Statistical quality scoring and outlier detection','Polars-powered data processing for large datasets','Interactive dashboards with exportable reports']
+    },
+    {
+      num: '05', name: 'Mallard', color: '#3CC9A8',
+      tagline: 'Behavioral Analytics Platform', badge: 'Web Platform',
+      tech: 'Python \u00b7 Django \u00b7 Spark \u00b7 AWS',
+      desc: 'A behavioral analytics platform that processes clickstream and event data to model user journeys, segment audiences, and predict churn. Built on Spark for batch and near-real-time processing.',
+      features: ['Spark-based event processing pipeline on AWS EMR','User journey modeling and funnel analysis','Predictive churn scoring with ML models','Real-time dashboards and alerting system']
+    },
+    {
+      num: '06', name: 'Budgie', color: '#9B7ED8',
+      tagline: 'Synthetic Data Generation Framework', badge: 'ML Framework',
+      tech: 'Python \u00b7 asyncio \u00b7 OpenAI \u00b7 Pydantic',
+      desc: 'A Python framework for generating high-quality synthetic datasets using LLMs. Handles template-driven prompt generation, asynchronous API calls, structured output validation, and crash recovery for long-running batch jobs.',
+      features: ['Jinja2-based YAML templates for prompt engineering','Async batch processing with configurable concurrency','Pydantic schema validation with automatic retries','JSONL output with crash recovery and deduplication'],
+      isBudgie: true
+    }
+  ];
+
+  var container = document.getElementById('projects');
+
+  function esc(str) {
+    var d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  projects.forEach(function(p, i) {
+    var row = document.createElement('div');
+    row.className = 'project-row';
+
+    // Build row-top
+    var top = document.createElement('div');
+    top.className = 'row-top';
+
+    var numSpan = document.createElement('span');
+    numSpan.className = 'row-num';
+    numSpan.textContent = p.num;
+
+    var info = document.createElement('div');
+    info.className = 'row-info';
+
+    var nameSpan = document.createElement('span');
+    nameSpan.className = 'row-name';
+    nameSpan.style.color = p.color;
+    nameSpan.textContent = p.name;
+
+    var tagSpan = document.createElement('span');
+    tagSpan.className = 'row-tagline';
+    tagSpan.textContent = p.tagline;
+
+    var techSpan = document.createElement('span');
+    techSpan.className = 'row-tech';
+    techSpan.textContent = p.tech;
+
+    info.appendChild(nameSpan);
+    info.appendChild(tagSpan);
+    info.appendChild(techSpan);
+
+    var badge = document.createElement('span');
+    badge.className = 'row-badge';
+    badge.textContent = p.badge;
+
+    var dot = document.createElement('span');
+    dot.className = 'row-dot';
+    dot.style.background = p.color;
+    dot.style.color = p.color;
+
+    top.appendChild(numSpan);
+    top.appendChild(info);
+    top.appendChild(badge);
+    top.appendChild(dot);
+
+    // Build row-detail
+    var detail = document.createElement('div');
+    detail.className = 'row-detail';
+
+    var inner = document.createElement('div');
+    inner.className = 'detail-inner';
+
+    // Visual / Pipeline
+    if (p.isBudgie) {
+      var pipeline = document.createElement('div');
+      pipeline.className = 'pipeline';
+
+      var steps = [
+        { label: 'Define', desc: 'Jinja2 YAML template' },
+        { label: 'Generate', desc: 'Async LLM batches' },
+        { label: 'Validate', desc: 'Parse \u2192 Check \u2192 Retry' },
+        { label: 'Output', desc: 'JSONL + crash recovery' }
+      ];
+
+      steps.forEach(function(s, si) {
+        var stepDiv = document.createElement('div');
+        stepDiv.className = 'pipeline-step';
+
+        var lbl = document.createElement('div');
+        lbl.className = 'pipeline-step-label';
+        lbl.textContent = s.label;
+
+        var dsc = document.createElement('div');
+        dsc.className = 'pipeline-step-desc';
+        dsc.textContent = s.desc;
+
+        stepDiv.appendChild(lbl);
+        stepDiv.appendChild(dsc);
+        pipeline.appendChild(stepDiv);
+
+        if (si < steps.length - 1) {
+          var arrow = document.createElement('div');
+          arrow.className = 'pipeline-arrow';
+          var arrowLine = document.createElement('div');
+          arrowLine.className = 'pipeline-arrow-line';
+          var arrowHead = document.createElement('div');
+          arrowHead.className = 'pipeline-arrow-head';
+          arrow.appendChild(arrowLine);
+          arrow.appendChild(arrowHead);
+          pipeline.appendChild(arrow);
+        }
+      });
+
+      inner.appendChild(pipeline);
+    } else {
+      var visual = document.createElement('div');
+      visual.className = 'detail-visual';
+      visual.style.borderColor = p.color + '20';
+      var screenshotLabel = document.createElement('span');
+      screenshotLabel.textContent = 'Screenshot';
+      visual.appendChild(screenshotLabel);
+      inner.appendChild(visual);
+    }
+
+    // Content side
+    var content = document.createElement('div');
+    content.className = 'detail-content';
+
+    var h3a = document.createElement('h3');
+    h3a.textContent = 'Overview';
+    content.appendChild(h3a);
+
+    var para = document.createElement('p');
+    para.textContent = p.desc;
+    content.appendChild(para);
+
+    var h3b = document.createElement('h3');
+    h3b.textContent = 'Key Features';
+    content.appendChild(h3b);
+
+    var ul = document.createElement('ul');
+    ul.className = 'detail-features';
+
+    p.features.forEach(function(f) {
+      var li = document.createElement('li');
+      var dotEl = document.createElement('span');
+      dotEl.className = 'dot';
+      dotEl.style.background = p.color;
+      li.appendChild(dotEl);
+      var txt = document.createElement('span');
+      txt.textContent = f;
+      li.appendChild(txt);
+      ul.appendChild(li);
+    });
+
+    content.appendChild(ul);
+    inner.appendChild(content);
+    detail.appendChild(inner);
+
+    row.appendChild(top);
+    row.appendChild(detail);
+    container.appendChild(row);
+  });
+
+  // Click to expand
+  document.querySelectorAll('.project-row').forEach(function(row) {
+    row.addEventListener('click', function() {
+      var wasActive = row.classList.contains('active');
+      document.querySelectorAll('.project-row.active').forEach(function(r) {
+        r.classList.remove('active');
+      });
+      if (!wasActive) {
+        row.classList.add('active');
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

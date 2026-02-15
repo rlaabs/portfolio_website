@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robert Laabs — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0A0A0F;
+    --surface: #111118;
+    --text: #E8E8ED;
+    --text-muted: #6B6B78;
+    --text-dim: #4A4A55;
+    --rule: rgba(255,255,255,0.06);
+    --ibis: #D4A843;
+    --ibis-dark: #8B6D1E;
+    --strix: #4A9EF5;
+    --strix-dark: #1B4F8A;
+    --sparrow: #C85A3A;
+    --sparrow-dark: #7A2E18;
+    --magpie: #2EA77A;
+    --magpie-dark: #155A3E;
+    --mallard: #3CC9A8;
+    --mallard-dark: #1A6B58;
+    --budgie: #9B7ED8;
+    --budgie-dark: #4E3A7A;
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 2rem;
+    position: relative;
+  }
+
+  .hero-name {
+    font-size: clamp(5rem, 10vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name .first { font-weight: 300; display: block; color: var(--text-muted); }
+  .hero-name .last  { font-weight: 700; display: block; }
+
+  .hero-tagline {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* ── Sticky Project Index ── */
+  .project-index-sentinel {
+    height: 0;
+    width: 100%;
+  }
+
+  .project-index {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.9rem 2rem;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .project-index.is-stuck {
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+
+  .project-index-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .index-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    padding: 0.4rem 0.7rem;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .index-link:hover {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .index-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .index-link.active .index-dot {
+    transform: scale(1.5);
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .index-num {
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+  }
+
+  .index-name {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: color 0.2s ease;
+  }
+
+  .index-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 60%;
+    height: 2px;
+    border-radius: 1px;
+    transition: transform 0.3s ease;
+  }
+
+  .index-link.active::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  .index-separator {
+    color: var(--text-dim);
+    font-size: 0.6rem;
+    opacity: 0.3;
+    user-select: none;
+  }
+
+  /* ── Project Spread ── */
+  .project-spread {
+    min-height: 70vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .project-spread.layout-odd {
+    grid-template-columns: 60% 1fr;
+  }
+
+  .project-spread.layout-even {
+    grid-template-columns: 1fr 60%;
+  }
+
+  .project-spread.layout-even .spread-visual {
+    order: 2;
+  }
+
+  .project-spread.layout-even .spread-text {
+    order: 1;
+  }
+
+  /* ── Visual Side ── */
+  .spread-visual {
+    position: relative;
+  }
+
+  .project-screenshot-wrapper {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .project-screenshot-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: grayscale(100%) contrast(1.1);
+    mix-blend-mode: luminosity;
+    transition: filter 0.6s ease, mix-blend-mode 0.6s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-screenshot-wrapper:hover img {
+    filter: grayscale(0%) contrast(1);
+    mix-blend-mode: normal;
+  }
+
+  /* Edge fade mask on outer side */
+  .project-screenshot-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .layout-odd .spread-visual .project-screenshot-wrapper.primary::after {
+    right: 0;
+    background: linear-gradient(to right, transparent, var(--bg));
+  }
+
+  .layout-even .spread-visual .project-screenshot-wrapper.primary::after {
+    left: 0;
+    background: linear-gradient(to left, transparent, var(--bg));
+  }
+
+  /* Stacked secondary screenshot */
+  .screenshot-stack {
+    position: relative;
+  }
+
+  .screenshot-stack .project-screenshot-wrapper.secondary {
+    position: absolute;
+    bottom: -20px;
+    width: 55%;
+    z-index: 5;
+    transform: rotate(-2deg);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+
+  .layout-odd .screenshot-stack .project-screenshot-wrapper.secondary {
+    right: -15px;
+  }
+
+  .layout-even .screenshot-stack .project-screenshot-wrapper.secondary {
+    left: -15px;
+  }
+
+  .screenshot-stack .project-screenshot-wrapper.secondary img {
+    filter: grayscale(100%) contrast(1.1);
+    mix-blend-mode: luminosity;
+    transition: filter 0.6s ease, mix-blend-mode 0.6s ease;
+  }
+
+  .screenshot-stack:hover .project-screenshot-wrapper.secondary img {
+    filter: grayscale(0%) contrast(1);
+    mix-blend-mode: normal;
+  }
+
+  /* ── Text Side ── */
+  .spread-text {
+    position: relative;
+    padding: 1rem 0;
+  }
+
+  .spread-number {
+    font-size: 8rem;
+    font-weight: 200;
+    line-height: 1;
+    opacity: 0.06;
+    position: absolute;
+    top: -1.5rem;
+    letter-spacing: -0.04em;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .layout-odd .spread-number {
+    right: 0;
+  }
+
+  .layout-even .spread-number {
+    left: 0;
+  }
+
+  .spread-name {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+
+  .spread-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.35em 1em;
+    border-radius: 100px;
+    border: 1px solid;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .spread-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    max-width: 480px;
+  }
+
+  .spread-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .spread-features li {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    padding: 0.3em 0;
+    line-height: 1.5;
+  }
+
+  .spread-features li::before {
+    content: '\2014\00a0\00a0';
+    opacity: 0.4;
+  }
+
+  .spread-tech {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ── Budgie Pipeline Snippet ── */
+  .budgie-pipeline {
+    margin-top: 1.25rem;
+    background: rgba(155, 126, 216, 0.05);
+    border: 1px solid rgba(155, 126, 216, 0.15);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.72rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+  }
+
+  .budgie-pipeline .kw { color: #9B7ED8; }
+  .budgie-pipeline .str { color: #6DBFA0; }
+  .budgie-pipeline .cmt { color: var(--text-dim); font-style: italic; }
+
+  /* ── Divider between spreads ── */
+  .spread-divider {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .project-spread,
+    .project-spread.layout-odd,
+    .project-spread.layout-even {
+      grid-template-columns: 1fr;
+      padding: 3rem 1.5rem;
+      gap: 2rem;
+      min-height: auto;
+    }
+
+    .project-spread.layout-even .spread-visual { order: 1; }
+    .project-spread.layout-even .spread-text { order: 2; }
+
+    .spread-number {
+      font-size: 5rem;
+      right: 0 !important;
+      left: auto !important;
+    }
+
+    .layout-odd .spread-visual .project-screenshot-wrapper.primary::after,
+    .layout-even .spread-visual .project-screenshot-wrapper.primary::after {
+      right: 0;
+      left: auto;
+      background: linear-gradient(to right, transparent, var(--bg));
+    }
+
+    .layout-odd .screenshot-stack .project-screenshot-wrapper.secondary,
+    .layout-even .screenshot-stack .project-screenshot-wrapper.secondary {
+      right: -10px;
+      left: auto;
+    }
+
+    .hero-name {
+      font-size: clamp(3.5rem, 12vw, 6rem);
+    }
+
+    .project-index-inner {
+      gap: 0.15rem;
+    }
+
+    .index-link {
+      padding: 0.35rem 0.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <h1 class="hero-name">
+    <span class="first">Robert</span>
+    <span class="last">Laabs</span>
+  </h1>
+  <p class="hero-tagline">Software Engineer &middot; Full-Stack &middot; AI Systems</p>
+</section>
+
+<!-- ── Sticky Project Index ── -->
+<div class="project-index-sentinel" id="index-sentinel"></div>
+<nav class="project-index" id="project-index">
+  <div class="project-index-inner">
+    <a class="index-link" href="#project-ibis">
+      <span class="index-dot" style="background: var(--ibis); color: var(--ibis);"></span>
+      <span class="index-num">01</span>
+      <span class="index-name" style="color: var(--ibis);">Ibis</span>
+    </a>
+    <span class="index-separator">&middot;</span>
+    <a class="index-link" href="#project-strix">
+      <span class="index-dot" style="background: var(--strix); color: var(--strix);"></span>
+      <span class="index-num">02</span>
+      <span class="index-name" style="color: var(--strix);">Strix</span>
+    </a>
+    <span class="index-separator">&middot;</span>
+    <a class="index-link" href="#project-sparrow">
+      <span class="index-dot" style="background: var(--sparrow); color: var(--sparrow);"></span>
+      <span class="index-num">03</span>
+      <span class="index-name" style="color: var(--sparrow);">Sparrow</span>
+    </a>
+    <span class="index-separator">&middot;</span>
+    <a class="index-link" href="#project-magpie">
+      <span class="index-dot" style="background: var(--magpie); color: var(--magpie);"></span>
+      <span class="index-num">04</span>
+      <span class="index-name" style="color: var(--magpie);">Magpie</span>
+    </a>
+    <span class="index-separator">&middot;</span>
+    <a class="index-link" href="#project-mallard">
+      <span class="index-dot" style="background: var(--mallard); color: var(--mallard);"></span>
+      <span class="index-num">05</span>
+      <span class="index-name" style="color: var(--mallard);">Mallard</span>
+    </a>
+    <span class="index-separator">&middot;</span>
+    <a class="index-link" href="#project-budgie">
+      <span class="index-dot" style="background: var(--budgie); color: var(--budgie);"></span>
+      <span class="index-num">06</span>
+      <span class="index-name" style="color: var(--budgie);">Budgie</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ══════════════════ PROJECTS ══════════════════ -->
+
+<!-- 01 Ibis — ODD: visual left, text right -->
+<section class="project-spread layout-odd" id="project-ibis">
+  <div class="spread-visual">
+    <div class="screenshot-stack">
+      <div class="project-screenshot-wrapper primary" style="background: linear-gradient(135deg, var(--ibis) 0%, var(--ibis-dark) 100%);">
+        <img src="sample-screenshots/ibis-hero.png" alt="Ibis application screenshot" loading="lazy">
+      </div>
+      <div class="project-screenshot-wrapper secondary" style="background: linear-gradient(135deg, var(--ibis) 0%, var(--ibis-dark) 100%);">
+        <img src="sample-screenshots/ibis-02.png" alt="Ibis detail view" loading="lazy">
+      </div>
+    </div>
+  </div>
+  <div class="spread-text">
+    <span class="spread-number">01</span>
+    <h2 class="spread-name" style="color: var(--ibis);">Ibis</h2>
+    <span class="spread-badge" style="border-color: var(--ibis); color: var(--ibis);">Desktop App</span>
+    <p class="spread-desc">A cross-platform desktop application that integrates large language models into enterprise workflows, enabling teams to process documents, generate reports, and automate repetitive tasks through a conversational interface.</p>
+    <ul class="spread-features">
+      <li>Real-time streaming AI responses with context persistence</li>
+      <li>Multi-document ingestion and cross-reference analysis</li>
+      <li>Enterprise SSO integration and role-based access control</li>
+      <li>Offline-capable with local model fallback</li>
+    </ul>
+    <p class="spread-tech">TypeScript &middot; Electron &middot; React &middot; Python</p>
+  </div>
+</section>
+
+<div class="spread-divider"></div>
+
+<!-- 02 Strix — EVEN: text left, visual right -->
+<section class="project-spread layout-even" id="project-strix">
+  <div class="spread-visual">
+    <div class="screenshot-stack">
+      <div class="project-screenshot-wrapper primary" style="background: linear-gradient(135deg, var(--strix) 0%, var(--strix-dark) 100%);">
+        <img src="sample-screenshots/strix-hero.png" alt="Strix application screenshot" loading="lazy">
+      </div>
+      <div class="project-screenshot-wrapper secondary" style="background: linear-gradient(135deg, var(--strix) 0%, var(--strix-dark) 100%);">
+        <img src="sample-screenshots/strix-02.png" alt="Strix detail view" loading="lazy">
+      </div>
+    </div>
+  </div>
+  <div class="spread-text">
+    <span class="spread-number">02</span>
+    <h2 class="spread-name" style="color: var(--strix);">Strix</h2>
+    <span class="spread-badge" style="border-color: var(--strix); color: var(--strix);">macOS App</span>
+    <p class="spread-desc">A native macOS application for browsing, querying, and editing SQLite databases. Designed for developers who need a fast, lightweight alternative to heavy database GUIs, with full keyboard-driven navigation.</p>
+    <ul class="spread-features">
+      <li>Native SwiftUI interface with AppKit integration</li>
+      <li>Syntax-highlighted SQL editor with autocomplete</li>
+      <li>Real-time query execution and result streaming</li>
+      <li>Schema visualization and data export tools</li>
+    </ul>
+    <p class="spread-tech">Swift &middot; SwiftUI &middot; GRDB &middot; AppKit</p>
+  </div>
+</section>
+
+<div class="spread-divider"></div>
+
+<!-- 03 Sparrow — ODD: visual left, text right -->
+<section class="project-spread layout-odd" id="project-sparrow">
+  <div class="spread-visual">
+    <div class="project-screenshot-wrapper primary" style="background: linear-gradient(135deg, var(--sparrow) 0%, var(--sparrow-dark) 100%);">
+      <img src="sample-screenshots/sparrow-hero.png" alt="Sparrow application screenshot" loading="lazy">
+    </div>
+  </div>
+  <div class="spread-text">
+    <span class="spread-number">03</span>
+    <h2 class="spread-name" style="color: var(--sparrow);">Sparrow</h2>
+    <span class="spread-badge" style="border-color: var(--sparrow); color: var(--sparrow);">Web Platform</span>
+    <p class="spread-desc">A web platform that automates market research by synthesizing data from multiple sources using generative AI. Analysts define research briefs and receive structured reports with cited findings.</p>
+    <ul class="spread-features">
+      <li>Automated multi-source data collection and synthesis</li>
+      <li>AI-generated research reports with source citations</li>
+      <li>Collaborative brief editor with version history</li>
+      <li>Docker-based deployment with horizontal scaling</li>
+    </ul>
+    <p class="spread-tech">Python &middot; Django &middot; Google GenAI &middot; Docker</p>
+  </div>
+</section>
+
+<div class="spread-divider"></div>
+
+<!-- 04 Magpie — EVEN: text left, visual right -->
+<section class="project-spread layout-even" id="project-magpie">
+  <div class="spread-visual">
+    <div class="project-screenshot-wrapper primary" style="background: linear-gradient(135deg, var(--magpie) 0%, var(--magpie-dark) 100%);">
+      <img src="sample-screenshots/magpie-hero.png" alt="Magpie application screenshot" loading="lazy">
+    </div>
+  </div>
+  <div class="spread-text">
+    <span class="spread-number">04</span>
+    <h2 class="spread-name" style="color: var(--magpie);">Magpie</h2>
+    <span class="spread-badge" style="border-color: var(--magpie); color: var(--magpie);">Web Platform</span>
+    <p class="spread-desc">Analyzes open-ended survey responses at scale, detecting low-quality answers, identifying thematic patterns, and producing executive summaries that surface actionable insights from qualitative data.</p>
+    <ul class="spread-features">
+      <li>High-throughput response classification with OpenAI</li>
+      <li>Statistical quality scoring and outlier detection</li>
+      <li>Polars-powered data processing for large datasets</li>
+      <li>Interactive dashboards with exportable reports</li>
+    </ul>
+    <p class="spread-tech">Python &middot; Django &middot; OpenAI &middot; Polars</p>
+  </div>
+</section>
+
+<div class="spread-divider"></div>
+
+<!-- 05 Mallard — ODD: visual left, text right -->
+<section class="project-spread layout-odd" id="project-mallard">
+  <div class="spread-visual">
+    <div class="project-screenshot-wrapper primary" style="background: linear-gradient(135deg, var(--mallard) 0%, var(--mallard-dark) 100%);">
+      <img src="sample-screenshots/mallard-hero.png" alt="Mallard application screenshot" loading="lazy">
+    </div>
+  </div>
+  <div class="spread-text">
+    <span class="spread-number">05</span>
+    <h2 class="spread-name" style="color: var(--mallard);">Mallard</h2>
+    <span class="spread-badge" style="border-color: var(--mallard); color: var(--mallard);">Web Platform</span>
+    <p class="spread-desc">A behavioral analytics platform that processes clickstream and event data to model user journeys, segment audiences, and predict churn. Built on Spark for batch and near-real-time processing.</p>
+    <ul class="spread-features">
+      <li>Spark-based event processing pipeline on AWS EMR</li>
+      <li>User journey modeling and funnel analysis</li>
+      <li>Predictive churn scoring with ML models</li>
+      <li>Real-time dashboards and alerting system</li>
+    </ul>
+    <p class="spread-tech">Python &middot; Django &middot; Spark &middot; AWS</p>
+  </div>
+</section>
+
+<div class="spread-divider"></div>
+
+<!-- 06 Budgie — EVEN: text left, visual right -->
+<section class="project-spread layout-even" id="project-budgie">
+  <div class="spread-visual">
+    <div class="project-screenshot-wrapper primary" style="background: linear-gradient(135deg, var(--budgie) 0%, var(--budgie-dark) 100%);">
+      <img src="sample-screenshots/budgie-hero.png" alt="Budgie architecture diagram" loading="lazy">
+    </div>
+  </div>
+  <div class="spread-text">
+    <span class="spread-number">06</span>
+    <h2 class="spread-name" style="color: var(--budgie);">Budgie</h2>
+    <span class="spread-badge" style="border-color: var(--budgie); color: var(--budgie);">ML Framework</span>
+    <p class="spread-desc">A Python framework for generating high-quality synthetic datasets using LLMs. Handles template-driven prompt generation, asynchronous API calls, structured output validation, and crash recovery for long-running batch jobs.</p>
+    <ul class="spread-features">
+      <li>Jinja2-based YAML templates for prompt engineering</li>
+      <li>Async batch processing with configurable concurrency</li>
+      <li>Pydantic schema validation with automatic retries</li>
+      <li>JSONL output with crash recovery and deduplication</li>
+    </ul>
+    <p class="spread-tech">Python &middot; asyncio &middot; OpenAI &middot; Pydantic</p>
+    <div class="budgie-pipeline">
+      <span class="cmt"># pipeline.yaml</span><br>
+      <span class="kw">stages</span>:<br>
+      &nbsp;&nbsp;- <span class="kw">name</span>: <span class="str">generate</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">template</span>: <span class="str">persona_qa.j2</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">concurrency</span>: <span class="str">32</span><br>
+      &nbsp;&nbsp;- <span class="kw">name</span>: <span class="str">validate</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">schema</span>: <span class="str">QAPair</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">retry</span>: <span class="str">3</span><br>
+      &nbsp;&nbsp;- <span class="kw">name</span>: <span class="str">output</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">format</span>: <span class="str">jsonl</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">dedupe</span>: <span class="str">true</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer spacer ── -->
+<div style="height: 6rem;"></div>
+
+<script>
+(function() {
+  // ── Sticky index shadow on scroll ──
+  var index = document.getElementById('project-index');
+  var sentinel = document.getElementById('index-sentinel');
+
+  var stickyObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) {
+        index.classList.add('is-stuck');
+      } else {
+        index.classList.remove('is-stuck');
+      }
+    });
+  }, { threshold: 0 });
+
+  stickyObserver.observe(sentinel);
+
+  // ── Active project tracking ──
+  var sections = document.querySelectorAll('.project-spread');
+  var links = document.querySelectorAll('.index-link');
+
+  var activeObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        links.forEach(function(link) {
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+  }, {
+    rootMargin: '-30% 0px -30% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function(section) {
+    activeObserver.observe(section);
+  });
+
+  // ── Smooth scroll for index links ──
+  links.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var targetId = this.getAttribute('href').substring(1);
+      var target = document.getElementById(targetId);
+      if (target) {
+        var indexHeight = index.offsetHeight;
+        var targetPos = target.getBoundingClientRect().top + window.pageYOffset - indexHeight - 20;
+        window.scrollTo({ top: targetPos, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ── Underline color for active links ──
+  var colors = {
+    'project-ibis': 'var(--ibis)',
+    'project-strix': 'var(--strix)',
+    'project-sparrow': 'var(--sparrow)',
+    'project-magpie': 'var(--magpie)',
+    'project-mallard': 'var(--mallard)',
+    'project-budgie': 'var(--budgie)'
+  };
+
+  // Add dynamic style for underline colors
+  var style = document.createElement('style');
+  var rules = '';
+  links.forEach(function(link) {
+    var href = link.getAttribute('href').substring(1);
+    var color = colors[href];
+    if (color) {
+      rules += '.index-link[href="#' + href + '"]::after { background: ' + color + '; }\n';
+    }
+  });
+  style.textContent = rules;
+  document.head.appendChild(style);
+})();
+</script>
+
+</body>
+</html>

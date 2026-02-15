@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Laabs — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0F;
+            --bg-subtle: #101018;
+            --bg-card: #0E0E16;
+            --text-primary: #E8E8ED;
+            --text-secondary: #8A8A96;
+            --text-muted: #5A5A66;
+            --rule: #1E1E2A;
+            --ibis: #D4A843;
+            --strix: #4A9EF5;
+            --sparrow: #C85A3A;
+            --magpie: #2EA77A;
+            --mallard: #3CC9A8;
+            --budgie: #9B7ED8;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ——— Navigation ——— */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ——— Hero Section (shorter ~70vh) ——— */
+
+        .hero {
+            height: 70vh;
+            min-height: 480px;
+            display: flex;
+            align-items: center;
+            padding: 0 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-name {
+            line-height: 0.92;
+            margin-bottom: 2rem;
+        }
+
+        .hero-name .first {
+            display: block;
+            font-size: clamp(3.5rem, 6vw, 5.5rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .hero-name .last {
+            display: block;
+            font-size: clamp(3.5rem, 6vw, 5.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-right: 8%;
+        }
+
+        .hero-subtitle-block {
+            max-width: 420px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-variant: small-caps;
+        }
+
+        .hero-tagline {
+            font-size: 1rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .hero-rule {
+            position: absolute;
+            bottom: 0;
+            left: 4rem;
+            right: 4rem;
+            height: 1px;
+            background: var(--rule);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInHint 1s ease 1.5s forwards;
+        }
+
+        .scroll-line {
+            width: 40px;
+            height: 1px;
+            background: var(--text-muted);
+        }
+
+        @keyframes fadeInHint {
+            to { opacity: 1; }
+        }
+
+        /* ——— Section Header ——— */
+
+        .section-header {
+            padding: 3rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .section-rule {
+            height: 1px;
+            background: var(--rule);
+        }
+
+        /* ——— Tier 1: Featured Applications (2x2 grid) ——— */
+
+        .tier-1 {
+            padding: 2.5rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .grid-card {
+            background: var(--bg-card);
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .grid-card.visible {
+            opacity: 1;
+        }
+
+        .grid-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .grid-card .card-accent {
+            height: 3px;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .grid-card.ibis .card-accent { background: var(--ibis); }
+        .grid-card.strix .card-accent { background: var(--strix); }
+        .grid-card.sparrow .card-accent { background: var(--sparrow); }
+        .grid-card.magpie .card-accent { background: var(--magpie); }
+
+        .card-screenshot {
+            flex: 0 0 60%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-card.ibis .card-screenshot {
+            background: linear-gradient(145deg, #0E0E16 0%, #18160E 100%);
+        }
+        .grid-card.strix .card-screenshot {
+            background: linear-gradient(145deg, #0C0C18 0%, #0E1420 100%);
+        }
+        .grid-card.sparrow .card-screenshot {
+            background: linear-gradient(145deg, #100C0A 0%, #1A120E 100%);
+        }
+        .grid-card.magpie .card-screenshot {
+            background: linear-gradient(145deg, #0A100E 0%, #0E1816 100%);
+        }
+
+        .card-screenshot svg {
+            opacity: 0.15;
+        }
+
+        .card-body {
+            flex: 1;
+            padding: 1rem 1.4rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-top: 1px solid var(--rule);
+        }
+
+        .card-body .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.2rem;
+        }
+
+        .grid-card.ibis .card-title { color: var(--ibis); }
+        .grid-card.strix .card-title { color: var(--strix); }
+        .grid-card.sparrow .card-title { color: var(--sparrow); }
+        .grid-card.magpie .card-title { color: var(--magpie); }
+
+        .card-body .card-tagline {
+            font-size: 0.82rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 0.6rem;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .card-badge {
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-variant: small-caps;
+            white-space: nowrap;
+        }
+
+        .card-tech {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-tech span {
+            color: var(--text-secondary);
+        }
+
+        /* ——— Tier 2: Infrastructure & Analytics ——— */
+
+        .tier-2-label {
+            padding: 2.5rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tier-2-label .sub-label {
+            font-size: 0.62rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        .tier-2 {
+            padding: 1rem 4rem 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .infra-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .infra-card {
+            background: var(--bg-card);
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .infra-card.visible {
+            opacity: 1;
+        }
+
+        .infra-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .infra-card .card-accent {
+            height: 3px;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .infra-card.mallard .card-accent { background: var(--mallard); }
+        .infra-card.budgie .card-accent { background: var(--budgie); }
+
+        .infra-card-body {
+            flex: 1;
+            padding: 1.2rem 1.6rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .infra-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .infra-text .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.15rem;
+        }
+
+        .infra-card.mallard .card-title { color: var(--mallard); }
+        .infra-card.budgie .card-title { color: var(--budgie); }
+
+        .infra-text .card-tagline {
+            font-size: 0.78rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .infra-text .card-desc {
+            font-size: 0.75rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .infra-text .card-tech {
+            margin-top: 0.6rem;
+            font-size: 0.68rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .infra-text .card-tech span {
+            color: var(--text-secondary);
+        }
+
+        .infra-motif {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-left: 1px solid var(--rule);
+        }
+
+        /* ——— Mallard: CSS scatter plot motif ——— */
+
+        .scatter-plot {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            padding: 1.2rem;
+        }
+
+        .scatter-axis-y {
+            position: absolute;
+            left: 1.2rem;
+            top: 1.2rem;
+            bottom: 2.4rem;
+            width: 1px;
+            background: var(--mallard);
+            opacity: 0.25;
+        }
+
+        .scatter-axis-x {
+            position: absolute;
+            left: 1.2rem;
+            bottom: 2.4rem;
+            right: 1.2rem;
+            height: 1px;
+            background: var(--mallard);
+            opacity: 0.25;
+        }
+
+        .scatter-dot {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--mallard);
+        }
+
+        .scatter-dot.hollow {
+            background: transparent;
+            border: 1px solid var(--mallard);
+            opacity: 0.5;
+        }
+
+        .scatter-label {
+            position: absolute;
+            bottom: 0.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.55rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mallard);
+            opacity: 0.35;
+        }
+
+        .bar-group {
+            position: absolute;
+            bottom: 2.8rem;
+            right: 1.4rem;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+        }
+
+        .bar {
+            width: 6px;
+            background: var(--mallard);
+            opacity: 0.2;
+            border-radius: 1px 1px 0 0;
+        }
+
+        /* ——— Budgie: pipeline motif ——— */
+
+        .pipeline {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding: 0 0.8rem;
+            width: 100%;
+        }
+
+        .pipeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .pipeline-node {
+            width: 52px;
+            height: 28px;
+            border: 1px solid var(--budgie);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.5rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            color: var(--budgie);
+            opacity: 0.7;
+            background: rgba(155, 126, 216, 0.04);
+            text-transform: uppercase;
+        }
+
+        .pipeline-arrow {
+            width: 14px;
+            height: 1px;
+            background: var(--budgie);
+            opacity: 0.3;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .pipeline-arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -2.5px;
+            border: 3px solid transparent;
+            border-left: 4px solid var(--budgie);
+            opacity: 0.3;
+        }
+
+        /* ——— Detail Panels (inline expand) ——— */
+
+        .detail-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg-subtle);
+            border-top: 0 solid var(--rule);
+        }
+
+        .detail-panel.open {
+            max-height: 600px;
+            border-top-width: 1px;
+        }
+
+        .detail-inner {
+            padding: 2rem 2.5rem;
+        }
+
+        .detail-inner h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .detail-inner .detail-tagline {
+            font-size: 0.9rem;
+            font-style: italic;
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .detail-inner .detail-desc {
+            font-size: 0.88rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 640px;
+            margin-bottom: 1.2rem;
+        }
+
+        .detail-inner .detail-tech {
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .detail-inner .detail-tech span {
+            color: var(--text-secondary);
+        }
+
+        .detail-close {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            padding: 0.3rem 0;
+            transition: color 0.2s ease;
+        }
+
+        .detail-close:hover {
+            color: var(--text-primary);
+        }
+
+        /* ——— Fade-in ——— */
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+        }
+
+        .fade-in-delay-1 { transition-delay: 0.15s; }
+        .fade-in-delay-2 { transition-delay: 0.3s; }
+
+        /* ——— Responsive ——— */
+
+        @media (max-width: 900px) {
+            nav { padding: 1.5rem 2rem; }
+            nav .nav-links { gap: 2rem; }
+
+            .hero { padding: 0 2rem; height: 65vh; }
+
+            .hero-name .first,
+            .hero-name .last {
+                font-size: clamp(2.8rem, 10vw, 4.5rem);
+            }
+
+            .hero-subtitle-area {
+                justify-content: flex-start;
+                padding-right: 0;
+                padding-left: 5%;
+            }
+
+            .hero-rule { left: 2rem; right: 2rem; }
+
+            .section-header { padding: 2.5rem 2rem 0; }
+            .tier-1 { padding: 2rem 2rem 0; }
+            .tier-2-label { padding: 2rem 2rem 0; }
+            .tier-2 { padding: 1rem 2rem 5rem; }
+
+            .project-grid { grid-template-columns: 1fr; }
+            .infra-grid { grid-template-columns: 1fr; }
+
+            .grid-card { height: 280px; }
+            .infra-card { height: auto; min-height: 180px; }
+
+            .scroll-hint { left: 2rem; }
+        }
+
+        @media (max-width: 600px) {
+            nav .nav-links { gap: 1.5rem; }
+            nav .nav-links a { font-size: 0.7rem; }
+
+            .hero-name .first,
+            .hero-name .last {
+                font-size: clamp(2.2rem, 12vw, 3.5rem);
+            }
+
+            .infra-card-body {
+                grid-template-columns: 1fr;
+            }
+
+            .infra-motif {
+                border-left: none;
+                border-top: 1px solid var(--rule);
+                min-height: 100px;
+            }
+
+            .pipeline {
+                padding: 1rem 0.5rem;
+            }
+
+            .pipeline-node {
+                width: 44px;
+                height: 24px;
+                font-size: 0.42rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">RL</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-name">
+                <span class="first fade-in">Robert</span>
+                <span class="last fade-in fade-in-delay-1">Laabs</span>
+            </div>
+            <div class="hero-subtitle-area fade-in fade-in-delay-2">
+                <div class="hero-subtitle-block">
+                    <p class="hero-subtitle">Software Engineer</p>
+                    <p class="hero-tagline">Building production tools that ship — from desktop apps to ML infrastructure</p>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <span class="scroll-line"></span>
+            Scroll
+        </div>
+        <div class="hero-rule"></div>
+    </section>
+
+    <!-- Selected Work -->
+    <div class="section-header" id="work">
+        <p class="section-label fade-in">Selected Work</p>
+        <div class="section-rule"></div>
+    </div>
+
+    <!-- Tier 1: Featured Applications -->
+    <section class="tier-1">
+        <div class="project-grid">
+
+            <!-- Ibis -->
+            <article class="grid-card ibis" data-project="ibis">
+                <div class="card-accent"></div>
+                <div class="card-screenshot">
+                    <svg width="100" height="80" viewBox="0 0 100 80" fill="none">
+                        <rect x="10" y="12" width="80" height="56" rx="5" stroke="#D4A843" stroke-width="1.5"/>
+                        <circle cx="35" cy="34" r="7" stroke="#D4A843" stroke-width="1.2"/>
+                        <path d="M10 55 L35 40 L55 50 L70 42 L90 55" stroke="#D4A843" stroke-width="1.2" fill="none"/>
+                        <rect x="25" y="2" width="50" height="6" rx="2" stroke="#D4A843" stroke-width="1"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Ibis</h3>
+                    <p class="card-tagline">Enterprise AI Desktop Assistant</p>
+                    <div class="card-meta">
+                        <span class="card-badge">Desktop App</span>
+                        <span class="card-tech"><span>Swift</span> · <span>Core ML</span> · <span>SwiftUI</span> · <span>Python</span></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Strix -->
+            <article class="grid-card strix" data-project="strix">
+                <div class="card-accent"></div>
+                <div class="card-screenshot">
+                    <svg width="100" height="80" viewBox="0 0 100 80" fill="none">
+                        <rect x="5" y="8" width="90" height="64" rx="5" stroke="#4A9EF5" stroke-width="1.5"/>
+                        <line x1="5" y1="22" x2="95" y2="22" stroke="#4A9EF5" stroke-width="1"/>
+                        <line x1="40" y1="22" x2="40" y2="72" stroke="#4A9EF5" stroke-width="1"/>
+                        <rect x="46" y="28" width="42" height="5" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="46" y="38" width="42" height="5" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="46" y="48" width="42" height="5" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="11" y="28" width="22" height="4" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="11" y="37" width="22" height="4" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="11" y="46" width="22" height="4" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Strix</h3>
+                    <p class="card-tagline">Native macOS SQLite Browser</p>
+                    <div class="card-meta">
+                        <span class="card-badge">Desktop App</span>
+                        <span class="card-tech"><span>Swift</span> · <span>AppKit</span> · <span>SQLite</span> · <span>Core Data</span></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Sparrow -->
+            <article class="grid-card sparrow" data-project="sparrow">
+                <div class="card-accent"></div>
+                <div class="card-screenshot">
+                    <svg width="100" height="80" viewBox="0 0 100 80" fill="none">
+                        <rect x="8" y="6" width="84" height="68" rx="5" stroke="#C85A3A" stroke-width="1.5"/>
+                        <rect x="14" y="16" width="30" height="20" rx="3" stroke="#C85A3A" stroke-width="1"/>
+                        <rect x="50" y="16" width="36" height="9" rx="2" stroke="#C85A3A" stroke-width="0.8"/>
+                        <rect x="50" y="28" width="24" height="5" rx="1" stroke="#C85A3A" stroke-width="0.8"/>
+                        <line x1="14" y1="44" x2="86" y2="44" stroke="#C85A3A" stroke-width="0.6"/>
+                        <rect x="14" y="50" width="20" height="14" rx="2" stroke="#C85A3A" stroke-width="0.8"/>
+                        <rect x="40" y="50" width="20" height="14" rx="2" stroke="#C85A3A" stroke-width="0.8"/>
+                        <rect x="66" y="50" width="20" height="14" rx="2" stroke="#C85A3A" stroke-width="0.8"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Sparrow</h3>
+                    <p class="card-tagline">Full-Stack Web Application</p>
+                    <div class="card-meta">
+                        <span class="card-badge">Web App</span>
+                        <span class="card-tech"><span>React</span> · <span>TypeScript</span> · <span>Node.js</span> · <span>PostgreSQL</span></span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Magpie -->
+            <article class="grid-card magpie" data-project="magpie">
+                <div class="card-accent"></div>
+                <div class="card-screenshot">
+                    <svg width="100" height="80" viewBox="0 0 100 80" fill="none">
+                        <rect x="8" y="6" width="84" height="68" rx="5" stroke="#2EA77A" stroke-width="1.5"/>
+                        <circle cx="50" cy="38" r="18" stroke="#2EA77A" stroke-width="1"/>
+                        <path d="M50 20 L50 38 L64 30" stroke="#2EA77A" stroke-width="1" fill="none"/>
+                        <circle cx="50" cy="38" r="10" stroke="#2EA77A" stroke-width="0.6" stroke-dasharray="2 2"/>
+                        <rect x="14" y="64" width="16" height="4" rx="1" stroke="#2EA77A" stroke-width="0.6"/>
+                        <rect x="34" y="64" width="16" height="4" rx="1" stroke="#2EA77A" stroke-width="0.6"/>
+                        <rect x="54" y="64" width="16" height="4" rx="1" stroke="#2EA77A" stroke-width="0.6"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Magpie</h3>
+                    <p class="card-tagline">Real-Time Analytics Dashboard</p>
+                    <div class="card-meta">
+                        <span class="card-badge">Dashboard</span>
+                        <span class="card-tech"><span>Vue.js</span> · <span>D3.js</span> · <span>FastAPI</span> · <span>Redis</span></span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- Inline detail panels for Tier 1 -->
+        <div class="detail-panel" id="detail-ibis">
+            <div class="detail-inner">
+                <button class="detail-close" onclick="closeDetail('ibis')">&times; Close</button>
+                <h3 style="color: var(--ibis);">Ibis</h3>
+                <p class="detail-tagline">Enterprise AI Desktop Assistant</p>
+                <p class="detail-desc">
+                    A native desktop application bringing enterprise-grade AI capabilities to professional workflows, with a focus on privacy, speed, and seamless system integration. Features on-device inference, multi-model orchestration, and deep macOS integration.
+                </p>
+                <p class="detail-tech">
+                    <span>Swift</span> · <span>Core ML</span> · <span>SwiftUI</span> · <span>Python</span> · <span>GGML</span>
+                </p>
+            </div>
+        </div>
+        <div class="detail-panel" id="detail-strix">
+            <div class="detail-inner">
+                <button class="detail-close" onclick="closeDetail('strix')">&times; Close</button>
+                <h3 style="color: var(--strix);">Strix</h3>
+                <p class="detail-tagline">Native macOS SQLite Browser</p>
+                <p class="detail-desc">
+                    A fast, native macOS application for browsing and managing SQLite databases. Built with performance and a clean interface at its core — handles databases with millions of rows, instant search, and export to multiple formats.
+                </p>
+                <p class="detail-tech">
+                    <span>Swift</span> · <span>AppKit</span> · <span>SQLite</span> · <span>Core Data</span>
+                </p>
+            </div>
+        </div>
+        <div class="detail-panel" id="detail-sparrow">
+            <div class="detail-inner">
+                <button class="detail-close" onclick="closeDetail('sparrow')">&times; Close</button>
+                <h3 style="color: var(--sparrow);">Sparrow</h3>
+                <p class="detail-tagline">Full-Stack Web Application</p>
+                <p class="detail-desc">
+                    A production web application with a modern React frontend and robust Node.js backend. Features real-time collaboration, role-based access control, and a responsive design system built from scratch.
+                </p>
+                <p class="detail-tech">
+                    <span>React</span> · <span>TypeScript</span> · <span>Node.js</span> · <span>PostgreSQL</span> · <span>Docker</span>
+                </p>
+            </div>
+        </div>
+        <div class="detail-panel" id="detail-magpie">
+            <div class="detail-inner">
+                <button class="detail-close" onclick="closeDetail('magpie')">&times; Close</button>
+                <h3 style="color: var(--magpie);">Magpie</h3>
+                <p class="detail-tagline">Real-Time Analytics Dashboard</p>
+                <p class="detail-desc">
+                    A real-time analytics dashboard processing streaming data into interactive visualizations. Features live-updating charts, configurable alert thresholds, and sub-second query latency across millions of events.
+                </p>
+                <p class="detail-tech">
+                    <span>Vue.js</span> · <span>D3.js</span> · <span>FastAPI</span> · <span>Redis</span> · <span>ClickHouse</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tier 2 Sub-label -->
+    <div class="tier-2-label">
+        <span class="sub-label fade-in">Infrastructure</span>
+    </div>
+
+    <!-- Tier 2: Infrastructure & Analytics -->
+    <section class="tier-2">
+        <div class="infra-grid">
+
+            <!-- Mallard -->
+            <article class="infra-card mallard" data-project="mallard">
+                <div class="card-accent"></div>
+                <div class="infra-card-body">
+                    <div class="infra-text">
+                        <h3 class="card-title">Mallard</h3>
+                        <p class="card-tagline">Data Pipeline & Analytics Engine</p>
+                        <p class="card-desc">
+                            ETL pipeline processing 2M+ records daily. Automated data quality checks, anomaly detection, and real-time monitoring dashboards.
+                        </p>
+                        <p class="card-tech">
+                            <span>Python</span> · <span>Apache Spark</span> · <span>Airflow</span> · <span>dbt</span>
+                        </p>
+                    </div>
+                    <div class="infra-motif">
+                        <div class="scatter-plot">
+                            <div class="scatter-axis-y"></div>
+                            <div class="scatter-axis-x"></div>
+                            <!-- Scatter dots -->
+                            <div class="scatter-dot" style="left: 22%; top: 28%; opacity: 0.7;"></div>
+                            <div class="scatter-dot" style="left: 30%; top: 45%; opacity: 0.5;"></div>
+                            <div class="scatter-dot" style="left: 38%; top: 22%; opacity: 0.8;"></div>
+                            <div class="scatter-dot hollow" style="left: 45%; top: 55%; opacity: 0.4;"></div>
+                            <div class="scatter-dot" style="left: 52%; top: 35%; opacity: 0.6;"></div>
+                            <div class="scatter-dot hollow" style="left: 58%; top: 18%; opacity: 0.5;"></div>
+                            <div class="scatter-dot" style="left: 65%; top: 40%; opacity: 0.7;"></div>
+                            <div class="scatter-dot" style="left: 72%; top: 30%; opacity: 0.5;"></div>
+                            <div class="scatter-dot hollow" style="left: 78%; top: 50%; opacity: 0.3;"></div>
+                            <div class="scatter-dot" style="left: 85%; top: 25%; opacity: 0.6;"></div>
+                            <!-- Bar chart sketch -->
+                            <div class="bar-group">
+                                <div class="bar" style="height: 24px;"></div>
+                                <div class="bar" style="height: 36px;"></div>
+                                <div class="bar" style="height: 18px;"></div>
+                                <div class="bar" style="height: 42px;"></div>
+                                <div class="bar" style="height: 30px;"></div>
+                            </div>
+                            <span class="scatter-label">throughput</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Budgie -->
+            <article class="infra-card budgie" data-project="budgie">
+                <div class="card-accent"></div>
+                <div class="infra-card-body">
+                    <div class="infra-text">
+                        <h3 class="card-title">Budgie</h3>
+                        <p class="card-tagline">ML Prompt Infrastructure</p>
+                        <p class="card-desc">
+                            Templated prompt pipeline with structured validation. Version-controlled prompt engineering, A/B testing, and automated quality scoring.
+                        </p>
+                        <p class="card-tech">
+                            <span>Python</span> · <span>Pydantic</span> · <span>FastAPI</span> · <span>PostgreSQL</span>
+                        </p>
+                    </div>
+                    <div class="infra-motif">
+                        <div class="pipeline">
+                            <div class="pipeline-step">
+                                <div class="pipeline-node">Tmpl</div>
+                            </div>
+                            <div class="pipeline-arrow"></div>
+                            <div class="pipeline-step">
+                                <div class="pipeline-node">LLM</div>
+                            </div>
+                            <div class="pipeline-arrow"></div>
+                            <div class="pipeline-step">
+                                <div class="pipeline-node">Valid</div>
+                            </div>
+                            <div class="pipeline-arrow"></div>
+                            <div class="pipeline-step">
+                                <div class="pipeline-node">Out</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- Inline detail panels for Tier 2 -->
+        <div class="detail-panel" id="detail-mallard">
+            <div class="detail-inner">
+                <button class="detail-close" onclick="closeDetail('mallard')">&times; Close</button>
+                <h3 style="color: var(--mallard);">Mallard</h3>
+                <p class="detail-tagline">Data Pipeline & Analytics Engine</p>
+                <p class="detail-desc">
+                    A production ETL pipeline processing over 2 million records daily across multiple data sources. Includes automated data quality checks, anomaly detection, and real-time monitoring dashboards with configurable alerting.
+                </p>
+                <p class="detail-tech">
+                    <span>Python</span> · <span>Apache Spark</span> · <span>Airflow</span> · <span>dbt</span> · <span>Snowflake</span>
+                </p>
+            </div>
+        </div>
+        <div class="detail-panel" id="detail-budgie">
+            <div class="detail-inner">
+                <button class="detail-close" onclick="closeDetail('budgie')">&times; Close</button>
+                <h3 style="color: var(--budgie);">Budgie</h3>
+                <p class="detail-tagline">ML Prompt Infrastructure</p>
+                <p class="detail-desc">
+                    A templated prompt pipeline with structured validation for production ML systems. Features version-controlled prompt engineering, A/B testing across model variants, automated quality scoring, and a REST API for integration with downstream services.
+                </p>
+                <p class="detail-tech">
+                    <span>Python</span> · <span>Pydantic</span> · <span>FastAPI</span> · <span>PostgreSQL</span> · <span>LangChain</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Intersection Observer for fade-in elements
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -30px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .grid-card, .infra-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Trigger hero elements immediately
+        setTimeout(() => {
+            document.querySelectorAll('.hero .fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+        }, 200);
+
+        // Inline expand for project cards
+        let openProject = null;
+
+        document.querySelectorAll('.grid-card, .infra-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const project = card.dataset.project;
+                const panel = document.getElementById('detail-' + project);
+                if (!panel) return;
+
+                if (openProject === project) {
+                    closeDetail(project);
+                    return;
+                }
+
+                // Close any open panel
+                if (openProject) {
+                    const prev = document.getElementById('detail-' + openProject);
+                    if (prev) prev.classList.remove('open');
+                    document.querySelectorAll('.grid-card, .infra-card').forEach(c => c.style.outline = 'none');
+                }
+
+                panel.classList.add('open');
+                card.style.outline = '1px solid ' + getComputedStyle(card.querySelector('.card-accent')).backgroundColor;
+                openProject = project;
+
+                // Scroll panel into view
+                setTimeout(() => {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            });
+        });
+
+        function closeDetail(project) {
+            const panel = document.getElementById('detail-' + project);
+            if (panel) panel.classList.remove('open');
+            document.querySelectorAll('.grid-card, .infra-card').forEach(c => c.style.outline = 'none');
+            openProject = null;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Laabs — Portfolio Mockup 03: Brutalist Mono</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0A0A0F;
+            --bg-card: #111118;
+            --bg-elevated: #1A1A24;
+            --text-primary: #E8E8ED;
+            --text-secondary: #8888A0;
+            --text-muted: #55556A;
+            --border-color: #2A2A3A;
+            --border-heavy: #3A3A4A;
+            --accent-amber: #D4A843;
+            --accent-blue: #4A9EF5;
+            --accent-green: #5AF57A;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+            --font-body: 'Inter', -apple-system, sans-serif;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--accent-amber);
+            color: var(--bg-primary);
+        }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--bg-primary);
+            border-bottom: 3px solid var(--border-heavy);
+            padding: 0 2rem;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .nav-logo span {
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0 1rem;
+            transition: color 0s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: none;
+        }
+
+        .nav-links a.active {
+            color: var(--accent-amber);
+        }
+
+        .nav-pipe {
+            color: var(--text-muted);
+            user-select: none;
+        }
+
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 56px 2rem 0;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-prefix {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-prefix span {
+            color: var(--accent-green);
+        }
+
+        .hero-name {
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            line-height: 1.05;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .hero-name::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 4px;
+            background: var(--border-heavy);
+            margin-top: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            font-size: clamp(1rem, 2.2vw, 1.35rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 3rem;
+            min-height: 2em;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-subtitle .prompt {
+            color: var(--accent-green);
+            margin-right: 0.5ch;
+        }
+
+        .hero-subtitle .typed-text {
+            color: var(--text-secondary);
+        }
+
+        .hero-subtitle .cursor {
+            display: inline-block;
+            width: 0.6em;
+            height: 1.2em;
+            background: var(--accent-amber);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 2.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .hero-meta-item .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            display: inline-block;
+        }
+
+        .hero-cta {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 1rem 2rem;
+            border: 3px solid var(--accent-amber);
+            background: transparent;
+            color: var(--accent-amber);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0s;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-amber);
+            color: var(--bg-primary);
+        }
+
+        .btn-secondary {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 1rem 2rem;
+            border: 3px solid var(--border-heavy);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        /* ========================================
+           PROJECTS SECTION
+           ======================================== */
+        .projects {
+            padding: 6rem 2rem 8rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-number {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-primary);
+        }
+
+        .section-line {
+            flex: 1;
+            height: 3px;
+            background: var(--border-heavy);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* ========================================
+           PROJECT CARD
+           ======================================== */
+        .project-card {
+            background: var(--bg-card);
+            border: 3px solid var(--border-heavy);
+            border-top-width: 5px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card--amber {
+            border-top-color: var(--accent-amber);
+        }
+
+        .project-card--blue {
+            border-top-color: var(--accent-blue);
+        }
+
+        .card-header {
+            padding: 2rem 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 0.3rem 0.6rem;
+            border: 2px solid;
+        }
+
+        .card-label--amber {
+            color: var(--accent-amber);
+            border-color: var(--accent-amber);
+        }
+
+        .card-label--blue {
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .card-status {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--accent-green);
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .card-status .pulse {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            animation: pulse-glow 2s step-start infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .card-body {
+            padding: 1.5rem 2rem 0;
+        }
+
+        .card-name {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-tagline {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-weight: 400;
+        }
+
+        .card-description {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-divider {
+            height: 2px;
+            background: var(--border-color);
+            margin: 0 2rem;
+        }
+
+        /* Tech Tags */
+        .card-tags {
+            padding: 1.25rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 0.25rem 0;
+            letter-spacing: 0.05em;
+        }
+
+        .tag::before {
+            content: '[';
+            color: var(--text-muted);
+        }
+
+        .tag::after {
+            content: ']';
+            color: var(--text-muted);
+        }
+
+        .project-card--amber .tag::before,
+        .project-card--amber .tag::after {
+            color: rgba(212, 168, 67, 0.4);
+        }
+
+        .project-card--blue .tag::before,
+        .project-card--blue .tag::after {
+            color: rgba(74, 158, 245, 0.4);
+        }
+
+        .card-divider-thin {
+            height: 1px;
+            background: var(--border-color);
+            margin: 0 2rem;
+        }
+
+        /* Card Footer */
+        .card-footer {
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-link {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0s;
+        }
+
+        .card-link--amber {
+            color: var(--accent-amber);
+        }
+
+        .card-link--blue {
+            color: var(--accent-blue);
+        }
+
+        .card-link:hover {
+            color: var(--text-primary);
+        }
+
+        .card-link .arrow {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .card-meta {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+        }
+
+        /* ========================================
+           MOCKUP BADGE
+           ======================================== */
+        .mockup-badge {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            border: 2px solid var(--border-heavy);
+            padding: 0.5rem 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            z-index: 200;
+        }
+
+        .mockup-badge span {
+            color: var(--accent-amber);
+        }
+
+        /* ========================================
+           SCANLINE OVERLAY (subtle CRT feel)
+           ======================================== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1000;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.03) 2px,
+                rgba(0, 0, 0, 0.03) 4px
+            );
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 860px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-name {
+                letter-spacing: 0.15em;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                padding: 0 1rem;
+            }
+
+            .nav-links a {
+                padding: 0 0.6rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-name {
+                letter-spacing: 0.08em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav>
+        <div class="nav-logo">r<span>/</span>laabs</div>
+        <div class="nav-links">
+            <a href="#" class="active">home</a>
+            <span class="nav-pipe">|</span>
+            <a href="#">projects</a>
+            <span class="nav-pipe">|</span>
+            <a href="#">about</a>
+            <span class="nav-pipe">|</span>
+            <a href="#">resume</a>
+            <span class="nav-pipe">|</span>
+            <a href="#">contact</a>
+        </div>
+    </nav>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero">
+        <div class="hero-prefix"><span>&gt;</span> portfolio.init()</div>
+        <h1 class="hero-name">ROBERT<br>LAABS</h1>
+        <div class="hero-subtitle">
+            <span class="prompt">$</span>
+            <span class="typed-text" id="typed-text"></span><span class="cursor"></span>
+        </div>
+        <div class="hero-meta">
+            <div class="hero-meta-item">
+                <span class="dot"></span>
+                <span>Portland, OR</span>
+            </div>
+            <div class="hero-meta-item">
+                <span class="dot"></span>
+                <span>Available for work</span>
+            </div>
+            <div class="hero-meta-item">
+                <span class="dot"></span>
+                <span>7+ years experience</span>
+            </div>
+        </div>
+        <div class="hero-cta">
+            <a href="#projects" class="btn-primary">View Projects --&gt;</a>
+            <a href="#" class="btn-secondary">Download Resume</a>
+        </div>
+    </section>
+
+    <!-- ========== PROJECTS SECTION ========== -->
+    <section class="projects" id="projects">
+        <div class="section-header">
+            <span class="section-number">// 01</span>
+            <h2 class="section-title">Projects</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="projects-grid">
+
+            <!-- IBIS CARD -->
+            <div class="project-card project-card--amber" id="card-ibis">
+                <div class="card-header">
+                    <span class="card-label card-label--amber">Featured</span>
+                    <span class="card-status"><span class="pulse"></span> Active</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-name">Ibis</h3>
+                    <p class="card-tagline">Enterprise AI Desktop Assistant</p>
+                    <p class="card-description">
+                        A cross-platform desktop application that brings enterprise-grade
+                        AI capabilities to local workflows. Built with a focus on privacy,
+                        performance, and seamless integration with existing tools.
+                    </p>
+                </div>
+                <div class="card-divider"></div>
+                <div class="card-tags">
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">Electron</span>
+                    <span class="tag">React</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">LLM Integration</span>
+                </div>
+                <div class="card-divider-thin"></div>
+                <div class="card-footer">
+                    <a href="#" class="card-link card-link--amber">
+                        View Case Study <span class="arrow">&rarr;</span>
+                    </a>
+                    <span class="card-meta">2024</span>
+                </div>
+            </div>
+
+            <!-- STRIX CARD -->
+            <div class="project-card project-card--blue" id="card-strix">
+                <div class="card-header">
+                    <span class="card-label card-label--blue">Featured</span>
+                    <span class="card-status"><span class="pulse"></span> Active</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-name">Strix</h3>
+                    <p class="card-tagline">Native macOS SQLite Browser</p>
+                    <p class="card-description">
+                        A lightweight, native macOS application for browsing and managing
+                        SQLite databases. Designed for developers who need fast, reliable
+                        access to local data stores without the overhead of heavyweight tools.
+                    </p>
+                </div>
+                <div class="card-divider"></div>
+                <div class="card-tags">
+                    <span class="tag">Swift</span>
+                    <span class="tag">SwiftUI</span>
+                    <span class="tag">SQLite</span>
+                    <span class="tag">macOS</span>
+                    <span class="tag">AppKit</span>
+                </div>
+                <div class="card-divider-thin"></div>
+                <div class="card-footer">
+                    <a href="#" class="card-link card-link--blue">
+                        View Case Study <span class="arrow">&rarr;</span>
+                    </a>
+                    <span class="card-meta">2024</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========== MOCKUP BADGE ========== -->
+    <div class="mockup-badge">Mockup <span>03</span> / 06 &mdash; Brutalist Mono</div>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        // Typewriter effect for hero subtitle
+        (function () {
+            const text = 'Software Engineer & Data Science Leader_';
+            const el = document.getElementById('typed-text');
+            let i = 0;
+
+            function type() {
+                if (i <= text.length) {
+                    el.textContent = text.slice(0, i);
+                    i++;
+                    setTimeout(type, 55 + Math.random() * 35);
+                }
+            }
+
+            // Start after a short delay
+            setTimeout(type, 600);
+        })();
+
+        // Hard snap-in animation for project cards (no easing)
+        (function () {
+            const cards = document.querySelectorAll('.project-card');
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        // Hard snap — instant transition via class toggle
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            cards.forEach(function (card) {
+                observer.observe(card);
+            });
+
+            // Fallback: if cards are already in view on load
+            setTimeout(function () {
+                cards.forEach(function (card) {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight) {
+                        card.classList.add('visible');
+                    }
+                });
+            }, 200);
+        })();
+    </script>
+
+</body>
+</html>

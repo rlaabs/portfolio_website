@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Laabs — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0F;
+            --bg-subtle: #101018;
+            --bg-card: #0E0E16;
+            --text-primary: #E8E8ED;
+            --text-secondary: #8A8A96;
+            --text-muted: #5A5A66;
+            --rule: #1E1E2A;
+            --amber: #D4A843;
+            --blue: #4A9EF5;
+            --terracotta: #C85A3A;
+            --teal: #2EA77A;
+            --mint: #3CC9A8;
+            --purple: #9B7ED8;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ——— Navigation ——— */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ——— Hero Section ——— */
+
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 4rem 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-name {
+            line-height: 0.92;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-name .first {
+            display: block;
+            font-size: clamp(4rem, 7vw, 7rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .hero-name .last {
+            display: block;
+            font-size: clamp(4rem, 7vw, 7rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-right: 8%;
+        }
+
+        .hero-subtitle-block {
+            max-width: 420px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .hero-tagline {
+            font-size: 1.05rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .hero-rule {
+            position: absolute;
+            bottom: 0;
+            left: 4rem;
+            right: 4rem;
+            height: 1px;
+            background: var(--rule);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInHint 1s ease 1.5s forwards;
+        }
+
+        .scroll-line {
+            width: 40px;
+            height: 1px;
+            background: var(--text-muted);
+        }
+
+        @keyframes fadeInHint {
+            to { opacity: 1; }
+        }
+
+        /* ——— Fade-in animations ——— */
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+        }
+
+        .fade-in-delay-1 { transition-delay: 0.15s; }
+        .fade-in-delay-2 { transition-delay: 0.3s; }
+
+        /* ——— Section Header ——— */
+
+        .section-header {
+            padding: 4rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .section-rule {
+            height: 1px;
+            background: var(--rule);
+            margin-bottom: 0;
+        }
+
+        /* ——— Projects Layout: Sticky Index + Scroll Spreads ——— */
+
+        .projects-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4rem;
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        /* Sticky Index (Left Side) */
+        .project-index {
+            width: 280px;
+            min-width: 280px;
+            position: sticky;
+            top: 120px;
+            padding: 3rem 0;
+            z-index: 10;
+        }
+
+        .index-item {
+            display: block;
+            padding: 0.75rem 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: none;
+            background: none;
+            text-align: left;
+            width: 100%;
+            position: relative;
+        }
+
+        .index-number {
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 0.2rem;
+            transition: opacity 0.4s ease;
+        }
+
+        .index-name {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            transition: all 0.4s ease;
+            display: block;
+        }
+
+        .index-type {
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 0.15rem;
+            transition: opacity 0.4s ease;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        /* Default dimmed state */
+        .index-item .index-name {
+            opacity: 0.35;
+        }
+
+        .index-item[data-color="amber"] .index-name { color: var(--amber); }
+        .index-item[data-color="blue"] .index-name { color: var(--blue); }
+        .index-item[data-color="terracotta"] .index-name { color: var(--terracotta); }
+        .index-item[data-color="teal"] .index-name { color: var(--teal); }
+        .index-item[data-color="mint"] .index-name { color: var(--mint); }
+        .index-item[data-color="purple"] .index-name { color: var(--purple); }
+
+        /* Active state */
+        .index-item.active .index-name {
+            opacity: 1;
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+
+        .index-item.active .index-number {
+            opacity: 1;
+        }
+
+        .index-item.active .index-type {
+            opacity: 1;
+            max-height: 2rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Hover (non-active) */
+        .index-item:not(.active):hover .index-name {
+            opacity: 0.7;
+        }
+
+        /* Index accent bar */
+        .index-item::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            transition: height 0.4s ease;
+            border-radius: 2px;
+        }
+
+        .index-item.active::before {
+            height: 80%;
+        }
+
+        .index-item[data-color="amber"]::before { background: var(--amber); }
+        .index-item[data-color="blue"]::before { background: var(--blue); }
+        .index-item[data-color="terracotta"]::before { background: var(--terracotta); }
+        .index-item[data-color="teal"]::before { background: var(--teal); }
+        .index-item[data-color="mint"]::before { background: var(--mint); }
+        .index-item[data-color="purple"]::before { background: var(--purple); }
+
+        /* Scrollable Project Spreads (Right Side) */
+        .project-spreads {
+            flex: 1;
+            padding-left: 4rem;
+            border-left: 1px solid var(--rule);
+        }
+
+        /* ——— Individual Project Spread ——— */
+
+        .project-spread {
+            min-height: 85vh;
+            padding: 5rem 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .project-spread + .project-spread {
+            border-top: 1px solid var(--rule);
+        }
+
+        /* Screenshot Container */
+        .spread-screenshot-container {
+            position: relative;
+            margin-bottom: 2.5rem;
+            width: 100%;
+        }
+
+        .spread-screenshot-main {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-subtle);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                0 12px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        .spread-screenshot-main img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            filter: saturate(0.7) contrast(1.05) brightness(0.95);
+            transition: filter 0.6s ease;
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                black 6%,
+                black 88%,
+                transparent 100%
+            );
+            mask-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                black 6%,
+                black 88%,
+                transparent 100%
+            );
+        }
+
+        .spread-screenshot-main:hover img {
+            filter: saturate(1) contrast(1) brightness(1);
+        }
+
+        /* Accent color overlay on screenshot */
+        .spread-screenshot-main::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            border-radius: 0 0 12px 12px;
+            pointer-events: none;
+            opacity: 0.08;
+        }
+
+        .project-spread[data-color="amber"] .spread-screenshot-main::after {
+            background: linear-gradient(to top, var(--amber), transparent);
+        }
+        .project-spread[data-color="blue"] .spread-screenshot-main::after {
+            background: linear-gradient(to top, var(--blue), transparent);
+        }
+        .project-spread[data-color="terracotta"] .spread-screenshot-main::after {
+            background: linear-gradient(to top, var(--terracotta), transparent);
+        }
+        .project-spread[data-color="teal"] .spread-screenshot-main::after {
+            background: linear-gradient(to top, var(--teal), transparent);
+        }
+        .project-spread[data-color="mint"] .spread-screenshot-main::after {
+            background: linear-gradient(to top, var(--mint), transparent);
+        }
+        .project-spread[data-color="purple"] .spread-screenshot-main::after {
+            background: linear-gradient(to top, var(--purple), transparent);
+        }
+
+        /* Secondary screenshot (offset, angled) */
+        .spread-screenshot-secondary {
+            position: absolute;
+            bottom: -2rem;
+            right: -1.5rem;
+            width: 42%;
+            border-radius: 10px;
+            overflow: hidden;
+            transform: rotate(-2deg);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                0 2px 8px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            background: var(--bg-subtle);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .spread-screenshot-secondary img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            filter: saturate(0.7) contrast(1.05) brightness(0.95);
+            transition: filter 0.6s ease;
+        }
+
+        .spread-screenshot-container:hover .spread-screenshot-secondary img {
+            filter: saturate(1) contrast(1) brightness(1);
+        }
+
+        /* Third screenshot for projects with 3 images */
+        .spread-screenshot-tertiary {
+            position: absolute;
+            top: -1.5rem;
+            right: -1rem;
+            width: 30%;
+            border-radius: 8px;
+            overflow: hidden;
+            transform: rotate(1.5deg);
+            box-shadow:
+                0 6px 24px rgba(0, 0, 0, 0.45),
+                0 2px 6px rgba(0, 0, 0, 0.25);
+            z-index: 1;
+            background: var(--bg-subtle);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .spread-screenshot-tertiary img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            filter: saturate(0.7) contrast(1.05) brightness(0.95);
+            transition: filter 0.6s ease;
+        }
+
+        .spread-screenshot-container:hover .spread-screenshot-tertiary img {
+            filter: saturate(1) contrast(1) brightness(1);
+        }
+
+        /* Budgie: architecture diagram with grid pattern */
+        .spread-architecture {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-subtle);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                0 12px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        .spread-architecture::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(155, 126, 216, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(155, 126, 216, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .spread-architecture img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            filter: saturate(0.7) contrast(1.05) brightness(0.95);
+            transition: filter 0.6s ease;
+            position: relative;
+            z-index: 1;
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                black 6%,
+                black 88%,
+                transparent 100%
+            );
+            mask-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                black 6%,
+                black 88%,
+                transparent 100%
+            );
+        }
+
+        .spread-architecture:hover img {
+            filter: saturate(1) contrast(1) brightness(1);
+        }
+
+        .spread-architecture::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            border-radius: 0 0 12px 12px;
+            pointer-events: none;
+            opacity: 0.08;
+            background: linear-gradient(to top, var(--purple), transparent);
+            z-index: 2;
+        }
+
+        /* Project Info */
+        .spread-info {
+            padding-right: 2rem;
+        }
+
+        .spread-name {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 0.4rem;
+        }
+
+        .project-spread[data-color="amber"] .spread-name { color: var(--amber); }
+        .project-spread[data-color="blue"] .spread-name { color: var(--blue); }
+        .project-spread[data-color="terracotta"] .spread-name { color: var(--terracotta); }
+        .project-spread[data-color="teal"] .spread-name { color: var(--teal); }
+        .project-spread[data-color="mint"] .spread-name { color: var(--mint); }
+        .project-spread[data-color="purple"] .spread-name { color: var(--purple); }
+
+        .spread-tagline {
+            font-size: 1.05rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .spread-description {
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+        }
+
+        .spread-tech {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .spread-tech span {
+            color: var(--text-secondary);
+        }
+
+        /* ——— Footer ——— */
+
+        .footer {
+            padding: 4rem 4rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-rule {
+            height: 1px;
+            background: var(--rule);
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* ——— Mobile: Horizontal Tab Bar ——— */
+
+        @media (max-width: 900px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            nav .nav-links {
+                gap: 2rem;
+            }
+
+            .hero {
+                padding: 6rem 2rem 3rem;
+                min-height: auto;
+            }
+
+            .hero-name .first,
+            .hero-name .last {
+                font-size: clamp(3rem, 10vw, 5rem);
+            }
+
+            .hero-subtitle-area {
+                justify-content: flex-start;
+                padding-right: 0;
+                padding-left: 5%;
+            }
+
+            .hero-rule {
+                left: 2rem;
+                right: 2rem;
+            }
+
+            .section-header {
+                padding: 3rem 2rem 0;
+            }
+
+            .projects-container {
+                flex-direction: column;
+                padding: 0 2rem;
+            }
+
+            /* Index becomes horizontal tab bar */
+            .project-index {
+                width: 100%;
+                min-width: unset;
+                position: sticky;
+                top: 70px;
+                padding: 0;
+                display: flex;
+                overflow-x: auto;
+                gap: 0;
+                background: var(--bg);
+                z-index: 50;
+                border-bottom: 1px solid var(--rule);
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .project-index::-webkit-scrollbar {
+                display: none;
+            }
+
+            .index-item {
+                padding: 1rem 1.2rem;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .index-item::before {
+                left: 50%;
+                transform: translateX(-50%);
+                top: unset;
+                bottom: 0;
+                width: 0;
+                height: 3px;
+            }
+
+            .index-item.active::before {
+                width: 80%;
+                height: 3px;
+            }
+
+            .index-number {
+                display: none;
+            }
+
+            .index-item .index-name {
+                font-size: 0.85rem;
+            }
+
+            .index-item.active .index-name {
+                font-size: 1rem;
+            }
+
+            .index-item .index-type {
+                display: none;
+            }
+
+            .index-item.active .index-type {
+                display: none;
+            }
+
+            .project-spreads {
+                padding-left: 0;
+                border-left: none;
+            }
+
+            .project-spread {
+                min-height: auto;
+                padding: 3rem 0;
+            }
+
+            .spread-screenshot-secondary {
+                right: -0.5rem;
+                width: 45%;
+            }
+
+            .spread-screenshot-tertiary {
+                right: -0.5rem;
+                width: 32%;
+            }
+
+            .spread-info {
+                padding-right: 0;
+            }
+
+            .scroll-hint {
+                left: 2rem;
+            }
+
+            .footer {
+                padding: 3rem 2rem 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav .nav-links {
+                gap: 1.5rem;
+            }
+
+            nav .nav-links a {
+                font-size: 0.7rem;
+            }
+
+            .hero-name .first,
+            .hero-name .last {
+                font-size: clamp(2.5rem, 12vw, 4rem);
+            }
+
+            .index-item {
+                padding: 0.8rem 1rem;
+            }
+
+            .index-item .index-name {
+                font-size: 0.75rem;
+            }
+
+            .index-item.active .index-name {
+                font-size: 0.85rem;
+            }
+
+            .spread-name {
+                font-size: 1.5rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">RL</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-name">
+                <span class="first fade-in">Robert</span>
+                <span class="last fade-in fade-in-delay-1">Laabs</span>
+            </div>
+            <div class="hero-subtitle-area fade-in fade-in-delay-2">
+                <div class="hero-subtitle-block">
+                    <p class="hero-subtitle">Software Engineer</p>
+                    <p class="hero-tagline">Building production tools that ship — from desktop apps to ML infrastructure</p>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <span class="scroll-line"></span>
+            Scroll
+        </div>
+        <div class="hero-rule"></div>
+    </section>
+
+    <!-- Projects Section -->
+    <div class="section-header" id="work">
+        <p class="section-label fade-in">Selected Work</p>
+        <div class="section-rule"></div>
+    </div>
+
+    <section class="projects-container">
+
+        <!-- Sticky Index (Left) -->
+        <aside class="project-index" role="tablist" aria-label="Project navigation">
+            <button class="index-item active" data-color="amber" data-target="spread-ibis" role="tab" aria-selected="true">
+                <span class="index-number">01</span>
+                <span class="index-name">Ibis</span>
+                <span class="index-type">Desktop App</span>
+            </button>
+            <button class="index-item" data-color="blue" data-target="spread-strix" role="tab" aria-selected="false">
+                <span class="index-number">02</span>
+                <span class="index-name">Strix</span>
+                <span class="index-type">macOS App</span>
+            </button>
+            <button class="index-item" data-color="terracotta" data-target="spread-sparrow" role="tab" aria-selected="false">
+                <span class="index-number">03</span>
+                <span class="index-name">Sparrow</span>
+                <span class="index-type">Web Platform</span>
+            </button>
+            <button class="index-item" data-color="teal" data-target="spread-magpie" role="tab" aria-selected="false">
+                <span class="index-number">04</span>
+                <span class="index-name">Magpie</span>
+                <span class="index-type">Web Platform</span>
+            </button>
+            <button class="index-item" data-color="mint" data-target="spread-mallard" role="tab" aria-selected="false">
+                <span class="index-number">05</span>
+                <span class="index-name">Mallard</span>
+                <span class="index-type">Web Platform</span>
+            </button>
+            <button class="index-item" data-color="purple" data-target="spread-budgie" role="tab" aria-selected="false">
+                <span class="index-number">06</span>
+                <span class="index-name">Budgie</span>
+                <span class="index-type">ML Framework</span>
+            </button>
+        </aside>
+
+        <!-- Scrollable Project Spreads (Right) -->
+        <div class="project-spreads">
+
+            <!-- 01 Ibis -->
+            <article class="project-spread" id="spread-ibis" data-color="amber">
+                <div class="spread-screenshot-container">
+                    <div class="spread-screenshot-main">
+                        <img src="sample-screenshots/ibis-hero.png" alt="Ibis — Enterprise AI Desktop Assistant main interface" loading="lazy">
+                    </div>
+                    <div class="spread-screenshot-secondary">
+                        <img src="sample-screenshots/ibis-02.png" alt="Ibis — conversation view" loading="lazy">
+                    </div>
+                    <div class="spread-screenshot-tertiary">
+                        <img src="sample-screenshots/ibis-03.png" alt="Ibis — settings panel" loading="lazy">
+                    </div>
+                </div>
+                <div class="spread-info">
+                    <h2 class="spread-name">Ibis</h2>
+                    <p class="spread-tagline">Enterprise AI Desktop Assistant</p>
+                    <p class="spread-description">
+                        A cross-platform desktop application providing enterprise-grade AI capabilities for professional workflows. Built on Electron with a React frontend and Python backend, prioritizing privacy, speed, and deep system integration.
+                    </p>
+                    <p class="spread-tech">
+                        <span>TypeScript</span> &middot; <span>Electron</span> &middot; <span>React</span> &middot; <span>Python</span>
+                    </p>
+                </div>
+            </article>
+
+            <!-- 02 Strix -->
+            <article class="project-spread" id="spread-strix" data-color="blue">
+                <div class="spread-screenshot-container">
+                    <div class="spread-screenshot-main">
+                        <img src="sample-screenshots/strix-hero.png" alt="Strix — Native macOS SQLite Browser main view" loading="lazy">
+                    </div>
+                    <div class="spread-screenshot-secondary">
+                        <img src="sample-screenshots/strix-02.png" alt="Strix — table browsing view" loading="lazy">
+                    </div>
+                    <div class="spread-screenshot-tertiary">
+                        <img src="sample-screenshots/strix-03.png" alt="Strix — query editor" loading="lazy">
+                    </div>
+                </div>
+                <div class="spread-info">
+                    <h2 class="spread-name">Strix</h2>
+                    <p class="spread-tagline">Native macOS SQLite Browser</p>
+                    <p class="spread-description">
+                        A fast, native macOS application for browsing and managing SQLite databases. Built entirely in Swift with SwiftUI, designed around performance and a clean, distraction-free interface with full drag-and-drop and Spotlight integration.
+                    </p>
+                    <p class="spread-tech">
+                        <span>Swift</span> &middot; <span>SwiftUI</span> &middot; <span>GRDB</span> &middot; <span>AppKit</span>
+                    </p>
+                </div>
+            </article>
+
+            <!-- 03 Sparrow -->
+            <article class="project-spread" id="spread-sparrow" data-color="terracotta">
+                <div class="spread-screenshot-container">
+                    <div class="spread-screenshot-main">
+                        <img src="sample-screenshots/sparrow-hero.png" alt="Sparrow — AI Market Research Platform interface" loading="lazy">
+                    </div>
+                </div>
+                <div class="spread-info">
+                    <h2 class="spread-name">Sparrow</h2>
+                    <p class="spread-tagline">AI Market Research Platform</p>
+                    <p class="spread-description">
+                        A web platform that leverages generative AI to automate and enhance market research workflows. Automated competitor analysis, AI-powered report generation with citations, and customizable research templates built on Django with Google's GenAI APIs.
+                    </p>
+                    <p class="spread-tech">
+                        <span>Python</span> &middot; <span>Django</span> &middot; <span>Google GenAI</span> &middot; <span>Docker</span>
+                    </p>
+                </div>
+            </article>
+
+            <!-- 04 Magpie -->
+            <article class="project-spread" id="spread-magpie" data-color="teal">
+                <div class="spread-screenshot-container">
+                    <div class="spread-screenshot-main">
+                        <img src="sample-screenshots/magpie-hero.png" alt="Magpie — Survey Response Quality Analyzer dashboard" loading="lazy">
+                    </div>
+                </div>
+                <div class="spread-info">
+                    <h2 class="spread-name">Magpie</h2>
+                    <p class="spread-tagline">Survey Response Quality Analyzer</p>
+                    <p class="spread-description">
+                        An intelligent platform that uses AI to evaluate and score survey response quality, identifying low-effort, inconsistent, or fraudulent responses. Polars-based data pipeline handles large datasets with configurable quality thresholds.
+                    </p>
+                    <p class="spread-tech">
+                        <span>Python</span> &middot; <span>Django</span> &middot; <span>OpenAI</span> &middot; <span>Polars</span>
+                    </p>
+                </div>
+            </article>
+
+            <!-- 05 Mallard -->
+            <article class="project-spread" id="spread-mallard" data-color="mint">
+                <div class="spread-screenshot-container">
+                    <div class="spread-screenshot-main">
+                        <img src="sample-screenshots/mallard-hero.png" alt="Mallard — Behavioral Analytics Platform with data visualization" loading="lazy">
+                    </div>
+                </div>
+                <div class="spread-info">
+                    <h2 class="spread-name">Mallard</h2>
+                    <p class="spread-tagline">Behavioral Analytics Platform</p>
+                    <p class="spread-description">
+                        A scalable behavioral analytics platform processing large volumes of user interaction data. Spark-powered behavioral segmentation with a custom dashboard builder, deployed on AWS infrastructure with auto-scaling.
+                    </p>
+                    <p class="spread-tech">
+                        <span>Python</span> &middot; <span>Django</span> &middot; <span>Spark</span> &middot; <span>AWS</span>
+                    </p>
+                </div>
+            </article>
+
+            <!-- 06 Budgie (Architecture Diagram) -->
+            <article class="project-spread" id="spread-budgie" data-color="purple">
+                <div class="spread-screenshot-container">
+                    <div class="spread-architecture">
+                        <img src="sample-screenshots/budgie-hero.png" alt="Budgie — Synthetic Data Generation Framework architecture diagram" loading="lazy">
+                    </div>
+                </div>
+                <div class="spread-info">
+                    <h2 class="spread-name">Budgie</h2>
+                    <p class="spread-tagline">Synthetic Data Generation Framework</p>
+                    <p class="spread-description">
+                        A Python framework for generating high-quality synthetic datasets using LLMs. Schema-first design with Pydantic models, async pipeline with configurable concurrency, and automatic validation with retry logic for malformed output. Pluggable LLM backends with cost tracking.
+                    </p>
+                    <p class="spread-tech">
+                        <span>Python</span> &middot; <span>asyncio</span> &middot; <span>OpenAI</span> &middot; <span>Pydantic</span>
+                    </p>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-rule"></div>
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2026 Robert Laabs</p>
+            <ul class="footer-links">
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Email</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        // ——— Intersection Observer: update sticky index on scroll ———
+        const spreads = document.querySelectorAll('.project-spread');
+        const indexItems = document.querySelectorAll('.index-item');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-30% 0px -30% 0px',
+            threshold: 0
+        };
+
+        let currentActive = null;
+
+        const spreadObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    setActiveIndex(id);
+                }
+            });
+        }, observerOptions);
+
+        spreads.forEach(spread => {
+            spreadObserver.observe(spread);
+        });
+
+        function setActiveIndex(spreadId) {
+            if (currentActive === spreadId) return;
+            currentActive = spreadId;
+
+            indexItems.forEach(item => {
+                const isActive = item.dataset.target === spreadId;
+                item.classList.toggle('active', isActive);
+                item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+
+            // On mobile, scroll the active tab into view
+            const activeTab = document.querySelector('.index-item.active');
+            if (activeTab && window.innerWidth <= 900) {
+                activeTab.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            }
+        }
+
+        // ——— Click to scroll ———
+        indexItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.dataset.target;
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ——— Fade-in observer for hero elements ———
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    fadeObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            fadeObserver.observe(el);
+        });
+
+        // Trigger hero elements after short delay
+        setTimeout(() => {
+            document.querySelectorAll('.hero .fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+        }, 200);
+    </script>
+
+</body>
+</html>

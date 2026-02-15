@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Laabs — Portfolio (Layered Depth)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ── Noise texture overlay ── */
+        html {
+            --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0A0F;
+            color: #E0DFE4;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-weight: 400;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Noise layer that covers everything ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: var(--noise);
+            background-size: 200px 200px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.55;
+            mix-blend-mode: overlay;
+        }
+
+        /* ── Depth layers ── */
+        .layer-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            will-change: transform;
+        }
+
+        .layer-mid {
+            position: relative;
+            z-index: 1;
+            will-change: transform;
+        }
+
+        .layer-fg {
+            position: relative;
+            z-index: 2;
+            will-change: transform;
+        }
+
+        /* ── Background atmospheric elements ── */
+        .bg-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 620px;
+            height: 620px;
+            transform: translate(-50%, -50%);
+            border: 1.5px solid rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .bg-ring-2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 480px;
+            height: 480px;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .bg-ring-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 550px;
+            height: 550px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(255,255,255,0.015) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* subtle floating shapes in background */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.025;
+        }
+
+        .bg-shape-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            right: 10%;
+            background: #D4A843;
+            filter: blur(80px);
+        }
+
+        .bg-shape-2 {
+            width: 250px;
+            height: 250px;
+            bottom: 20%;
+            left: 8%;
+            background: #4A9EF5;
+            filter: blur(80px);
+        }
+
+        /* ── Floating Nav ── */
+        nav {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            padding: 14px 32px;
+            background: rgba(14, 14, 20, 0.7);
+            backdrop-filter: blur(20px) saturate(1.2);
+            -webkit-backdrop-filter: blur(20px) saturate(1.2);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                0 1px 4px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-logo {
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: -0.01em;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 13px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-links a:hover {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            overflow: hidden;
+        }
+
+        .hero-ring-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 7vw, 88px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            color: #fff;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease-out 0.2s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 2vw, 20px);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease-out 0.5s forwards;
+        }
+
+        .hero-tagline {
+            font-size: clamp(15px, 1.6vw, 18px);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 520px;
+            line-height: 1.7;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease-out 0.7s forwards;
+        }
+
+        .hero-scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease-out 1.2s forwards;
+        }
+
+        .hero-scroll-hint span {
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 32px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        /* ── Projects Section ── */
+        .projects {
+            position: relative;
+            padding: 40px 24px 120px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            margin-bottom: 64px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .section-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 56px;
+            align-items: center;
+        }
+
+        /* ── Project Card ── */
+        .project-card {
+            position: relative;
+            width: 100%;
+            max-width: 740px;
+            background: linear-gradient(
+                165deg,
+                rgba(22, 22, 30, 0.95) 0%,
+                rgba(16, 16, 22, 0.98) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 44px 48px;
+            cursor: default;
+            transition:
+                transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+            /* Layered shadow — the "lifted paper" look */
+            box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.2),
+                0 4px 8px rgba(0, 0, 0, 0.18),
+                0 12px 24px rgba(0, 0, 0, 0.16),
+                0 24px 48px rgba(0, 0, 0, 0.12);
+
+            opacity: 0;
+            transform: translateY(40px);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                        box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                        opacity 0.8s ease-out;
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Alternate card rotation */
+        .project-card:nth-child(odd).visible {
+            transform: rotate(-1.2deg);
+        }
+
+        .project-card:nth-child(even).visible {
+            transform: rotate(1.2deg);
+        }
+
+        .project-card:hover {
+            transform: rotate(0deg) translateY(-6px) !important;
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.22),
+                0 8px 16px rgba(0, 0, 0, 0.2),
+                0 20px 40px rgba(0, 0, 0, 0.18),
+                0 40px 80px rgba(0, 0, 0, 0.14),
+                0 60px 100px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Subtle accent glow on card top edge */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 32px;
+            right: 32px;
+            height: 1px;
+            border-radius: 1px;
+            opacity: 0.5;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card:hover::before {
+            opacity: 0.8;
+        }
+
+        .project-card.card-ibis::before {
+            background: linear-gradient(90deg, transparent, #D4A843, transparent);
+        }
+
+        .project-card.card-strix::before {
+            background: linear-gradient(90deg, transparent, #4A9EF5, transparent);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .card-ibis .card-icon {
+            background: rgba(212, 168, 67, 0.1);
+            border: 1px solid rgba(212, 168, 67, 0.15);
+            color: #D4A843;
+        }
+
+        .card-strix .card-icon {
+            background: rgba(74, 158, 245, 0.1);
+            border: 1px solid rgba(74, 158, 245, 0.15);
+            color: #4A9EF5;
+        }
+
+        .card-status {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 5px 12px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .card-title {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .card-tagline {
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .card-ibis .card-tagline { color: rgba(212, 168, 67, 0.7); }
+        .card-strix .card-tagline { color: rgba(74, 158, 245, 0.7); }
+
+        .card-description {
+            font-size: 14.5px;
+            font-weight: 300;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 28px;
+            max-width: 580px;
+        }
+
+        /* ── Tech Tags (recessed) ── */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 6px;
+            color: rgba(255, 255, 255, 0.4);
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow:
+                inset 0 1px 3px rgba(0, 0, 0, 0.3),
+                inset 0 0px 1px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.01em;
+        }
+
+        .card-ibis .tech-tag {
+            background: rgba(212, 168, 67, 0.04);
+            border-color: rgba(212, 168, 67, 0.06);
+            box-shadow:
+                inset 0 1px 3px rgba(0, 0, 0, 0.3),
+                inset 0 0px 1px rgba(212, 168, 67, 0.05);
+        }
+
+        .card-strix .tech-tag {
+            background: rgba(74, 158, 245, 0.04);
+            border-color: rgba(74, 158, 245, 0.06);
+            box-shadow:
+                inset 0 1px 3px rgba(0, 0, 0, 0.3),
+                inset 0 0px 1px rgba(74, 158, 245, 0.05);
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(1); }
+            50% { opacity: 0.8; transform: scaleY(1.2); }
+        }
+
+        /* ── Mockup badge ── */
+        .mockup-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 8px 16px;
+            background: rgba(14, 14, 20, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .mockup-badge strong {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            nav {
+                gap: 20px;
+                padding: 12px 20px;
+            }
+            .nav-links { gap: 16px; }
+            .project-card { padding: 32px 28px; }
+            .card-title { font-size: 22px; }
+            .bg-ring { width: 360px; height: 360px; }
+            .bg-ring-2 { width: 280px; height: 280px; }
+            .bg-ring-glow { width: 320px; height: 320px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Background Layer ── -->
+    <div class="layer-bg" data-parallax-speed="0.02">
+        <div class="hero-ring-container">
+            <div class="bg-ring"></div>
+            <div class="bg-ring-2"></div>
+            <div class="bg-ring-glow"></div>
+        </div>
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+    </div>
+
+    <!-- ── Nav ── -->
+    <nav>
+        <div class="nav-logo">RL</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── Hero (Foreground Layer) ── -->
+    <section class="hero">
+        <div class="layer-fg" data-parallax-speed="-0.05">
+            <div class="hero-subtitle">Software Engineer</div>
+            <h1 class="hero-title">Robert Laabs</h1>
+            <p class="hero-tagline">Building production tools that ship&thinsp;&mdash;&thinsp;from desktop apps to ML infrastructure</p>
+        </div>
+        <div class="hero-scroll-hint">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ── Projects (Mid Layer) ── -->
+    <section class="projects layer-mid" data-parallax-speed="-0.03">
+        <div class="section-label" id="work">Selected Projects</div>
+
+        <div class="cards-container">
+
+            <!-- Ibis Card -->
+            <article class="project-card card-ibis">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div class="card-status">Production</div>
+                </div>
+                <h2 class="card-title">Ibis</h2>
+                <p class="card-tagline">Enterprise AI Desktop Assistant</p>
+                <p class="card-description">
+                    A cross-platform desktop application providing enterprise teams with a private, secure AI assistant. Features local model inference, document analysis, and seamless integration with internal knowledge bases.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Electron</span>
+                    <span class="tech-tag">TypeScript</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">LLM Integration</span>
+                    <span class="tech-tag">SQLite</span>
+                </div>
+            </article>
+
+            <!-- Strix Card -->
+            <article class="project-card card-strix">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="12" rx="10" ry="6"/>
+                            <path d="M12 6v12"/>
+                            <path d="M6 12h12"/>
+                        </svg>
+                    </div>
+                    <div class="card-status">Active</div>
+                </div>
+                <h2 class="card-title">Strix</h2>
+                <p class="card-tagline">Native macOS SQLite Browser</p>
+                <p class="card-description">
+                    A fast, native macOS application for browsing and querying SQLite databases. Built with SwiftUI for a truly native feel, featuring syntax-highlighted SQL editing, visual schema exploration, and instant full-text search.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Swift</span>
+                    <span class="tech-tag">SwiftUI</span>
+                    <span class="tech-tag">SQLite</span>
+                    <span class="tech-tag">AppKit</span>
+                    <span class="tech-tag">GRDB</span>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- ── Mockup Badge ── -->
+    <div class="mockup-badge">Mockup <strong>6 / 6</strong> &mdash; Layered Depth</div>
+
+    <!-- ── JavaScript: Parallax + Scroll Reveal ── -->
+    <script>
+        (function () {
+            // ── Scroll-driven parallax ──
+            const parallaxEls = document.querySelectorAll('[data-parallax-speed]');
+            let scrollY = 0;
+            let ticking = false;
+
+            function updateParallax() {
+                parallaxEls.forEach(el => {
+                    const speed = parseFloat(el.dataset.parallaxSpeed);
+                    el.style.transform = `translateY(${scrollY * speed}px)`;
+                });
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                scrollY = window.pageYOffset;
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            // ── Intersection Observer for scroll reveal ──
+            const revealEls = document.querySelectorAll('.project-card, .section-label');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            revealEls.forEach(el => observer.observe(el));
+        })();
+    </script>
+</body>
+</html>

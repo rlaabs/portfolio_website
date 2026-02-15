@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Laabs — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0F;
+            --bg-subtle: #101018;
+            --text-primary: #E8E8ED;
+            --text-secondary: #8A8A96;
+            --text-muted: #5A5A66;
+            --rule: #1E1E2A;
+            --amber: #D4A843;
+            --blue: #4A9EF5;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ——— Navigation ——— */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ——— Hero Section ——— */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-name {
+            line-height: 0.92;
+            margin-bottom: 3rem;
+        }
+
+        .hero-name .first {
+            display: block;
+            font-size: clamp(4rem, 8vw, 8rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .hero-name .last {
+            display: block;
+            font-size: clamp(4rem, 8vw, 8rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2.5rem;
+            padding-right: 8%;
+        }
+
+        .hero-subtitle-block {
+            max-width: 420px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+            font-variant: small-caps;
+        }
+
+        .hero-tagline {
+            font-size: 1.05rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .hero-rule {
+            position: absolute;
+            bottom: 0;
+            left: 4rem;
+            right: 4rem;
+            height: 1px;
+            background: var(--rule);
+        }
+
+        /* ——— Section Divider ——— */
+
+        .section-header {
+            padding: 4rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .section-rule {
+            height: 1px;
+            background: var(--rule);
+            margin-bottom: 5rem;
+        }
+
+        /* ——— Project Cards ——— */
+
+        .projects {
+            padding: 5rem 4rem 8rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            gap: 0;
+            margin-bottom: 6rem;
+            min-height: 440px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .project-card.visible {
+            opacity: 1;
+        }
+
+        .project-card:nth-child(even) {
+            grid-template-columns: 40% 60%;
+        }
+
+        .project-card:nth-child(even) .project-image {
+            order: 2;
+        }
+
+        .project-card:nth-child(even) .project-info {
+            order: 1;
+            padding-right: 4rem;
+            padding-left: 0;
+        }
+
+        .project-image {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-image-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+        }
+
+        /* Ibis placeholder */
+        .project-card:nth-child(1) .project-image {
+            border-bottom: 2px solid var(--amber);
+        }
+
+        .project-card:nth-child(1) .project-image-inner {
+            background: linear-gradient(145deg, #0E0E16 0%, #141420 100%);
+        }
+
+        /* Strix placeholder */
+        .project-card:nth-child(2) .project-image {
+            border-bottom: 2px solid var(--blue);
+        }
+
+        .project-card:nth-child(2) .project-image-inner {
+            background: linear-gradient(145deg, #0C0C18 0%, #10101E 100%);
+        }
+
+        .placeholder-icon {
+            opacity: 0.12;
+        }
+
+        .project-info {
+            padding: 3rem 0 3rem 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .project-number {
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 0.6rem;
+        }
+
+        .project-card:nth-child(1) .project-title {
+            color: var(--amber);
+        }
+
+        .project-card:nth-child(2) .project-title {
+            color: var(--blue);
+        }
+
+        .project-tagline {
+            font-size: 1rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .project-description {
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 380px;
+        }
+
+        .project-tech {
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .project-tech span {
+            color: var(--text-secondary);
+        }
+
+        .project-divider {
+            height: 1px;
+            background: var(--rule);
+            max-width: 1400px;
+            margin: 0 auto 6rem;
+        }
+
+        /* ——— Scroll indicator ——— */
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 3rem;
+            left: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInHint 1s ease 1.5s forwards;
+        }
+
+        .scroll-line {
+            width: 40px;
+            height: 1px;
+            background: var(--text-muted);
+        }
+
+        @keyframes fadeInHint {
+            to { opacity: 1; }
+        }
+
+        /* ——— Fade-in animations ——— */
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+        }
+
+        .fade-in-delay-1 { transition-delay: 0.15s; }
+        .fade-in-delay-2 { transition-delay: 0.3s; }
+        .fade-in-delay-3 { transition-delay: 0.5s; }
+        .fade-in-delay-4 { transition-delay: 0.7s; }
+
+        /* ——— Responsive ——— */
+
+        @media (max-width: 900px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            nav .nav-links {
+                gap: 2rem;
+            }
+
+            .hero {
+                padding: 0 2rem;
+            }
+
+            .hero-name .first,
+            .hero-name .last {
+                font-size: clamp(3rem, 10vw, 5rem);
+            }
+
+            .hero-subtitle-area {
+                justify-content: flex-start;
+                padding-right: 0;
+                padding-left: 5%;
+            }
+
+            .hero-rule {
+                left: 2rem;
+                right: 2rem;
+            }
+
+            .projects {
+                padding: 4rem 2rem 6rem;
+            }
+
+            .project-card,
+            .project-card:nth-child(even) {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .project-card:nth-child(even) .project-image {
+                order: 0;
+            }
+
+            .project-card:nth-child(even) .project-info {
+                order: 0;
+                padding-right: 0;
+                padding-left: 0;
+            }
+
+            .project-image {
+                min-height: 260px;
+            }
+
+            .project-info {
+                padding: 2.5rem 0;
+            }
+
+            .section-header {
+                padding: 3rem 2rem 0;
+            }
+
+            .scroll-hint {
+                left: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav .nav-links {
+                gap: 1.5rem;
+            }
+
+            nav .nav-links a {
+                font-size: 0.7rem;
+            }
+
+            .hero-name .first,
+            .hero-name .last {
+                font-size: clamp(2.5rem, 12vw, 4rem);
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">RL</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-name">
+                <span class="first fade-in">Robert</span>
+                <span class="last fade-in fade-in-delay-1">Laabs</span>
+            </div>
+            <div class="hero-subtitle-area fade-in fade-in-delay-2">
+                <div class="hero-subtitle-block">
+                    <p class="hero-subtitle">Software Engineer</p>
+                    <p class="hero-tagline">Building production tools that ship — from desktop apps to ML infrastructure</p>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <span class="scroll-line"></span>
+            Scroll
+        </div>
+        <div class="hero-rule"></div>
+    </section>
+
+    <!-- Projects Section -->
+    <div class="section-header">
+        <p class="section-label fade-in">Selected Work</p>
+        <div class="section-rule"></div>
+    </div>
+
+    <section class="projects" id="work">
+
+        <!-- Ibis Card -->
+        <article class="project-card">
+            <div class="project-image">
+                <div class="project-image-inner">
+                    <svg class="placeholder-icon" width="120" height="120" viewBox="0 0 120 120" fill="none">
+                        <rect x="20" y="30" width="80" height="60" rx="6" stroke="#D4A843" stroke-width="1.5"/>
+                        <circle cx="45" cy="52" r="8" stroke="#D4A843" stroke-width="1.2"/>
+                        <path d="M20 75 L45 58 L65 70 L80 60 L100 75" stroke="#D4A843" stroke-width="1.2" fill="none"/>
+                        <rect x="35" y="14" width="50" height="8" rx="2" stroke="#D4A843" stroke-width="1"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="project-info">
+                <p class="project-number">01</p>
+                <h2 class="project-title">Ibis</h2>
+                <p class="project-tagline">Enterprise AI Desktop Assistant</p>
+                <p class="project-description">
+                    A native desktop application bringing enterprise-grade AI capabilities to professional workflows, with a focus on privacy, speed, and seamless system integration.
+                </p>
+                <p class="project-tech">
+                    <span>Swift</span> · <span>Core ML</span> · <span>SwiftUI</span> · <span>Python</span>
+                </p>
+            </div>
+        </article>
+
+        <div class="project-divider"></div>
+
+        <!-- Strix Card -->
+        <article class="project-card">
+            <div class="project-image">
+                <div class="project-image-inner">
+                    <svg class="placeholder-icon" width="120" height="120" viewBox="0 0 120 120" fill="none">
+                        <rect x="15" y="25" width="90" height="70" rx="6" stroke="#4A9EF5" stroke-width="1.5"/>
+                        <line x1="15" y1="42" x2="105" y2="42" stroke="#4A9EF5" stroke-width="1"/>
+                        <line x1="50" y1="42" x2="50" y2="95" stroke="#4A9EF5" stroke-width="1"/>
+                        <rect x="55" y="48" width="44" height="6" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="55" y="60" width="44" height="6" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="55" y="72" width="44" height="6" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="21" y="48" width="24" height="4" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="21" y="57" width="24" height="4" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                        <rect x="21" y="66" width="24" height="4" rx="1" stroke="#4A9EF5" stroke-width="0.8"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="project-info">
+                <p class="project-number">02</p>
+                <h2 class="project-title">Strix</h2>
+                <p class="project-tagline">Native macOS SQLite Browser</p>
+                <p class="project-description">
+                    A fast, native macOS application for browsing and managing SQLite databases, built with performance and a clean interface at its core.
+                </p>
+                <p class="project-tech">
+                    <span>Swift</span> · <span>AppKit</span> · <span>SQLite</span> · <span>Core Data</span>
+                </p>
+            </div>
+        </article>
+
+    </section>
+
+    <script>
+        // Intersection Observer for fade-in elements
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements and project cards
+        document.querySelectorAll('.fade-in, .project-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Trigger hero elements immediately after short delay
+        setTimeout(() => {
+            document.querySelectorAll('.hero .fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+        }, 200);
+    </script>
+
+</body>
+</html>

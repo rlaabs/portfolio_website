@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Laabs — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #1A0A0A;
+            --bg-deep: #120606;
+            --bg-field: #2A0E0E;
+            --bg-card: #1E0909;
+            --text-primary: #E8E0D8;
+            --text-secondary: #9A8E84;
+            --text-muted: #6A5E54;
+            --zip: #C83030;
+            --zip-glow: rgba(200, 48, 48, 0.4);
+            --zip-subtle: rgba(200, 48, 48, 0.15);
+            --rule: #3A1818;
+            --amber: #D4A843;
+            --blue: #4A9EF5;
+            --terracotta: #C85A3A;
+            --teal: #2EA77A;
+            --mint: #3CC9A8;
+            --purple: #9B7ED8;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ——— Zip Line Utility ——— */
+
+        .zip {
+            position: absolute;
+            width: 2px;
+            background: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow), 0 0 20px var(--zip-subtle);
+            transition: box-shadow 0.6s ease, background 0.6s ease;
+        }
+
+        .zip:hover {
+            box-shadow: 0 0 14px var(--zip-glow), 0 0 40px var(--zip-subtle);
+        }
+
+        .zip-h {
+            position: absolute;
+            height: 2px;
+            background: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow), 0 0 20px var(--zip-subtle);
+        }
+
+        /* ——— Navigation ——— */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.8rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        nav .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            list-style: none;
+        }
+
+        nav .nav-links li {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .nav-links li:not(:last-child)::after {
+            content: '';
+            display: inline-block;
+            width: 2px;
+            height: 18px;
+            background: var(--zip);
+            box-shadow: 0 0 6px var(--zip-glow);
+            margin: 0 2rem;
+        }
+
+        nav .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ——— Hero Section ——— */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: var(--bg-field);
+            overflow: hidden;
+        }
+
+        /* Ambient color field layers */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 30% 40%, rgba(200, 48, 48, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(42, 14, 14, 0.6) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero-name {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 3rem;
+        }
+
+        .hero-name .first {
+            display: block;
+            font-size: clamp(5rem, 10vw, 10rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            line-height: 1;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.3s forwards;
+        }
+
+        /* The zip between first and last name */
+        .hero-name .name-zip {
+            width: 2px;
+            height: 0;
+            background: var(--zip);
+            box-shadow: 0 0 12px var(--zip-glow), 0 0 30px var(--zip-subtle);
+            margin: 0.3rem 0;
+            animation: zipGrow 0.8s ease 0.8s forwards;
+        }
+
+        @keyframes zipGrow {
+            to { height: 60px; }
+        }
+
+        .hero-name .last {
+            display: block;
+            font-size: clamp(5rem, 10vw, 10rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            line-height: 1;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.2s forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-subtitle {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.6s forwards;
+        }
+
+        .hero-tagline {
+            font-size: 1.05rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.8s forwards;
+        }
+
+        /* Vertical zips on hero edges */
+        .hero .zip-left {
+            position: absolute;
+            left: 15%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--zip);
+            opacity: 0.15;
+            box-shadow: none;
+        }
+
+        .hero .zip-right {
+            position: absolute;
+            right: 15%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--zip);
+            opacity: 0.15;
+            box-shadow: none;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 1s ease 2.2s forwards;
+        }
+
+        .scroll-hint .scroll-zip {
+            width: 2px;
+            height: 30px;
+            background: var(--zip);
+            box-shadow: 0 0 6px var(--zip-glow);
+            animation: scrollPulse 2s ease-in-out 2.5s infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* ——— Section Divider ——— */
+
+        .section-divider {
+            position: relative;
+            height: 80px;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-divider .zip-h {
+            width: 100%;
+            left: 0;
+        }
+
+        /* ——— Section Header ——— */
+
+        .section-header {
+            padding: 4rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .section-rule {
+            height: 2px;
+            background: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow);
+            margin-bottom: 3rem;
+        }
+
+        /* ——— Project Index Grid ——— */
+
+        .projects-index {
+            padding: 0 4rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            position: relative;
+        }
+
+        /* Zip lines between grid columns */
+        .projects-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: calc(100% / 3);
+            width: 2px;
+            background: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow), 0 0 20px var(--zip-subtle);
+            z-index: 2;
+        }
+
+        .projects-grid::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: calc(200% / 3);
+            width: 2px;
+            background: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow), 0 0 20px var(--zip-subtle);
+            z-index: 2;
+        }
+
+        /* Horizontal zip between rows */
+        .grid-row-zip {
+            grid-column: 1 / -1;
+            height: 2px;
+            background: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow), 0 0 20px var(--zip-subtle);
+        }
+
+        .project-card {
+            background: var(--bg);
+            padding: 2.5rem 2rem;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.5s ease;
+        }
+
+        .project-card:hover {
+            background: var(--bg-field);
+        }
+
+        .project-card.active {
+            background: var(--bg-field);
+        }
+
+        /* Color field accent on hover — fills from bottom */
+        .project-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            transition: height 0.5s ease;
+            pointer-events: none;
+            opacity: 0.06;
+        }
+
+        .project-card:hover::after {
+            height: 100%;
+        }
+
+        .project-card[data-color="amber"]::after { background: var(--amber); }
+        .project-card[data-color="blue"]::after { background: var(--blue); }
+        .project-card[data-color="terracotta"]::after { background: var(--terracotta); }
+        .project-card[data-color="teal"]::after { background: var(--teal); }
+        .project-card[data-color="mint"]::after { background: var(--mint); }
+        .project-card[data-color="purple"]::after { background: var(--purple); }
+
+        .card-number {
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+        }
+
+        .card-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+        }
+
+        .project-card[data-color="amber"] .card-name { color: var(--amber); }
+        .project-card[data-color="blue"] .card-name { color: var(--blue); }
+        .project-card[data-color="terracotta"] .card-name { color: var(--terracotta); }
+        .project-card[data-color="teal"] .card-name { color: var(--teal); }
+        .project-card[data-color="mint"] .card-name { color: var(--mint); }
+        .project-card[data-color="purple"] .card-name { color: var(--purple); }
+
+        .card-type {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .card-tagline {
+            font-size: 0.9rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: auto;
+            line-height: 1.5;
+        }
+
+        .card-tech {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-top: 1.2rem;
+            letter-spacing: 0.01em;
+        }
+
+        .card-tech span {
+            color: var(--text-secondary);
+        }
+
+        /* Budgie pattern overlay */
+        .project-card[data-project="budgie"] {
+            overflow: hidden;
+        }
+
+        .project-card[data-project="budgie"]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image:
+                radial-gradient(circle at 25% 25%, var(--purple) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, var(--purple) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        /* ——— Expanded Detail Panel ——— */
+
+        .detail-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 0;
+            background: var(--bg);
+            position: relative;
+        }
+
+        .detail-panel.open {
+            max-height: 1200px;
+            opacity: 1;
+        }
+
+        /* Zip lines on detail panel edges */
+        .detail-panel::before,
+        .detail-panel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow);
+            z-index: 5;
+        }
+
+        .detail-panel::before { left: 0; }
+        .detail-panel::after { right: 0; }
+
+        .detail-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--rule);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .detail-close:hover {
+            color: var(--text-primary);
+            border-color: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow);
+        }
+
+        /* ——— Screenshot Gallery (Dissolve) ——— */
+
+        .gallery-container {
+            position: relative;
+            background: var(--bg-deep);
+            border-top: 2px solid var(--zip);
+            box-shadow: 0 2px 20px var(--zip-subtle);
+        }
+
+        .detail-panel[data-color="amber"] .gallery-container { border-top-color: var(--amber); }
+        .detail-panel[data-color="blue"] .gallery-container { border-top-color: var(--blue); }
+        .detail-panel[data-color="terracotta"] .gallery-container { border-top-color: var(--terracotta); }
+        .detail-panel[data-color="teal"] .gallery-container { border-top-color: var(--teal); }
+        .detail-panel[data-color="mint"] .gallery-container { border-top-color: var(--mint); }
+        .detail-panel[data-color="purple"] .gallery-container { border-top-color: var(--purple); }
+
+        .gallery-track {
+            position: relative;
+            max-height: 420px;
+            min-height: 380px;
+        }
+
+        .gallery-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 4rem 1rem;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            pointer-events: none;
+        }
+
+        .gallery-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .gallery-slide img {
+            max-height: 340px;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 2px;
+        }
+
+        .gallery-caption {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* ——— Thumbnail Strip with Progress ——— */
+
+        .gallery-thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.8rem 1rem 1.2rem;
+            background: var(--bg-deep);
+        }
+
+        .gallery-thumb {
+            height: 60px;
+            width: auto;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+            border: none;
+            border-bottom: 2px solid var(--rule);
+            padding: 0;
+            padding-bottom: 4px;
+            background: none;
+            display: block;
+            position: relative;
+        }
+
+        .gallery-thumb:hover { opacity: 0.6; }
+        .gallery-thumb.active { opacity: 1; }
+
+        .gallery-thumb::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            transition: none;
+        }
+
+        .detail-panel[data-color="amber"] .gallery-thumb::after { background: var(--amber); }
+        .detail-panel[data-color="blue"] .gallery-thumb::after { background: var(--blue); }
+        .detail-panel[data-color="terracotta"] .gallery-thumb::after { background: var(--terracotta); }
+        .detail-panel[data-color="teal"] .gallery-thumb::after { background: var(--teal); }
+        .detail-panel[data-color="mint"] .gallery-thumb::after { background: var(--mint); }
+        .detail-panel[data-color="purple"] .gallery-thumb::after { background: var(--purple); }
+
+        .gallery-thumb.active.filling::after {
+            width: 100%;
+            transition: width 4s linear;
+        }
+
+        .gallery-thumb.viewed::after {
+            width: 100%;
+            transition: none;
+        }
+
+        .gallery-thumb img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            border-radius: 2px;
+            display: block;
+        }
+
+        /* ——— Detail Info ——— */
+
+        .detail-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 2px 1fr;
+            gap: 0;
+            padding: 2.5rem 3rem 3rem;
+        }
+
+        .detail-info-zip {
+            background: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow);
+            align-self: stretch;
+        }
+
+        .detail-info-left {
+            padding-right: 2.5rem;
+        }
+
+        .detail-info-right {
+            padding-left: 2.5rem;
+        }
+
+        .detail-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-panel[data-color="amber"] .detail-title { color: var(--amber); }
+        .detail-panel[data-color="blue"] .detail-title { color: var(--blue); }
+        .detail-panel[data-color="terracotta"] .detail-title { color: var(--terracotta); }
+        .detail-panel[data-color="teal"] .detail-title { color: var(--teal); }
+        .detail-panel[data-color="mint"] .detail-title { color: var(--mint); }
+        .detail-panel[data-color="purple"] .detail-title { color: var(--purple); }
+
+        .detail-tagline {
+            font-size: 1rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-description {
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .detail-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .detail-features li {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .detail-features li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 2px;
+            height: 12px;
+            transform: translateY(-50%);
+            background: var(--zip);
+            box-shadow: 0 0 4px var(--zip-glow);
+        }
+
+        .detail-tech-stack {
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .detail-tech-stack span {
+            color: var(--text-secondary);
+        }
+
+        .detail-meta {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* ——— Budgie Text-Only Panel ——— */
+
+        .budgie-text-panel {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2.5rem 3rem 3rem;
+            border-top: 2px solid var(--purple);
+            box-shadow: 0 -2px 20px rgba(155, 126, 216, 0.15);
+        }
+
+        .budgie-text-panel .detail-title { color: var(--purple); }
+        .budgie-text-panel .detail-tagline { margin-bottom: 1.5rem; }
+        .budgie-text-panel .detail-description { margin-bottom: 2rem; }
+        .budgie-text-panel .detail-features { margin-bottom: 2rem; }
+        .budgie-text-panel .detail-tech-stack { margin-bottom: 1rem; }
+
+        /* ——— Footer ——— */
+
+        .footer {
+            padding: 4rem 4rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-rule {
+            height: 2px;
+            background: var(--zip);
+            box-shadow: 0 0 8px var(--zip-glow);
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            list-style: none;
+        }
+
+        .footer-links li {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links li:not(:last-child)::after {
+            content: '';
+            display: inline-block;
+            width: 2px;
+            height: 14px;
+            background: var(--zip);
+            box-shadow: 0 0 4px var(--zip-glow);
+            margin: 0 1.5rem;
+        }
+
+        .footer-links a {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* ——— Reduced Motion ——— */
+
+        @media (prefers-reduced-motion: reduce) {
+            .gallery-slide { transition: none; }
+            .gallery-thumb::after { transition: none !important; }
+            .gallery-thumb.active.filling::after { width: 100%; transition: none; }
+            .hero-name .first, .hero-name .last, .hero-subtitle, .hero-tagline, .scroll-hint {
+                animation: none;
+                opacity: 1;
+            }
+            .hero-name .name-zip { animation: none; height: 60px; }
+        }
+
+        /* ——— Responsive ——— */
+
+        @media (max-width: 1100px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .projects-grid::after { display: none; }
+            .projects-grid::before { left: 50%; }
+            .detail-info-grid {
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 900px) {
+            nav { padding: 1.5rem 2rem; }
+            .hero .zip-left { left: 5%; }
+            .hero .zip-right { right: 5%; }
+            .section-header { padding: 3rem 2rem 0; }
+            .projects-index { padding: 0 2rem 3rem; }
+            .detail-info-grid {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+            .detail-info-zip { display: none; }
+            .detail-info-left { padding-right: 0; margin-bottom: 2rem; }
+            .detail-info-right { padding-left: 0; }
+            .gallery-slide { padding: 2rem 2rem 1rem; }
+            .budgie-text-panel { padding: 2rem; }
+            .footer { padding: 3rem 2rem 2rem; }
+        }
+
+        @media (max-width: 600px) {
+            nav .nav-links li:not(:last-child)::after { margin: 0 1rem; }
+            nav .nav-links a { font-size: 0.7rem; }
+            .hero-name .first, .hero-name .last {
+                font-size: clamp(3rem, 14vw, 5rem);
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .projects-grid::before, .projects-grid::after { display: none; }
+            .grid-row-zip { display: block; }
+            .project-card { min-height: 200px; }
+            .gallery-track { max-height: 300px; min-height: 260px; }
+            .gallery-slide img { max-height: 240px; }
+            .gallery-thumb { height: 44px; }
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">RL</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section — A vast color field -->
+    <section class="hero">
+        <div class="zip-left"></div>
+        <div class="zip-right"></div>
+        <div class="hero-content">
+            <div class="hero-name">
+                <span class="first">Robert</span>
+                <div class="name-zip"></div>
+                <span class="last">Laabs</span>
+            </div>
+            <p class="hero-subtitle">Software Engineer</p>
+            <p class="hero-tagline">Building production tools that ship — from desktop apps to ML infrastructure</p>
+        </div>
+        <div class="scroll-hint">
+            <div class="scroll-zip"></div>
+            Scroll
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <div class="section-header" id="work">
+        <p class="section-label">Selected Work</p>
+        <div class="section-rule"></div>
+    </div>
+
+    <section class="projects-index">
+        <div class="projects-grid">
+
+            <div class="project-card" data-color="amber" data-project="ibis" onclick="toggleDetail('ibis')">
+                <p class="card-number">01</p>
+                <h3 class="card-name">Ibis</h3>
+                <p class="card-type">Desktop App</p>
+                <p class="card-tagline">Enterprise AI Desktop Assistant</p>
+                <p class="card-tech"><span>TypeScript</span> · <span>Electron</span> · <span>React</span> · <span>Python</span></p>
+            </div>
+
+            <div class="project-card" data-color="blue" data-project="strix" onclick="toggleDetail('strix')">
+                <p class="card-number">02</p>
+                <h3 class="card-name">Strix</h3>
+                <p class="card-type">macOS App</p>
+                <p class="card-tagline">Native macOS SQLite Browser</p>
+                <p class="card-tech"><span>Swift</span> · <span>SwiftUI</span> · <span>GRDB</span> · <span>AppKit</span></p>
+            </div>
+
+            <div class="project-card" data-color="terracotta" data-project="sparrow" onclick="toggleDetail('sparrow')">
+                <p class="card-number">03</p>
+                <h3 class="card-name">Sparrow</h3>
+                <p class="card-type">Web Platform</p>
+                <p class="card-tagline">AI Market Research Platform</p>
+                <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>Google GenAI</span> · <span>Docker</span></p>
+            </div>
+
+            <div class="grid-row-zip"></div>
+
+            <div class="project-card" data-color="teal" data-project="magpie" onclick="toggleDetail('magpie')">
+                <p class="card-number">04</p>
+                <h3 class="card-name">Magpie</h3>
+                <p class="card-type">Web Platform</p>
+                <p class="card-tagline">Survey Response Quality Analyzer</p>
+                <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>OpenAI</span> · <span>Polars</span></p>
+            </div>
+
+            <div class="project-card" data-color="mint" data-project="mallard" onclick="toggleDetail('mallard')">
+                <p class="card-number">05</p>
+                <h3 class="card-name">Mallard</h3>
+                <p class="card-type">Web Platform</p>
+                <p class="card-tagline">Behavioral Analytics Platform</p>
+                <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>Spark</span> · <span>AWS</span></p>
+            </div>
+
+            <div class="project-card" data-color="purple" data-project="budgie" onclick="toggleDetail('budgie')">
+                <p class="card-number">06</p>
+                <h3 class="card-name">Budgie</h3>
+                <p class="card-type">ML Framework</p>
+                <p class="card-tagline">Synthetic Data Generation Framework</p>
+                <p class="card-tech"><span>Python</span> · <span>asyncio</span> · <span>OpenAI</span> · <span>Pydantic</span></p>
+            </div>
+
+        </div>
+
+        <!-- Detail Panels -->
+
+        <!-- Ibis Detail -->
+        <div class="detail-panel" id="detail-ibis" data-color="amber">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="ibis">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/ibis-hero.png" alt="Ibis chat conversation">
+                        <p class="gallery-caption">Chat conversation</p>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="sample-screenshots/ibis-02.png" alt="Ibis welcome screen">
+                        <p class="gallery-caption">Welcome screen</p>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="sample-screenshots/ibis-03.png" alt="Ibis tool execution">
+                        <p class="gallery-caption">Tool execution</p>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-thumbnails" data-thumbs="ibis">
+                <button class="gallery-thumb active" onclick="galleryGoTo(event, 'ibis', 0)">
+                    <img src="sample-screenshots/ibis-hero.png" alt="Chat conversation">
+                </button>
+                <button class="gallery-thumb" onclick="galleryGoTo(event, 'ibis', 1)">
+                    <img src="sample-screenshots/ibis-02.png" alt="Welcome screen">
+                </button>
+                <button class="gallery-thumb" onclick="galleryGoTo(event, 'ibis', 2)">
+                    <img src="sample-screenshots/ibis-03.png" alt="Tool execution">
+                </button>
+            </div>
+            <div class="detail-info-grid">
+                <div class="detail-info-left">
+                    <h2 class="detail-title">Ibis</h2>
+                    <p class="detail-tagline">Enterprise AI Desktop Assistant</p>
+                    <p class="detail-description">
+                        A cross-platform desktop application providing enterprise-grade AI capabilities for professional workflows. Built on Electron with a React frontend and Python backend, prioritizing privacy, speed, and deep system integration.
+                    </p>
+                </div>
+                <div class="detail-info-zip"></div>
+                <div class="detail-info-right">
+                    <ul class="detail-features">
+                        <li>Local-first architecture with optional cloud sync</li>
+                        <li>Multi-model support with context management</li>
+                        <li>Custom plugin system for workflow automation</li>
+                        <li>Encrypted conversation history and data export</li>
+                    </ul>
+                    <p class="detail-tech-stack">
+                        <span>TypeScript</span> · <span>Electron</span> · <span>React</span> · <span>Python</span>
+                    </p>
+                    <p class="detail-meta">2024 — Lead Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Strix Detail -->
+        <div class="detail-panel" id="detail-strix" data-color="blue">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="strix">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/strix-hero.png" alt="Strix data grid view">
+                        <p class="gallery-caption">Data grid view</p>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="sample-screenshots/strix-02.png" alt="Strix query editor">
+                        <p class="gallery-caption">Query editor</p>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="sample-screenshots/strix-03.png" alt="Strix change tracking">
+                        <p class="gallery-caption">Change tracking</p>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-thumbnails" data-thumbs="strix">
+                <button class="gallery-thumb active" onclick="galleryGoTo(event, 'strix', 0)">
+                    <img src="sample-screenshots/strix-hero.png" alt="Data grid view">
+                </button>
+                <button class="gallery-thumb" onclick="galleryGoTo(event, 'strix', 1)">
+                    <img src="sample-screenshots/strix-02.png" alt="Query editor">
+                </button>
+                <button class="gallery-thumb" onclick="galleryGoTo(event, 'strix', 2)">
+                    <img src="sample-screenshots/strix-03.png" alt="Change tracking">
+                </button>
+            </div>
+            <div class="detail-info-grid">
+                <div class="detail-info-left">
+                    <h2 class="detail-title">Strix</h2>
+                    <p class="detail-tagline">Native macOS SQLite Browser</p>
+                    <p class="detail-description">
+                        A fast, native macOS application for browsing and managing SQLite databases. Built entirely in Swift with SwiftUI, designed around performance and a clean, distraction-free interface.
+                    </p>
+                </div>
+                <div class="detail-info-zip"></div>
+                <div class="detail-info-right">
+                    <ul class="detail-features">
+                        <li>Instant schema visualization and table browsing</li>
+                        <li>Live query editor with syntax highlighting</li>
+                        <li>GRDB-powered data layer for high performance</li>
+                        <li>Full drag-and-drop and Spotlight integration</li>
+                    </ul>
+                    <p class="detail-tech-stack">
+                        <span>Swift</span> · <span>SwiftUI</span> · <span>GRDB</span> · <span>AppKit</span>
+                    </p>
+                    <p class="detail-meta">2024 — Solo Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Sparrow Detail -->
+        <div class="detail-panel" id="detail-sparrow" data-color="terracotta">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="sparrow">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/sparrow-hero.png" alt="Sparrow chat conversation">
+                        <p class="gallery-caption">Chat conversation</p>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-info-grid">
+                <div class="detail-info-left">
+                    <h2 class="detail-title">Sparrow</h2>
+                    <p class="detail-tagline">AI Market Research Platform</p>
+                    <p class="detail-description">
+                        A web platform that leverages generative AI to automate and enhance market research workflows. Built with Django and Google's GenAI APIs, containerized with Docker for reliable deployment.
+                    </p>
+                </div>
+                <div class="detail-info-zip"></div>
+                <div class="detail-info-right">
+                    <ul class="detail-features">
+                        <li>Automated competitor analysis and trend detection</li>
+                        <li>AI-powered report generation with citations</li>
+                        <li>Customizable research templates and workflows</li>
+                        <li>Team collaboration with role-based access</li>
+                    </ul>
+                    <p class="detail-tech-stack">
+                        <span>Python</span> · <span>Django</span> · <span>Google GenAI</span> · <span>Docker</span>
+                    </p>
+                    <p class="detail-meta">2024 — Lead Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Magpie Detail -->
+        <div class="detail-panel" id="detail-magpie" data-color="teal">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="magpie">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/magpie-hero.png" alt="Magpie dashboard overview">
+                        <p class="gallery-caption">Dashboard overview</p>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-info-grid">
+                <div class="detail-info-left">
+                    <h2 class="detail-title">Magpie</h2>
+                    <p class="detail-tagline">Survey Response Quality Analyzer</p>
+                    <p class="detail-description">
+                        An intelligent platform that uses AI to evaluate and score survey response quality, identifying low-effort, inconsistent, or fraudulent responses. Built on Django with Polars for high-performance data processing.
+                    </p>
+                </div>
+                <div class="detail-info-zip"></div>
+                <div class="detail-info-right">
+                    <ul class="detail-features">
+                        <li>AI-powered quality scoring with explainability</li>
+                        <li>Real-time response stream analysis</li>
+                        <li>Polars-based data pipeline for large datasets</li>
+                        <li>Configurable quality thresholds and rules</li>
+                    </ul>
+                    <p class="detail-tech-stack">
+                        <span>Python</span> · <span>Django</span> · <span>OpenAI</span> · <span>Polars</span>
+                    </p>
+                    <p class="detail-meta">2024 — Lead Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Mallard Detail -->
+        <div class="detail-panel" id="detail-mallard" data-color="mint">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="mallard">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/mallard-hero.png" alt="Mallard data exploration">
+                        <p class="gallery-caption">Data exploration</p>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-info-grid">
+                <div class="detail-info-left">
+                    <h2 class="detail-title">Mallard</h2>
+                    <p class="detail-tagline">Behavioral Analytics Platform</p>
+                    <p class="detail-description">
+                        A scalable behavioral analytics platform processing large volumes of user interaction data. Built on Django with Apache Spark for distributed computation and AWS infrastructure for reliable scale.
+                    </p>
+                </div>
+                <div class="detail-info-zip"></div>
+                <div class="detail-info-right">
+                    <ul class="detail-features">
+                        <li>Real-time event ingestion and processing</li>
+                        <li>Spark-powered behavioral segmentation</li>
+                        <li>Custom dashboard builder with live metrics</li>
+                        <li>AWS-native deployment with auto-scaling</li>
+                    </ul>
+                    <p class="detail-tech-stack">
+                        <span>Python</span> · <span>Django</span> · <span>Spark</span> · <span>AWS</span>
+                    </p>
+                    <p class="detail-meta">2023 — Lead Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Budgie Detail -->
+        <div class="detail-panel" id="detail-budgie" data-color="purple">
+            <div class="budgie-text-panel">
+                <h2 class="detail-title">Budgie</h2>
+                <p class="detail-tagline">Synthetic Data Generation Framework</p>
+                <p class="detail-description">
+                    A Python framework — not a UI tool — for generating high-quality synthetic datasets using LLMs. Designed as a developer library, it leverages async concurrency for throughput, Pydantic for schema enforcement, and built-in validation with automatic retry logic. The framework handles the full pipeline from template definition to validated output.
+                </p>
+                <ul class="detail-features">
+                    <li>Schema-first design with Pydantic models</li>
+                    <li>Async pipeline with configurable concurrency</li>
+                    <li>Automatic validation and retry on malformed output</li>
+                    <li>Pluggable LLM backends with cost tracking</li>
+                    <li>CLI and programmatic API interfaces</li>
+                </ul>
+                <p class="detail-tech-stack">
+                    <span>Python</span> · <span>asyncio</span> · <span>OpenAI</span> · <span>Pydantic</span>
+                </p>
+                <p class="detail-meta">2024 — Framework Author</p>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-rule"></div>
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2026 Robert Laabs</p>
+            <ul class="footer-links">
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Email</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        let activeProject = null;
+        const autoplayTimers = {};
+        const resumeTimers = {};
+        const currentSlideIndex = {};
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function getSlideCount(projectId) {
+            const track = document.querySelector('[data-gallery="' + projectId + '"]');
+            return track ? track.querySelectorAll('.gallery-slide').length : 0;
+        }
+
+        function isSingleSlide(projectId) {
+            return getSlideCount(projectId) <= 1;
+        }
+
+        function toggleDetail(projectId) {
+            const panel = document.getElementById('detail-' + projectId);
+            const card = document.querySelector('[data-project="' + projectId + '"]');
+
+            if (activeProject === projectId) {
+                closeAllDetails();
+                return;
+            }
+
+            closeAllDetails();
+
+            requestAnimationFrame(() => {
+                panel.classList.add('open');
+                card.classList.add('active');
+                activeProject = projectId;
+                resetGallery(projectId);
+
+                if (!prefersReducedMotion && !isSingleSlide(projectId)) {
+                    setTimeout(() => { startAutoplay(projectId); }, 800);
+                }
+
+                setTimeout(() => {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 150);
+            });
+        }
+
+        function closeDetail(event) {
+            event.stopPropagation();
+            closeAllDetails();
+        }
+
+        function closeAllDetails() {
+            if (activeProject) stopAutoplay(activeProject);
+            document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+            document.querySelectorAll('.project-card').forEach(c => c.classList.remove('active'));
+            activeProject = null;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAllDetails();
+        });
+
+        function getGalleryElements(projectId) {
+            const track = document.querySelector('[data-gallery="' + projectId + '"]');
+            const thumbsContainer = document.querySelector('[data-thumbs="' + projectId + '"]');
+            const thumbs = thumbsContainer ? thumbsContainer.querySelectorAll('.gallery-thumb') : [];
+            const slides = track ? track.querySelectorAll('.gallery-slide') : [];
+            return { track, thumbs, slides };
+        }
+
+        function goToSlide(projectId, targetIndex, isAutoplay) {
+            const { slides, thumbs } = getGalleryElements(projectId);
+            if (!slides.length) return;
+
+            const prevIndex = currentSlideIndex[projectId] || 0;
+            if (targetIndex === prevIndex && slides[prevIndex].classList.contains('active')) return;
+
+            const totalSlides = slides.length;
+            const isLoopReset = (targetIndex === 0 && prevIndex === totalSlides - 1);
+
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === targetIndex);
+            });
+
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.remove('active', 'filling');
+                if (isLoopReset) thumb.classList.remove('viewed');
+
+                if (i === targetIndex) {
+                    thumb.classList.add('active');
+                    if (!prefersReducedMotion && !isSingleSlide(projectId) && autoplayTimers[projectId]) {
+                        void thumb.offsetWidth;
+                        thumb.classList.add('filling');
+                    }
+                } else if (i < targetIndex || thumb.classList.contains('viewed')) {
+                    if (!isLoopReset || i < targetIndex) {
+                        thumb.classList.add('viewed');
+                    }
+                }
+            });
+
+            if (!isLoopReset && prevIndex !== targetIndex && thumbs[prevIndex]) {
+                thumbs[prevIndex].classList.add('viewed');
+            }
+
+            currentSlideIndex[projectId] = targetIndex;
+        }
+
+        function galleryGoTo(event, projectId, targetIndex) {
+            event.stopPropagation();
+            pauseAutoplay(projectId);
+            goToSlide(projectId, targetIndex, false);
+
+            if (!prefersReducedMotion && !isSingleSlide(projectId)) {
+                resumeTimers[projectId] = setTimeout(() => {
+                    startAutoplay(projectId);
+                }, 6000);
+            }
+        }
+
+        function resetGallery(projectId) {
+            const { slides, thumbs } = getGalleryElements(projectId);
+            currentSlideIndex[projectId] = 0;
+            slides.forEach((slide, i) => { slide.classList.toggle('active', i === 0); });
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.remove('active', 'filling', 'viewed');
+                if (i === 0) thumb.classList.add('active');
+            });
+        }
+
+        function startAutoplay(projectId) {
+            stopAutoplay(projectId);
+            const { slides, thumbs } = getGalleryElements(projectId);
+            if (slides.length <= 1) return;
+
+            const idx = currentSlideIndex[projectId] || 0;
+            if (thumbs[idx]) {
+                thumbs[idx].classList.remove('filling');
+                void thumbs[idx].offsetWidth;
+                thumbs[idx].classList.add('filling');
+            }
+
+            autoplayTimers[projectId] = setInterval(() => {
+                const current = currentSlideIndex[projectId] || 0;
+                const next = (current + 1) % slides.length;
+                goToSlide(projectId, next, true);
+            }, 4000);
+        }
+
+        function stopAutoplay(projectId) {
+            if (autoplayTimers[projectId]) { clearInterval(autoplayTimers[projectId]); delete autoplayTimers[projectId]; }
+            if (resumeTimers[projectId]) { clearTimeout(resumeTimers[projectId]); delete resumeTimers[projectId]; }
+        }
+
+        function pauseAutoplay(projectId) {
+            if (autoplayTimers[projectId]) { clearInterval(autoplayTimers[projectId]); delete autoplayTimers[projectId]; }
+            if (resumeTimers[projectId]) { clearTimeout(resumeTimers[projectId]); delete resumeTimers[projectId]; }
+            const { thumbs } = getGalleryElements(projectId);
+            thumbs.forEach(t => t.classList.remove('filling'));
+        }
+
+        ['ibis', 'strix', 'sparrow', 'magpie', 'mallard'].forEach(id => { resetGallery(id); });
+    </script>
+
+</body>
+</html>

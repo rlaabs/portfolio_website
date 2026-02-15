@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robert Laabs — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --ibis: #D4A843;
+  --strix: #4A9EF5;
+  --sparrow: #C85A3A;
+  --magpie: #2EA77A;
+  --mallard: #3CC9A8;
+  --budgie: #9B7ED8;
+  --bg: #0A0A0F;
+  --text: #F0F0F0;
+  --text-dim: rgba(240, 240, 240, 0.6);
+  --gap: 2px;
+  --radius: 8px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== HERO ===== */
+.hero {
+  height: 50vh;
+  max-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 2rem;
+}
+
+.hero-name {
+  text-align: center;
+  line-height: 0.88;
+}
+
+.hero-name .first {
+  display: block;
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.hero-name .last {
+  display: block;
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  -webkit-text-stroke: 2px var(--text);
+  color: transparent;
+}
+
+.hero-sub {
+  margin-top: 1.5rem;
+  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+.hero-scroll .arrow {
+  width: 1px;
+  height: 24px;
+  background: var(--text-dim);
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ===== BENTO GRID ===== */
+.bento-section {
+  padding: 0 2rem 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "ibis ibis strix"
+    "ibis ibis sparrow"
+    "magpie mallard budgie";
+  gap: var(--gap);
+  min-height: 70vh;
+}
+
+/* ===== TILE BASE ===== */
+.tile {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  min-height: 200px;
+}
+
+.tile-ibis    { grid-area: ibis; }
+.tile-strix   { grid-area: strix; }
+.tile-sparrow { grid-area: sparrow; }
+.tile-magpie  { grid-area: magpie; }
+.tile-mallard { grid-area: mallard; }
+.tile-budgie  { grid-area: budgie; }
+
+/* Screenshot as background image */
+.tile-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85) contrast(1.05);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.5s ease;
+}
+
+/* Gradient overlay */
+.tile-overlay {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.tile-ibis .tile-overlay {
+  background: linear-gradient(to top, rgba(212, 168, 67, 0.70) 0%, rgba(212, 168, 67, 0.35) 40%, transparent 75%);
+}
+.tile-strix .tile-overlay {
+  background: linear-gradient(to top, rgba(74, 158, 245, 0.70) 0%, rgba(74, 158, 245, 0.35) 40%, transparent 75%);
+}
+.tile-sparrow .tile-overlay {
+  background: linear-gradient(to top, rgba(200, 90, 58, 0.70) 0%, rgba(200, 90, 58, 0.35) 40%, transparent 75%);
+}
+.tile-magpie .tile-overlay {
+  background: linear-gradient(to top, rgba(46, 167, 122, 0.70) 0%, rgba(46, 167, 122, 0.35) 40%, transparent 75%);
+}
+.tile-mallard .tile-overlay {
+  background: linear-gradient(to top, rgba(60, 201, 168, 0.70) 0%, rgba(60, 201, 168, 0.35) 40%, transparent 75%);
+}
+.tile-budgie .tile-overlay {
+  background: linear-gradient(to top, rgba(155, 126, 216, 0.70) 0%, rgba(155, 126, 216, 0.35) 40%, transparent 75%);
+}
+
+/* Tile text content */
+.tile-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  z-index: 2;
+}
+
+.tile-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.tile-ibis .tile-name { font-size: 2rem; }
+
+.tile-tagline {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.6rem;
+}
+
+.tile-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+}
+
+/* Tech tags (shown on hover) */
+.tile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
+}
+
+.tile-tag {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+/* Hover effects */
+.tile:hover .tile-img {
+  transform: scale(1.03);
+  filter: brightness(0.95) contrast(1.05);
+}
+
+.tile:hover .tile-overlay {
+  opacity: 0.5;
+}
+
+.tile:hover .tile-tags {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 15, 0.95);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  overflow-y: auto;
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1010;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.lightbox-close:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lightbox-inner {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 4rem 2rem 3rem;
+  opacity: 0;
+  transform: scale(0.96) translateY(12px);
+  transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
+}
+
+.lightbox.active .lightbox-inner {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Gallery strip */
+.lightbox-gallery {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+.lightbox-gallery::-webkit-scrollbar {
+  height: 4px;
+}
+
+.lightbox-gallery::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.lightbox-gallery::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.lightbox-gallery img {
+  height: 400px;
+  width: auto;
+  max-width: 90vw;
+  border-radius: 6px;
+  object-fit: contain;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Lightbox text */
+.lightbox-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.lightbox-title {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.lightbox-type-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.lightbox-desc {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 700px;
+  margin-bottom: 1.5rem;
+}
+
+.lightbox-section-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 0.6rem;
+}
+
+.lightbox-features {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.lightbox-features li {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.65);
+  padding: 0.3rem 0;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.lightbox-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+.lightbox-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.lightbox-tech span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+}
+
+/* Budgie pipeline visualization */
+.pipeline-vis {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  background: rgba(155, 126, 216, 0.06);
+  border: 1px solid rgba(155, 126, 216, 0.15);
+  border-radius: 8px;
+}
+
+.pipeline-step {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(155, 126, 216, 0.15);
+  border: 1px solid rgba(155, 126, 216, 0.3);
+  white-space: nowrap;
+}
+
+.pipeline-arrow {
+  color: rgba(155, 126, 216, 0.5);
+  font-size: 0.85rem;
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .tile:hover .tile-img {
+    transform: none;
+  }
+  .lightbox-inner {
+    transform: none;
+  }
+  .lightbox.active .lightbox-inner {
+    transform: none;
+  }
+  .hero-scroll {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .bento-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "ibis ibis"
+      "strix sparrow"
+      "magpie mallard"
+      "budgie budgie";
+    min-height: auto;
+  }
+
+  .tile {
+    min-height: 220px;
+  }
+
+  .tile-ibis .tile-name {
+    font-size: 1.6rem;
+  }
+
+  .lightbox-gallery img {
+    height: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    height: 40vh;
+  }
+
+  .hero-name .first,
+  .hero-name .last {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+
+  .bento-section {
+    padding: 0 0.75rem 2rem;
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "ibis"
+      "strix"
+      "sparrow"
+      "magpie"
+      "mallard"
+      "budgie";
+  }
+
+  .tile {
+    min-height: 200px;
+  }
+
+  .tile-ibis .tile-name {
+    font-size: 1.4rem;
+  }
+
+  .tile-content {
+    padding: 1rem;
+  }
+
+  .lightbox-inner {
+    padding: 3rem 1rem 2rem;
+  }
+
+  .lightbox-gallery img {
+    height: 220px;
+    max-width: 85vw;
+  }
+
+  .lightbox-title {
+    font-size: 1.5rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-name">
+    <span class="first">Robert</span>
+    <span class="last">Laabs</span>
+  </div>
+  <p class="hero-sub">Software Engineer &amp; Product Builder</p>
+  <div class="hero-scroll">
+    <span>Work</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- ===== BENTO GRID ===== -->
+<section class="bento-section">
+  <div class="bento-grid">
+
+    <!-- Ibis — flagship, spans 2 rows -->
+    <div class="tile tile-ibis" data-project="ibis">
+      <img class="tile-img" src="sample-screenshots/ibis-hero.png" alt="Ibis screenshot" loading="lazy">
+      <div class="tile-overlay"></div>
+      <div class="tile-content">
+        <div class="tile-name">Ibis</div>
+        <div class="tile-tagline">Intelligent budgeting and financial insights</div>
+        <span class="tile-badge">iOS App</span>
+        <div class="tile-tags">
+          <span class="tile-tag">Swift</span>
+          <span class="tile-tag">SwiftUI</span>
+          <span class="tile-tag">Core Data</span>
+          <span class="tile-tag">Charts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strix -->
+    <div class="tile tile-strix" data-project="strix">
+      <img class="tile-img" src="sample-screenshots/strix-hero.png" alt="Strix screenshot" loading="lazy">
+      <div class="tile-overlay"></div>
+      <div class="tile-content">
+        <div class="tile-name">Strix</div>
+        <div class="tile-tagline">Smart task scheduling with focus modes</div>
+        <span class="tile-badge">iOS App</span>
+        <div class="tile-tags">
+          <span class="tile-tag">Swift</span>
+          <span class="tile-tag">UIKit</span>
+          <span class="tile-tag">CloudKit</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sparrow -->
+    <div class="tile tile-sparrow" data-project="sparrow">
+      <img class="tile-img" src="sample-screenshots/sparrow-hero.png" alt="Sparrow screenshot" loading="lazy">
+      <div class="tile-overlay"></div>
+      <div class="tile-content">
+        <div class="tile-name">Sparrow</div>
+        <div class="tile-tagline">Lightweight team chat for small groups</div>
+        <span class="tile-badge">Web App</span>
+        <div class="tile-tags">
+          <span class="tile-tag">React</span>
+          <span class="tile-tag">Node.js</span>
+          <span class="tile-tag">WebSocket</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Magpie -->
+    <div class="tile tile-magpie" data-project="magpie">
+      <img class="tile-img" src="sample-screenshots/magpie-hero.png" alt="Magpie screenshot" loading="lazy">
+      <div class="tile-overlay"></div>
+      <div class="tile-content">
+        <div class="tile-name">Magpie</div>
+        <div class="tile-tagline">Collect and organize design inspiration</div>
+        <span class="tile-badge">Browser Extension</span>
+        <div class="tile-tags">
+          <span class="tile-tag">JavaScript</span>
+          <span class="tile-tag">Chrome API</span>
+          <span class="tile-tag">IndexedDB</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mallard -->
+    <div class="tile tile-mallard" data-project="mallard">
+      <img class="tile-img" src="sample-screenshots/mallard-hero.png" alt="Mallard screenshot" loading="lazy">
+      <div class="tile-overlay"></div>
+      <div class="tile-content">
+        <div class="tile-name">Mallard</div>
+        <div class="tile-tagline">Automated deployment pipeline dashboard</div>
+        <span class="tile-badge">DevTool</span>
+        <div class="tile-tags">
+          <span class="tile-tag">Python</span>
+          <span class="tile-tag">Flask</span>
+          <span class="tile-tag">Docker</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Budgie -->
+    <div class="tile tile-budgie" data-project="budgie">
+      <img class="tile-img" src="sample-screenshots/budgie-hero.png" alt="Budgie architecture diagram" loading="lazy">
+      <div class="tile-overlay"></div>
+      <div class="tile-content">
+        <div class="tile-name">Budgie</div>
+        <div class="tile-tagline">Event-driven data processing pipeline</div>
+        <span class="tile-badge">Backend System</span>
+        <div class="tile-tags">
+          <span class="tile-tag">Go</span>
+          <span class="tile-tag">Kafka</span>
+          <span class="tile-tag">PostgreSQL</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+  <div class="lightbox-inner" id="lightbox-inner">
+  </div>
+</div>
+
+<script>
+// ===== PROJECT DATA =====
+const projects = {
+  ibis: {
+    name: 'Ibis',
+    type: 'iOS App',
+    color: '#D4A843',
+    tagline: 'Intelligent budgeting and financial insights',
+    description: 'A personal finance app that uses smart categorization and trend analysis to help users understand their spending habits. Features interactive charts, recurring transaction detection, and monthly budget tracking with contextual insights.',
+    screenshots: [
+      'sample-screenshots/ibis-hero.png',
+      'sample-screenshots/ibis-02.png',
+      'sample-screenshots/ibis-03.png'
+    ],
+    features: [
+      'Smart transaction categorization with learning',
+      'Interactive spending charts and trend analysis',
+      'Monthly budgets with real-time tracking',
+      'Recurring payment detection and alerts'
+    ],
+    tech: ['Swift', 'SwiftUI', 'Core Data', 'Charts', 'StoreKit', 'CloudKit']
+  },
+  strix: {
+    name: 'Strix',
+    type: 'iOS App',
+    color: '#4A9EF5',
+    tagline: 'Smart task scheduling with focus modes',
+    description: 'A productivity app that combines task management with intelligent scheduling. Strix analyzes your calendar, energy patterns, and task priorities to suggest optimal time blocks for focused work.',
+    screenshots: [
+      'sample-screenshots/strix-hero.png',
+      'sample-screenshots/strix-02.png',
+      'sample-screenshots/strix-03.png'
+    ],
+    features: [
+      'AI-powered scheduling suggestions',
+      'Focus mode with distraction blocking',
+      'Calendar integration and time-block planning',
+      'Weekly productivity reports'
+    ],
+    tech: ['Swift', 'UIKit', 'CloudKit', 'EventKit', 'WidgetKit']
+  },
+  sparrow: {
+    name: 'Sparrow',
+    type: 'Web App',
+    color: '#C85A3A',
+    tagline: 'Lightweight team chat for small groups',
+    description: 'A minimalist real-time messaging app designed for small teams who want fast communication without the bloat. Features threads, reactions, file sharing, and rich link previews.',
+    screenshots: [
+      'sample-screenshots/sparrow-hero.png'
+    ],
+    features: [
+      'Real-time messaging with WebSocket',
+      'Threaded conversations and reactions',
+      'File sharing with drag-and-drop',
+      'Rich link previews and search'
+    ],
+    tech: ['React', 'Node.js', 'WebSocket', 'PostgreSQL', 'Redis', 'S3']
+  },
+  magpie: {
+    name: 'Magpie',
+    type: 'Browser Extension',
+    color: '#2EA77A',
+    tagline: 'Collect and organize design inspiration',
+    description: 'A browser extension that lets designers and developers save visual inspiration from any webpage. Captures screenshots, color palettes, and typography with one-click saving to organized collections.',
+    screenshots: [
+      'sample-screenshots/magpie-hero.png'
+    ],
+    features: [
+      'One-click screenshot capture from any page',
+      'Automatic color palette extraction',
+      'Typography detection and cataloging',
+      'Taggable collections with search'
+    ],
+    tech: ['JavaScript', 'Chrome Extensions API', 'IndexedDB', 'Canvas API']
+  },
+  mallard: {
+    name: 'Mallard',
+    type: 'DevTool',
+    color: '#3CC9A8',
+    tagline: 'Automated deployment pipeline dashboard',
+    description: 'A deployment monitoring dashboard that visualizes CI/CD pipeline status across multiple repositories. Provides real-time build status, deployment history, and rollback capabilities with a clean overview.',
+    screenshots: [
+      'sample-screenshots/mallard-hero.png'
+    ],
+    features: [
+      'Real-time pipeline status monitoring',
+      'Multi-repo deployment overview',
+      'One-click rollback capability',
+      'Deployment history and analytics'
+    ],
+    tech: ['Python', 'Flask', 'Docker', 'GitHub Actions API', 'SQLite']
+  },
+  budgie: {
+    name: 'Budgie',
+    type: 'Backend System',
+    color: '#9B7ED8',
+    tagline: 'Event-driven data processing pipeline',
+    description: 'A scalable event-driven architecture for processing and transforming data streams in real-time. Handles ingestion, validation, enrichment, and routing of events across microservices with exactly-once delivery guarantees.',
+    screenshots: [
+      'sample-screenshots/budgie-hero.png'
+    ],
+    features: [
+      'Exactly-once event delivery guarantees',
+      'Schema validation and data enrichment',
+      'Dead letter queue with replay capability',
+      'Real-time monitoring and alerting'
+    ],
+    tech: ['Go', 'Apache Kafka', 'PostgreSQL', 'gRPC', 'Prometheus', 'Docker'],
+    pipeline: ['Ingest', 'Validate', 'Enrich', 'Route', 'Store', 'Notify']
+  }
+};
+
+// ===== LIGHTBOX LOGIC =====
+const lightbox = document.getElementById('lightbox');
+const lightboxInner = document.getElementById('lightbox-inner');
+const lightboxClose = document.getElementById('lightbox-close');
+
+function buildLightboxContent(projectKey) {
+  const p = projects[projectKey];
+  if (!p) return;
+
+  // Clear existing content
+  lightboxInner.textContent = '';
+
+  // Gallery
+  const gallery = document.createElement('div');
+  gallery.className = 'lightbox-gallery';
+  p.screenshots.forEach(function(src) {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = p.name + ' screenshot';
+    img.loading = 'lazy';
+    gallery.appendChild(img);
+  });
+  lightboxInner.appendChild(gallery);
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'lightbox-header';
+
+  const title = document.createElement('div');
+  title.className = 'lightbox-title';
+  title.style.color = p.color;
+  title.textContent = p.name;
+  header.appendChild(title);
+
+  const badge = document.createElement('span');
+  badge.className = 'lightbox-type-badge';
+  badge.style.borderColor = p.color + '40';
+  badge.style.color = p.color;
+  badge.textContent = p.type;
+  header.appendChild(badge);
+
+  lightboxInner.appendChild(header);
+
+  // Description
+  const desc = document.createElement('p');
+  desc.className = 'lightbox-desc';
+  desc.textContent = p.description;
+  lightboxInner.appendChild(desc);
+
+  // Pipeline (Budgie only)
+  if (p.pipeline) {
+    const pipeTitle = document.createElement('div');
+    pipeTitle.className = 'lightbox-section-title';
+    pipeTitle.textContent = 'Processing Pipeline';
+    lightboxInner.appendChild(pipeTitle);
+
+    const pipeVis = document.createElement('div');
+    pipeVis.className = 'pipeline-vis';
+    p.pipeline.forEach(function(step, i) {
+      if (i > 0) {
+        const arrow = document.createElement('span');
+        arrow.className = 'pipeline-arrow';
+        arrow.textContent = '\u2192';
+        pipeVis.appendChild(arrow);
+      }
+      const stepEl = document.createElement('span');
+      stepEl.className = 'pipeline-step';
+      stepEl.textContent = step;
+      pipeVis.appendChild(stepEl);
+    });
+    lightboxInner.appendChild(pipeVis);
+  }
+
+  // Features
+  const featTitle = document.createElement('div');
+  featTitle.className = 'lightbox-section-title';
+  featTitle.textContent = 'Key Features';
+  lightboxInner.appendChild(featTitle);
+
+  const featList = document.createElement('ul');
+  featList.className = 'lightbox-features';
+  featList.style.setProperty('--accent-color', p.color);
+  p.features.forEach(function(f) {
+    const li = document.createElement('li');
+    li.textContent = f;
+    featList.appendChild(li);
+  });
+  lightboxInner.appendChild(featList);
+
+  // Tech
+  const techTitle = document.createElement('div');
+  techTitle.className = 'lightbox-section-title';
+  techTitle.textContent = 'Tech Stack';
+  lightboxInner.appendChild(techTitle);
+
+  const techWrap = document.createElement('div');
+  techWrap.className = 'lightbox-tech';
+  p.tech.forEach(function(t) {
+    const span = document.createElement('span');
+    span.textContent = t;
+    techWrap.appendChild(span);
+  });
+  lightboxInner.appendChild(techWrap);
+}
+
+function openLightbox(projectKey) {
+  buildLightboxContent(projectKey);
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Tile click handlers
+document.querySelectorAll('.tile').forEach(function(tile) {
+  tile.addEventListener('click', function() {
+    var projectKey = tile.dataset.project;
+    openLightbox(projectKey);
+  });
+});
+
+// Close handlers
+lightboxClose.addEventListener('click', closeLightbox);
+
+lightbox.addEventListener('click', function(e) {
+  if (e.target === lightbox) closeLightbox();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+</script>
+</body>
+</html>

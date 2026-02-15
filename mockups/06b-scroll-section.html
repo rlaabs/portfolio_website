@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Laabs — Portfolio (Scroll Section)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0A0A0F;
+            --bg-card: #0E0E16;
+            --bg-subtle: #101018;
+            --text-primary: #E8E8ED;
+            --text-secondary: #8A8A96;
+            --text-muted: #5A5A66;
+            --rule: #1E1E2A;
+            --amber: #D4A843;
+            --blue: #4A9EF5;
+            --terracotta: #C85A3A;
+            --teal: #2EA77A;
+            --mint: #3CC9A8;
+            --purple: #9B7ED8;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 4rem 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-name {
+            line-height: 0.92;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-name .first {
+            display: block;
+            font-size: clamp(4rem, 7vw, 7rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .hero-name .last {
+            display: block;
+            font-size: clamp(4rem, 7vw, 7rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-right: 8%;
+        }
+
+        .hero-subtitle-block {
+            max-width: 420px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .hero-tagline {
+            font-size: 1.05rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .hero-rule {
+            position: absolute;
+            bottom: 0;
+            left: 4rem;
+            right: 4rem;
+            height: 1px;
+            background: var(--rule);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInHint 1s ease 1.5s forwards;
+        }
+
+        .scroll-line-hero {
+            width: 40px;
+            height: 1px;
+            background: var(--text-muted);
+        }
+
+        @keyframes fadeInHint {
+            to { opacity: 1; }
+        }
+
+        /* ── Fade-in ── */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .fade-in.visible { opacity: 1; }
+        .fade-in-delay-1 { transition-delay: 0.15s; }
+        .fade-in-delay-2 { transition-delay: 0.3s; }
+
+        /* ── Section Header ── */
+        .section-header {
+            padding: 4rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .section-rule {
+            height: 1px;
+            background: var(--rule);
+        }
+
+        /* ── Project Grid (3x2 text-only) ── */
+        .grid-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 4rem 4rem;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .grid-card {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            padding: 2rem 1.8rem 1.8rem;
+            cursor: pointer;
+            transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+            overflow: hidden;
+            text-decoration: none;
+            display: block;
+        }
+
+        .grid-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .grid-card:hover {
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Accent stripes */
+        .grid-card[data-color="amber"]::before { background: var(--amber); }
+        .grid-card[data-color="blue"]::before { background: var(--blue); }
+        .grid-card[data-color="terracotta"]::before { background: var(--terracotta); }
+        .grid-card[data-color="teal"]::before { background: var(--teal); }
+        .grid-card[data-color="mint"]::before { background: var(--mint); }
+        .grid-card[data-color="purple"]::before { background: var(--purple); }
+
+        /* Hover backgrounds */
+        .grid-card[data-color="amber"]:hover { background: rgba(212, 168, 67, 0.04); }
+        .grid-card[data-color="blue"]:hover { background: rgba(74, 158, 245, 0.04); }
+        .grid-card[data-color="terracotta"]:hover { background: rgba(200, 90, 58, 0.04); }
+        .grid-card[data-color="teal"]:hover { background: rgba(46, 167, 122, 0.04); }
+        .grid-card[data-color="mint"]:hover { background: rgba(60, 201, 168, 0.04); }
+        .grid-card[data-color="purple"]:hover { background: rgba(155, 126, 216, 0.04); }
+
+        .grid-card-number {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+        }
+
+        .grid-card-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .grid-card-type {
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 0.7rem;
+        }
+
+        .grid-card[data-color="amber"] .grid-card-type { color: rgba(212, 168, 67, 0.7); }
+        .grid-card[data-color="blue"] .grid-card-type { color: rgba(74, 158, 245, 0.7); }
+        .grid-card[data-color="terracotta"] .grid-card-type { color: rgba(200, 90, 58, 0.7); }
+        .grid-card[data-color="teal"] .grid-card-type { color: rgba(46, 167, 122, 0.7); }
+        .grid-card[data-color="mint"] .grid-card-type { color: rgba(60, 201, 168, 0.7); }
+        .grid-card[data-color="purple"] .grid-card-type { color: rgba(155, 126, 216, 0.7); }
+
+        .grid-card-tagline {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .grid-card-tech {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        /* ── Sticky Mini-Nav ── */
+        .mini-nav {
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            background: rgba(10, 10, 15, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--rule);
+            padding: 0 4rem;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .mini-nav.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mini-nav::-webkit-scrollbar { display: none; }
+
+        .mini-nav-item {
+            padding: 0.9rem 1.4rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            transition: color 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .mini-nav-item:hover {
+            color: var(--text-secondary);
+        }
+
+        .mini-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            border-radius: 1px;
+            transition: width 0.3s ease;
+        }
+
+        .mini-nav-item.active::after {
+            width: 70%;
+        }
+
+        .mini-nav-item[data-color="amber"] { --nav-accent: var(--amber); }
+        .mini-nav-item[data-color="blue"] { --nav-accent: var(--blue); }
+        .mini-nav-item[data-color="terracotta"] { --nav-accent: var(--terracotta); }
+        .mini-nav-item[data-color="teal"] { --nav-accent: var(--teal); }
+        .mini-nav-item[data-color="mint"] { --nav-accent: var(--mint); }
+        .mini-nav-item[data-color="purple"] { --nav-accent: var(--purple); }
+
+        .mini-nav-item.active {
+            color: var(--nav-accent);
+        }
+
+        .mini-nav-item::after {
+            background: var(--nav-accent);
+        }
+
+        /* ── Detail Sections ── */
+        .detail-sections {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
+
+        .detail-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .detail-section + .detail-section {
+            border-top: 1px solid var(--rule);
+        }
+
+        .detail-layout {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        /* Odd: screenshot left, text right */
+        .detail-layout.layout-odd {
+            flex-direction: row;
+        }
+
+        /* Even: text left, screenshot right */
+        .detail-layout.layout-even {
+            flex-direction: row-reverse;
+        }
+
+        .detail-visual {
+            width: 55%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .detail-text {
+            width: 45%;
+            position: relative;
+        }
+
+        /* ── Screenshot Treatment ── */
+        .screenshot-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: visible;
+        }
+
+        .screenshot-main {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                0 12px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        .screenshot-main img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            filter: saturate(0.6) contrast(1.05) brightness(0.9);
+            transition: filter 0.6s ease;
+        }
+
+        .screenshot-container:hover .screenshot-main img {
+            filter: saturate(1) contrast(1) brightness(1);
+        }
+
+        /* Edge mask: fade bottom */
+        .screenshot-main::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(to top, var(--bg-card), transparent);
+            border-radius: 0 0 12px 12px;
+        }
+
+        /* Accent gradient overlay from bottom */
+        .screenshot-main::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            border-radius: 0 0 12px 12px;
+            pointer-events: none;
+            opacity: 0.15;
+            z-index: 3;
+        }
+
+        .detail-section[data-color="amber"] .screenshot-main::after { background: linear-gradient(to top, var(--amber), transparent); }
+        .detail-section[data-color="blue"] .screenshot-main::after { background: linear-gradient(to top, var(--blue), transparent); }
+        .detail-section[data-color="terracotta"] .screenshot-main::after { background: linear-gradient(to top, var(--terracotta), transparent); }
+        .detail-section[data-color="teal"] .screenshot-main::after { background: linear-gradient(to top, var(--teal), transparent); }
+        .detail-section[data-color="mint"] .screenshot-main::after { background: linear-gradient(to top, var(--mint), transparent); }
+        .detail-section[data-color="purple"] .screenshot-main::after { background: linear-gradient(to top, var(--purple), transparent); }
+
+        /* Secondary screenshot (overlapping stack) */
+        .screenshot-secondary {
+            position: absolute;
+            bottom: -1.5rem;
+            right: -1.5rem;
+            width: 50%;
+            border-radius: 12px;
+            overflow: hidden;
+            transform: rotate(-2deg);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                0 2px 8px rgba(0, 0, 0, 0.3);
+            z-index: 4;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .screenshot-secondary img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            filter: saturate(0.6) contrast(1.05) brightness(0.9);
+            transition: filter 0.6s ease;
+        }
+
+        .screenshot-container:hover .screenshot-secondary img {
+            filter: saturate(1) contrast(1) brightness(1);
+        }
+
+        /* ── Budgie Pipeline Visualization ── */
+        .budgie-visual {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                0 12px 48px rgba(0, 0, 0, 0.3);
+            padding: 3rem 2.5rem;
+            min-height: 380px;
+        }
+
+        .budgie-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 40%, rgba(155, 126, 216, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .pipeline-stages {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 2.5rem;
+        }
+
+        .pipeline-connector {
+            flex: 1;
+            height: 2px;
+            position: relative;
+            margin: 0 -0.5rem;
+        }
+
+        .pipeline-connector::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(155, 126, 216, 0.3) 0px,
+                rgba(155, 126, 216, 0.3) 6px,
+                transparent 6px,
+                transparent 12px
+            );
+            animation: dashFlow 1.5s linear infinite;
+        }
+
+        @keyframes dashFlow {
+            0% { background-position: 0 0; }
+            100% { background-position: 12px 0; }
+        }
+
+        .pipeline-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 3;
+            flex-shrink: 0;
+        }
+
+        .stage-node {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(155, 126, 216, 0.35);
+            background: rgba(155, 126, 216, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.6rem;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .budgie-visual:hover .stage-node {
+            border-color: rgba(155, 126, 216, 0.55);
+            background: rgba(155, 126, 216, 0.1);
+        }
+
+        .stage-node svg {
+            width: 24px;
+            height: 24px;
+            color: var(--purple);
+            opacity: 0.8;
+        }
+
+        .stage-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: 0.02em;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .stage-sublabel {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.15rem;
+        }
+
+        /* Budgie code snippet */
+        .budgie-code {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(155, 126, 216, 0.12);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.72rem;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        .budgie-code .kw { color: var(--purple); }
+        .budgie-code .fn { color: #E8C76A; }
+        .budgie-code .str { color: #7EC89B; }
+        .budgie-code .cm { color: var(--text-muted); font-style: italic; }
+        .budgie-code .op { color: var(--text-secondary); }
+        .budgie-code .var { color: var(--text-primary); }
+        .budgie-code .cls { color: #5CB3E8; }
+        .budgie-code .num { color: #E89B6A; }
+
+        /* ── Detail Text ── */
+        .detail-bg-number {
+            position: absolute;
+            top: -0.5rem;
+            left: -0.5rem;
+            font-size: 6rem;
+            font-weight: 200;
+            color: var(--text-primary);
+            opacity: 0.05;
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .detail-name {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-section[data-color="amber"] .detail-name { color: var(--amber); }
+        .detail-section[data-color="blue"] .detail-name { color: var(--blue); }
+        .detail-section[data-color="terracotta"] .detail-name { color: var(--terracotta); }
+        .detail-section[data-color="teal"] .detail-name { color: var(--teal); }
+        .detail-section[data-color="mint"] .detail-name { color: var(--mint); }
+        .detail-section[data-color="purple"] .detail-name { color: var(--purple); }
+
+        .detail-type-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .detail-description {
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            max-width: 520px;
+        }
+
+        .detail-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-features li {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            line-height: 1.7;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .detail-features li::before {
+            content: '\2014';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .detail-tech {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .detail-tech span {
+            color: var(--text-secondary);
+        }
+
+        /* ── Footer ── */
+        .footer {
+            padding: 4rem 4rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-rule {
+            height: 1px;
+            background: var(--rule);
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover { color: var(--text-secondary); }
+
+        /* ── Mockup Badge ── */
+        .mockup-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 200;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 8px 16px;
+            background: rgba(14, 14, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .mockup-badge strong {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+        }
+
+        /* ── Responsive: 1100px ── */
+        @media (max-width: 1100px) {
+            .project-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ── Responsive: 900px ── */
+        @media (max-width: 900px) {
+            nav { padding: 1.5rem 2rem; }
+            nav .nav-links { gap: 2rem; }
+
+            .hero {
+                padding: 6rem 2rem 3rem;
+                min-height: auto;
+            }
+
+            .hero-name .first,
+            .hero-name .last {
+                font-size: clamp(3rem, 10vw, 5rem);
+            }
+
+            .hero-subtitle-area {
+                justify-content: flex-start;
+                padding-right: 0;
+                padding-left: 5%;
+            }
+
+            .hero-rule { left: 2rem; right: 2rem; }
+            .scroll-hint { left: 2rem; }
+
+            .section-header { padding: 3rem 2rem 0; }
+            .grid-section { padding: 2rem 2rem 3rem; }
+            .detail-sections { padding: 0 2rem; }
+            .mini-nav { padding: 0 2rem; }
+
+            .detail-layout,
+            .detail-layout.layout-odd,
+            .detail-layout.layout-even {
+                flex-direction: column;
+            }
+
+            .detail-visual,
+            .detail-text {
+                width: 100%;
+            }
+
+            .detail-visual {
+                margin-bottom: 2rem;
+            }
+
+            .detail-section {
+                padding: 3.5rem 0;
+            }
+
+            .pipeline-stages {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+
+            .pipeline-connector {
+                display: none;
+            }
+        }
+
+        /* ── Responsive: 600px ── */
+        @media (max-width: 600px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav .nav-links { gap: 1.5rem; }
+            nav .nav-links a { font-size: 0.7rem; }
+
+            .hero-name .first,
+            .hero-name .last {
+                font-size: clamp(2.5rem, 12vw, 4rem);
+            }
+
+            .detail-name { font-size: 1.5rem; }
+            .detail-bg-number { font-size: 4rem; }
+
+            .mini-nav { padding: 0 1rem; }
+            .mini-nav-item { padding: 0.8rem 1rem; font-size: 0.68rem; }
+
+            .footer {
+                padding: 3rem 2rem 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: flex-start;
+            }
+
+            .stage-node {
+                width: 48px;
+                height: 48px;
+            }
+
+            .stage-node svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">RL</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-name">
+                <span class="first fade-in">Robert</span>
+                <span class="last fade-in fade-in-delay-1">Laabs</span>
+            </div>
+            <div class="hero-subtitle-area fade-in fade-in-delay-2">
+                <div class="hero-subtitle-block">
+                    <p class="hero-subtitle">Software Engineer</p>
+                    <p class="hero-tagline">Building production tools that ship — from desktop apps to ML infrastructure</p>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <span class="scroll-line-hero"></span>
+            Scroll
+        </div>
+        <div class="hero-rule"></div>
+    </section>
+
+    <!-- Section Header -->
+    <div class="section-header" id="work">
+        <p class="section-label fade-in">Selected Work</p>
+        <div class="section-rule"></div>
+    </div>
+
+    <!-- Project Grid (3x2 text-only) -->
+    <div class="grid-section">
+        <div class="project-grid">
+
+            <a class="grid-card fade-in" data-color="amber" href="#section-ibis">
+                <div class="grid-card-number">01</div>
+                <div class="grid-card-name">Ibis</div>
+                <div class="grid-card-type">Desktop App</div>
+                <div class="grid-card-tagline">Enterprise AI assistant with local inference and document analysis</div>
+                <div class="grid-card-tech">TypeScript &middot; Electron &middot; React &middot; Python</div>
+            </a>
+
+            <a class="grid-card fade-in" data-color="blue" href="#section-strix">
+                <div class="grid-card-number">02</div>
+                <div class="grid-card-name">Strix</div>
+                <div class="grid-card-type">macOS App</div>
+                <div class="grid-card-tagline">Fast, native SQLite browser with schema exploration and syntax-highlighted editing</div>
+                <div class="grid-card-tech">Swift &middot; SwiftUI &middot; GRDB &middot; AppKit</div>
+            </a>
+
+            <a class="grid-card fade-in" data-color="terracotta" href="#section-sparrow">
+                <div class="grid-card-number">03</div>
+                <div class="grid-card-name">Sparrow</div>
+                <div class="grid-card-type">Web Platform</div>
+                <div class="grid-card-tagline">Automated market research with AI-powered report generation and citations</div>
+                <div class="grid-card-tech">Python &middot; Django &middot; Google GenAI &middot; Docker</div>
+            </a>
+
+            <a class="grid-card fade-in" data-color="teal" href="#section-magpie">
+                <div class="grid-card-number">04</div>
+                <div class="grid-card-name">Magpie</div>
+                <div class="grid-card-type">Web Platform</div>
+                <div class="grid-card-tagline">Survey quality scoring that catches low-effort and fraudulent responses</div>
+                <div class="grid-card-tech">Python &middot; Django &middot; OpenAI &middot; Polars</div>
+            </a>
+
+            <a class="grid-card fade-in" data-color="mint" href="#section-mallard">
+                <div class="grid-card-number">05</div>
+                <div class="grid-card-name">Mallard</div>
+                <div class="grid-card-type">Web Platform</div>
+                <div class="grid-card-tagline">Scalable behavioral analytics with custom dashboards and auto-scaling</div>
+                <div class="grid-card-tech">Python &middot; Django &middot; Spark &middot; AWS</div>
+            </a>
+
+            <a class="grid-card fade-in" data-color="purple" href="#section-budgie">
+                <div class="grid-card-number">06</div>
+                <div class="grid-card-name">Budgie</div>
+                <div class="grid-card-type">ML Framework</div>
+                <div class="grid-card-tagline">Schema-first synthetic data generation with async pipelines and validation</div>
+                <div class="grid-card-tech">Python &middot; asyncio &middot; OpenAI &middot; Pydantic</div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Sticky Mini-Nav -->
+    <div class="mini-nav" id="miniNav">
+        <button class="mini-nav-item" data-color="amber" data-target="section-ibis">Ibis</button>
+        <button class="mini-nav-item" data-color="blue" data-target="section-strix">Strix</button>
+        <button class="mini-nav-item" data-color="terracotta" data-target="section-sparrow">Sparrow</button>
+        <button class="mini-nav-item" data-color="teal" data-target="section-magpie">Magpie</button>
+        <button class="mini-nav-item" data-color="mint" data-target="section-mallard">Mallard</button>
+        <button class="mini-nav-item" data-color="purple" data-target="section-budgie">Budgie</button>
+    </div>
+
+    <!-- Detail Sections -->
+    <div class="detail-sections">
+
+        <!-- 01 Ibis (ODD: screenshot LEFT, text RIGHT) -->
+        <article class="detail-section" id="section-ibis" data-color="amber" data-index="0">
+            <div class="detail-layout layout-odd">
+                <div class="detail-visual">
+                    <div class="screenshot-container">
+                        <div class="screenshot-main">
+                            <img src="sample-screenshots/ibis-hero.png" alt="Ibis main interface" loading="lazy">
+                        </div>
+                        <div class="screenshot-secondary">
+                            <img src="sample-screenshots/ibis-02.png" alt="Ibis conversation view" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-text">
+                    <div class="detail-bg-number">01</div>
+                    <h2 class="detail-name">Ibis</h2>
+                    <div class="detail-type-badge">Desktop App</div>
+                    <p class="detail-description">
+                        A cross-platform desktop application providing enterprise-grade AI capabilities for professional workflows. Built on Electron with a React frontend and Python backend, prioritizing privacy, speed, and deep system integration.
+                    </p>
+                    <ul class="detail-features">
+                        <li>Local model inference for data-sensitive environments</li>
+                        <li>Document analysis with multi-format parsing</li>
+                        <li>Seamless integration with internal knowledge bases</li>
+                        <li>Cross-platform deployment with native feel</li>
+                    </ul>
+                    <p class="detail-tech">
+                        <span>TypeScript</span> &middot; <span>Electron</span> &middot; <span>React</span> &middot; <span>Python</span>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- 02 Strix (EVEN: text LEFT, screenshot RIGHT) -->
+        <article class="detail-section" id="section-strix" data-color="blue" data-index="1">
+            <div class="detail-layout layout-even">
+                <div class="detail-visual">
+                    <div class="screenshot-container">
+                        <div class="screenshot-main">
+                            <img src="sample-screenshots/strix-hero.png" alt="Strix main view" loading="lazy">
+                        </div>
+                        <div class="screenshot-secondary">
+                            <img src="sample-screenshots/strix-02.png" alt="Strix table browser" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-text">
+                    <div class="detail-bg-number">02</div>
+                    <h2 class="detail-name">Strix</h2>
+                    <div class="detail-type-badge">macOS App</div>
+                    <p class="detail-description">
+                        A fast, native macOS application for browsing and managing SQLite databases. Built entirely in Swift with SwiftUI, designed around performance and a clean, distraction-free interface with full drag-and-drop and Spotlight integration.
+                    </p>
+                    <ul class="detail-features">
+                        <li>Syntax-highlighted SQL editing with autocomplete</li>
+                        <li>Visual schema exploration and relationship mapping</li>
+                        <li>Instant full-text search across all tables</li>
+                        <li>Native macOS integration with Spotlight and Quick Look</li>
+                    </ul>
+                    <p class="detail-tech">
+                        <span>Swift</span> &middot; <span>SwiftUI</span> &middot; <span>GRDB</span> &middot; <span>AppKit</span>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- 03 Sparrow (ODD: screenshot LEFT, text RIGHT) -->
+        <article class="detail-section" id="section-sparrow" data-color="terracotta" data-index="2">
+            <div class="detail-layout layout-odd">
+                <div class="detail-visual">
+                    <div class="screenshot-container">
+                        <div class="screenshot-main">
+                            <img src="sample-screenshots/sparrow-hero.png" alt="Sparrow platform interface" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-text">
+                    <div class="detail-bg-number">03</div>
+                    <h2 class="detail-name">Sparrow</h2>
+                    <div class="detail-type-badge">Web Platform</div>
+                    <p class="detail-description">
+                        A web platform that leverages generative AI to automate and enhance market research workflows. Automated competitor analysis, AI-powered report generation with citations, and customizable research templates.
+                    </p>
+                    <ul class="detail-features">
+                        <li>Automated competitor analysis with source tracking</li>
+                        <li>AI-generated reports with inline citations</li>
+                        <li>Customizable research templates and workflows</li>
+                    </ul>
+                    <p class="detail-tech">
+                        <span>Python</span> &middot; <span>Django</span> &middot; <span>Google GenAI</span> &middot; <span>Docker</span>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- 04 Magpie (EVEN: text LEFT, screenshot RIGHT) -->
+        <article class="detail-section" id="section-magpie" data-color="teal" data-index="3">
+            <div class="detail-layout layout-even">
+                <div class="detail-visual">
+                    <div class="screenshot-container">
+                        <div class="screenshot-main">
+                            <img src="sample-screenshots/magpie-hero.png" alt="Magpie dashboard" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-text">
+                    <div class="detail-bg-number">04</div>
+                    <h2 class="detail-name">Magpie</h2>
+                    <div class="detail-type-badge">Web Platform</div>
+                    <p class="detail-description">
+                        An intelligent platform that uses AI to evaluate and score survey response quality, identifying low-effort, inconsistent, or fraudulent responses. Polars-based data pipeline handles large datasets with configurable quality thresholds.
+                    </p>
+                    <ul class="detail-features">
+                        <li>AI-powered quality scoring with explainable results</li>
+                        <li>Configurable thresholds for different survey types</li>
+                        <li>High-performance Polars pipeline for large datasets</li>
+                    </ul>
+                    <p class="detail-tech">
+                        <span>Python</span> &middot; <span>Django</span> &middot; <span>OpenAI</span> &middot; <span>Polars</span>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- 05 Mallard (ODD: screenshot LEFT, text RIGHT) -->
+        <article class="detail-section" id="section-mallard" data-color="mint" data-index="4">
+            <div class="detail-layout layout-odd">
+                <div class="detail-visual">
+                    <div class="screenshot-container">
+                        <div class="screenshot-main">
+                            <img src="sample-screenshots/mallard-hero.png" alt="Mallard analytics dashboard" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-text">
+                    <div class="detail-bg-number">05</div>
+                    <h2 class="detail-name">Mallard</h2>
+                    <div class="detail-type-badge">Web Platform</div>
+                    <p class="detail-description">
+                        A scalable behavioral analytics platform processing large volumes of user interaction data. Spark-powered behavioral segmentation with a custom dashboard builder, deployed on AWS infrastructure with auto-scaling.
+                    </p>
+                    <ul class="detail-features">
+                        <li>Spark-powered behavioral segmentation at scale</li>
+                        <li>Custom drag-and-drop dashboard builder</li>
+                        <li>AWS auto-scaling with cost-optimized infrastructure</li>
+                    </ul>
+                    <p class="detail-tech">
+                        <span>Python</span> &middot; <span>Django</span> &middot; <span>Spark</span> &middot; <span>AWS</span>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- 06 Budgie (EVEN: text LEFT, visual RIGHT) -->
+        <article class="detail-section" id="section-budgie" data-color="purple" data-index="5">
+            <div class="detail-layout layout-even">
+                <div class="detail-visual">
+                    <div class="budgie-visual">
+                        <!-- Pipeline Visualization -->
+                        <div class="pipeline-stages">
+                            <div class="pipeline-stage">
+                                <div class="stage-node">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                    </svg>
+                                </div>
+                                <span class="stage-label">Schema</span>
+                                <span class="stage-sublabel">Pydantic</span>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-stage">
+                                <div class="stage-node">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="16 18 22 12 16 6"/>
+                                        <polyline points="8 6 2 12 8 18"/>
+                                    </svg>
+                                </div>
+                                <span class="stage-label">Prompt</span>
+                                <span class="stage-sublabel">Template</span>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-stage">
+                                <div class="stage-node">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                        <path d="M2 17l10 5 10-5"/>
+                                        <path d="M2 12l10 5 10-5"/>
+                                    </svg>
+                                </div>
+                                <span class="stage-label">Generate</span>
+                                <span class="stage-sublabel">async LLM</span>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-stage">
+                                <div class="stage-node">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                </div>
+                                <span class="stage-label">Validate</span>
+                                <span class="stage-sublabel">+ Retry</span>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-stage">
+                                <div class="stage-node">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                                    </svg>
+                                </div>
+                                <span class="stage-label">Output</span>
+                                <span class="stage-sublabel">Dataset</span>
+                            </div>
+                        </div>
+
+                        <!-- Code Snippet -->
+                        <div class="budgie-code">
+                            <span class="kw">from</span> <span class="cls">budgie</span> <span class="kw">import</span> <span class="cls">Pipeline</span><span class="op">,</span> <span class="cls">Schema</span><br>
+                            <br>
+                            <span class="kw">class</span> <span class="cls">UserProfile</span><span class="op">(</span><span class="cls">Schema</span><span class="op">):</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="var">name</span><span class="op">:</span> <span class="cls">str</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="var">bio</span><span class="op">:</span> <span class="cls">str</span> <span class="op">=</span> <span class="fn">Field</span><span class="op">(</span><span class="var">max_length</span><span class="op">=</span><span class="num">280</span><span class="op">)</span><br>
+                            <br>
+                            <span class="var">pipe</span> <span class="op">=</span> <span class="cls">Pipeline</span><span class="op">(</span><span class="var">schema</span><span class="op">=</span><span class="cls">UserProfile</span><span class="op">,</span> <span class="var">n</span><span class="op">=</span><span class="num">1000</span><span class="op">)</span><br>
+                            <span class="var">data</span> <span class="op">=</span> <span class="kw">await</span> <span class="var">pipe</span><span class="op">.</span><span class="fn">run</span><span class="op">()</span> <span class="cm"># async generation</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-text">
+                    <div class="detail-bg-number">06</div>
+                    <h2 class="detail-name">Budgie</h2>
+                    <div class="detail-type-badge">ML Framework</div>
+                    <p class="detail-description">
+                        A Python framework for generating high-quality synthetic datasets using LLMs. Schema-first design with Pydantic models, async pipeline with configurable concurrency, and automatic validation with retry logic for malformed output.
+                    </p>
+                    <ul class="detail-features">
+                        <li>Schema-first design with Pydantic model definitions</li>
+                        <li>Async pipeline with configurable concurrency limits</li>
+                        <li>Automatic validation and retry for malformed output</li>
+                        <li>Pluggable LLM backends with cost tracking</li>
+                    </ul>
+                    <p class="detail-tech">
+                        <span>Python</span> &middot; <span>asyncio</span> &middot; <span>OpenAI</span> &middot; <span>Pydantic</span>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-rule"></div>
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2026 Robert Laabs</p>
+            <ul class="footer-links">
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Email</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- Mockup Badge -->
+    <div class="mockup-badge">Mockup <strong>6b</strong> &mdash; Scroll Section</div>
+
+    <script>
+        (function () {
+            // ── Smooth scroll for grid cards ──
+            document.querySelectorAll('.grid-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = card.getAttribute('href').slice(1);
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // ── Mini-nav click handlers ──
+            document.querySelectorAll('.mini-nav-item').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.dataset.target;
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // ── Show/hide mini-nav based on grid visibility ──
+            const miniNav = document.getElementById('miniNav');
+            const gridSection = document.querySelector('.grid-section');
+
+            const miniNavObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        // Grid is above viewport — show mini-nav
+                        const gridRect = gridSection.getBoundingClientRect();
+                        if (gridRect.bottom < 0) {
+                            miniNav.classList.add('visible');
+                        } else {
+                            miniNav.classList.remove('visible');
+                        }
+                    } else {
+                        miniNav.classList.remove('visible');
+                    }
+                });
+            }, {
+                threshold: 0,
+                rootMargin: '0px'
+            });
+
+            miniNavObserver.observe(gridSection);
+
+            // ── Intersection Observer: update mini-nav active state ──
+            const detailSections = document.querySelectorAll('.detail-section');
+            const miniNavItems = document.querySelectorAll('.mini-nav-item');
+            let currentActiveSection = null;
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        if (currentActiveSection !== id) {
+                            currentActiveSection = id;
+                            miniNavItems.forEach(item => {
+                                const isActive = item.dataset.target === id;
+                                item.classList.toggle('active', isActive);
+                            });
+                        }
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '-30% 0px -30% 0px',
+                threshold: 0
+            });
+
+            detailSections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // ── Fade-in observer ──
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        fadeObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                fadeObserver.observe(el);
+            });
+
+            // Trigger hero fade-ins
+            setTimeout(() => {
+                document.querySelectorAll('.hero .fade-in').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 200);
+        })();
+    </script>
+
+</body>
+</html>

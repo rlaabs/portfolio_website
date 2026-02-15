@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Laabs — Portfolio (Inline Expand)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0A0A0F;
+            --bg-subtle: #101018;
+            --bg-card: #0E0E16;
+            --bg-card-hover: #131320;
+            --text-primary: #E8E8ED;
+            --text-secondary: #8A8A96;
+            --text-muted: #5A5A66;
+            --rule: #1E1E2A;
+            --amber: #D4A843;
+            --blue: #4A9EF5;
+            --terracotta: #C85A3A;
+            --teal: #2EA77A;
+            --mint: #3CC9A8;
+            --purple: #9B7ED8;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            height: 70vh;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 clamp(2rem, 5vw, 6rem);
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: clamp(2rem, 5vw, 6rem);
+            right: clamp(2rem, 5vw, 6rem);
+            height: 1px;
+            background: var(--rule);
+        }
+
+        .hero-name {
+            font-size: clamp(4rem, 7vw, 7rem);
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .hero-name span:first-child {
+            font-weight: 300;
+        }
+
+        .hero-name span:last-child {
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            margin-top: 1.5rem;
+            text-align: right;
+            max-width: 480px;
+            margin-left: auto;
+        }
+
+        .hero-subtitle .role {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .hero-subtitle .tagline {
+            font-size: 1.05rem;
+            font-style: italic;
+            font-weight: 300;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        /* ── Section ── */
+        .section-label {
+            padding: 3rem clamp(2rem, 5vw, 6rem) 1.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* ── Grid ── */
+        .grid-wrap {
+            padding: 0 clamp(2rem, 5vw, 6rem);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--rule);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* ── Card ── */
+        .project-card {
+            position: relative;
+            background: var(--bg-card);
+            padding: 1.75rem 1.75rem 1.75rem 2.25rem;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            user-select: none;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--card-accent);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card.active {
+            background: var(--bg-card-hover);
+        }
+
+        .project-card.active::before {
+            opacity: 1;
+        }
+
+        .card-number {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.6rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .card-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--card-accent);
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.01em;
+        }
+
+        .card-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border: 1px solid var(--rule);
+            border-radius: 3px;
+            padding: 0.15rem 0.5rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .card-tagline {
+            font-size: 0.85rem;
+            font-style: italic;
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: 0.7rem;
+            line-height: 1.4;
+        }
+
+        .card-tech {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .card-tech span {
+            margin: 0 0.3em;
+            opacity: 0.4;
+        }
+
+        /* ── Detail Panel ── */
+        .detail-panel {
+            height: 0;
+            overflow: hidden;
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg);
+            position: relative;
+        }
+
+        .detail-inner {
+            border-top: 3px solid var(--detail-accent, var(--text-muted));
+            padding: 3rem clamp(2rem, 5vw, 6rem);
+        }
+
+        .detail-layout {
+            display: grid;
+            grid-template-columns: 55% 45%;
+            gap: 3rem;
+            max-width: 1400px;
+        }
+
+        /* ── Screenshot Treatment ── */
+        .visual-area {
+            position: relative;
+        }
+
+        .screenshot-container {
+            position: relative;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Gallery for multi-screenshot projects */
+        .screenshot-gallery {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .screenshot-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .screenshot-slide {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .screenshot-slide img {
+            display: block;
+            width: 100%;
+            height: auto;
+            min-height: 300px;
+            object-fit: cover;
+            filter: saturate(0.6) contrast(1.05) brightness(0.9);
+            transition: filter 0.6s ease;
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        }
+
+        .screenshot-slide::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+
+        .screenshot-container:hover .screenshot-slide img {
+            filter: saturate(1) contrast(1) brightness(1);
+        }
+
+        .screenshot-container:hover .screenshot-slide::after {
+            opacity: 0.33;
+        }
+
+        /* Single screenshot */
+        .screenshot-single {
+            position: relative;
+        }
+
+        .screenshot-single img {
+            display: block;
+            width: 100%;
+            height: auto;
+            min-height: 300px;
+            object-fit: cover;
+            filter: saturate(0.6) contrast(1.05) brightness(0.9);
+            transition: filter 0.6s ease;
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        }
+
+        .screenshot-single::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+
+        .screenshot-container:hover .screenshot-single img {
+            filter: saturate(1) contrast(1) brightness(1);
+        }
+
+        .screenshot-container:hover .screenshot-single::after {
+            opacity: 0.33;
+        }
+
+        /* Gallery dots */
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            padding: 0.75rem 0 0;
+        }
+
+        .gallery-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            opacity: 0.3;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-dot.active {
+            opacity: 1;
+        }
+
+        /* ── Budgie Pipeline Visualization ── */
+        .budgie-visual {
+            background: radial-gradient(ellipse at 30% 40%, rgba(155, 126, 216, 0.08) 0%, transparent 70%),
+                        radial-gradient(ellipse at 70% 60%, rgba(155, 126, 216, 0.05) 0%, transparent 60%),
+                        var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            padding: 2.5rem 2rem 2rem;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pipeline-title {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--purple);
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .pipeline-stages {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            gap: 0;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .pipeline-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+            flex: 0 0 auto;
+        }
+
+        .pipeline-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            border: 1.5px solid rgba(155, 126, 216, 0.4);
+            background: rgba(155, 126, 216, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            animation: nodePulse 3s ease-in-out infinite;
+        }
+
+        .pipeline-node:nth-child(1) .pipeline-icon { animation-delay: 0s; }
+        .pipeline-node:nth-child(3) .pipeline-icon { animation-delay: 0.6s; }
+        .pipeline-node:nth-child(5) .pipeline-icon { animation-delay: 1.2s; }
+        .pipeline-node:nth-child(7) .pipeline-icon { animation-delay: 1.8s; }
+        .pipeline-node:nth-child(9) .pipeline-icon { animation-delay: 2.4s; }
+
+        @keyframes nodePulse {
+            0%, 100% { border-color: rgba(155, 126, 216, 0.3); box-shadow: 0 0 0 0 rgba(155, 126, 216, 0); }
+            50% { border-color: rgba(155, 126, 216, 0.6); box-shadow: 0 0 16px 2px rgba(155, 126, 216, 0.08); }
+        }
+
+        .pipeline-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .pipeline-sublabel {
+            font-size: 0.55rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .pipeline-connector {
+            flex: 1;
+            height: 1.5px;
+            position: relative;
+            min-width: 20px;
+            margin: 0 -4px;
+            align-self: flex-start;
+            margin-top: 26px;
+        }
+
+        .pipeline-connector::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(155, 126, 216, 0.5) 0px,
+                rgba(155, 126, 216, 0.5) 6px,
+                transparent 6px,
+                transparent 12px
+            );
+            background-size: 12px 100%;
+            animation: dashFlow 1.5s linear infinite;
+        }
+
+        @keyframes dashFlow {
+            0% { background-position: 0 0; }
+            100% { background-position: 12px 0; }
+        }
+
+        .budgie-code {
+            margin-top: auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(155, 126, 216, 0.15);
+            padding: 1rem 1.25rem;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.7rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            overflow-x: auto;
+        }
+
+        .budgie-code .kw { color: #C792EA; }
+        .budgie-code .fn { color: #82AAFF; }
+        .budgie-code .st { color: #C3E88D; }
+        .budgie-code .cm { color: #546E7A; }
+        .budgie-code .op { color: #89DDFF; }
+        .budgie-code .aw { color: #FFCB6B; }
+
+        /* ── Detail Text ── */
+        .detail-text {
+            position: relative;
+            padding-right: 2rem;
+        }
+
+        .detail-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--rule);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .detail-close:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .detail-name {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.4rem;
+        }
+
+        .detail-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border: 1px solid var(--rule);
+            border-radius: 3px;
+            padding: 0.2rem 0.6rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .detail-desc {
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-features li {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .detail-features li::before {
+            content: '\2014';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .detail-tech-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .detail-tech-list {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .detail-tech-list span {
+            margin: 0 0.35em;
+            opacity: 0.35;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            padding: 4rem clamp(2rem, 5vw, 6rem) 2rem;
+            text-align: center;
+        }
+
+        .footer-line {
+            width: 40px;
+            height: 1px;
+            background: var(--rule);
+            margin: 0 auto 1.5rem;
+        }
+
+        .footer-text {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* ── Reduced Motion ── */
+        @media (prefers-reduced-motion: reduce) {
+            .detail-panel {
+                transition: none;
+            }
+            .pipeline-icon {
+                animation: none;
+            }
+            .pipeline-connector::before {
+                animation: none;
+            }
+            .screenshot-slide img,
+            .screenshot-single img,
+            .screenshot-slide::after,
+            .screenshot-single::after {
+                transition: none;
+            }
+            .project-card,
+            .project-card::before {
+                transition: none;
+            }
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        /* ── Responsive: 2-col grid at 1100px ── */
+        @media (max-width: 1100px) {
+            .project-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ── Responsive: detail single column at 900px ── */
+        @media (max-width: 900px) {
+            .detail-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* ── Responsive: 1-col grid at 600px ── */
+        @media (max-width: 600px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-name {
+                font-size: clamp(2.5rem, 10vw, 4rem);
+            }
+
+            .hero-subtitle {
+                text-align: left;
+                margin-left: 0;
+            }
+
+            .project-card {
+                min-height: 200px;
+            }
+
+            .detail-inner {
+                padding: 2rem clamp(1rem, 4vw, 2rem);
+            }
+
+            .pipeline-stages {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+
+            .pipeline-connector {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+        <h1 class="hero-name">
+            <span>Robert </span><span>Laabs</span>
+        </h1>
+        <div class="hero-subtitle">
+            <div class="role">Software Engineer</div>
+            <div class="tagline">Crafting precise tools for complex problems</div>
+        </div>
+    </section>
+
+    <!-- ── Projects ── -->
+    <div class="section-label">Selected Projects</div>
+
+    <div class="grid-wrap">
+        <div class="project-grid" id="projectGrid">
+
+            <div class="project-card" data-project="ibis" style="--card-accent: var(--amber);" onclick="toggleDetail('ibis')">
+                <div class="card-number">01</div>
+                <div class="card-name">Ibis</div>
+                <div class="card-badge">Desktop App</div>
+                <div class="card-tagline">Enterprise AI Desktop Assistant</div>
+                <div class="card-tech">TypeScript<span>&middot;</span>Electron<span>&middot;</span>React<span>&middot;</span>Python</div>
+            </div>
+
+            <div class="project-card" data-project="strix" style="--card-accent: var(--blue);" onclick="toggleDetail('strix')">
+                <div class="card-number">02</div>
+                <div class="card-name">Strix</div>
+                <div class="card-badge">macOS App</div>
+                <div class="card-tagline">Native macOS SQLite Browser</div>
+                <div class="card-tech">Swift<span>&middot;</span>SwiftUI<span>&middot;</span>GRDB<span>&middot;</span>AppKit</div>
+            </div>
+
+            <div class="project-card" data-project="sparrow" style="--card-accent: var(--terracotta);" onclick="toggleDetail('sparrow')">
+                <div class="card-number">03</div>
+                <div class="card-name">Sparrow</div>
+                <div class="card-badge">Web Platform</div>
+                <div class="card-tagline">AI Market Research Platform</div>
+                <div class="card-tech">Python<span>&middot;</span>Django<span>&middot;</span>Google GenAI<span>&middot;</span>Docker</div>
+            </div>
+
+            <div class="project-card" data-project="magpie" style="--card-accent: var(--teal);" onclick="toggleDetail('magpie')">
+                <div class="card-number">04</div>
+                <div class="card-name">Magpie</div>
+                <div class="card-badge">Web Platform</div>
+                <div class="card-tagline">Survey Response Quality Analyzer</div>
+                <div class="card-tech">Python<span>&middot;</span>Django<span>&middot;</span>OpenAI<span>&middot;</span>Polars</div>
+            </div>
+
+            <div class="project-card" data-project="mallard" style="--card-accent: var(--mint);" onclick="toggleDetail('mallard')">
+                <div class="card-number">05</div>
+                <div class="card-name">Mallard</div>
+                <div class="card-badge">Web Platform</div>
+                <div class="card-tagline">Behavioral Analytics Platform</div>
+                <div class="card-tech">Python<span>&middot;</span>Django<span>&middot;</span>Spark<span>&middot;</span>AWS</div>
+            </div>
+
+            <div class="project-card" data-project="budgie" style="--card-accent: var(--purple);" onclick="toggleDetail('budgie')">
+                <div class="card-number">06</div>
+                <div class="card-name">Budgie</div>
+                <div class="card-badge">ML Framework</div>
+                <div class="card-tagline">Synthetic Data Generation Framework</div>
+                <div class="card-tech">Python<span>&middot;</span>asyncio<span>&middot;</span>OpenAI<span>&middot;</span>Pydantic</div>
+            </div>
+
+        </div>
+
+        <!-- Detail Panel (below entire grid) -->
+        <div class="detail-panel" id="detailPanel">
+            <div class="detail-inner" id="detailInner">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+        <div class="footer-line"></div>
+        <div class="footer-text">Robert Laabs &mdash; 2026</div>
+    </footer>
+
+    <script>
+    /* ═══════════════════════════════════════════
+       Project Data
+       ═══════════════════════════════════════════ */
+    const projects = {
+        ibis: {
+            name: 'Ibis',
+            accent: '#D4A843',
+            badge: 'Desktop App',
+            description: 'A cross-platform desktop assistant that brings enterprise AI capabilities to local workflows. Built with Electron and React on the frontend, backed by a Python service layer for model orchestration and document processing.',
+            features: [
+                'Local-first architecture with optional cloud sync for enterprise deployments',
+                'Multi-model orchestration supporting OpenAI, Anthropic, and local LLMs',
+                'Document ingestion pipeline with chunking, embedding, and semantic search',
+                'Plugin system for extending assistant capabilities per-organization'
+            ],
+            tech: 'TypeScript \u00b7 Electron \u00b7 React \u00b7 Python',
+            screenshots: ['sample-screenshots/ibis-hero.png', 'sample-screenshots/ibis-02.png', 'sample-screenshots/ibis-03.png'],
+            type: 'gallery'
+        },
+        strix: {
+            name: 'Strix',
+            accent: '#4A9EF5',
+            badge: 'macOS App',
+            description: 'A native macOS application for browsing, querying, and managing SQLite databases. Designed for developers who want a fast, keyboard-driven interface without the overhead of generic database tools.',
+            features: [
+                'Native SwiftUI interface with AppKit integration for pro-level table views',
+                'Syntax-highlighted SQL editor with autocomplete and query history',
+                'Visual schema browser with relationship mapping',
+                'Export to CSV, JSON, and Markdown with customizable formatting'
+            ],
+            tech: 'Swift \u00b7 SwiftUI \u00b7 GRDB \u00b7 AppKit',
+            screenshots: ['sample-screenshots/strix-hero.png', 'sample-screenshots/strix-02.png', 'sample-screenshots/strix-03.png'],
+            type: 'gallery'
+        },
+        sparrow: {
+            name: 'Sparrow',
+            accent: '#C85A3A',
+            badge: 'Web Platform',
+            description: 'An AI-powered market research platform that automates competitive analysis and trend identification. Researchers define queries, and the system synthesizes findings from multiple data sources into structured reports.',
+            features: [
+                'Automated data collection from public APIs, web sources, and document uploads',
+                'Google GenAI integration for synthesis and insight extraction',
+                'Collaborative workspace with role-based access and annotation tools',
+                'Dockerized deployment with horizontal scaling for large research workloads'
+            ],
+            tech: 'Python \u00b7 Django \u00b7 Google GenAI \u00b7 Docker',
+            screenshots: ['sample-screenshots/sparrow-hero.png'],
+            type: 'single'
+        },
+        magpie: {
+            name: 'Magpie',
+            accent: '#2EA77A',
+            badge: 'Web Platform',
+            description: 'A quality analysis tool for survey responses that uses AI to detect low-effort, fraudulent, or bot-generated submissions. Helps research teams clean datasets before analysis, significantly improving data integrity.',
+            features: [
+                'Multi-signal quality scoring combining heuristic and LLM-based analysis',
+                'Polars-powered data processing for sub-second analysis of large datasets',
+                'Configurable quality thresholds with visual distribution previews',
+                'Batch export with quality annotations for downstream statistical tools'
+            ],
+            tech: 'Python \u00b7 Django \u00b7 OpenAI \u00b7 Polars',
+            screenshots: ['sample-screenshots/magpie-hero.png'],
+            type: 'single'
+        },
+        mallard: {
+            name: 'Mallard',
+            accent: '#3CC9A8',
+            badge: 'Web Platform',
+            description: 'A behavioral analytics platform that processes event streams to surface user patterns, cohort behaviors, and engagement metrics. Built for product teams that need deeper insight than standard analytics tools provide.',
+            features: [
+                'Spark-based ETL pipeline processing millions of events per hour',
+                'Custom funnel builder with flexible event sequencing and time windows',
+                'Cohort analysis with retention curves and behavioral segmentation',
+                'AWS-native deployment with auto-scaling and cost-optimized storage tiers'
+            ],
+            tech: 'Python \u00b7 Django \u00b7 Spark \u00b7 AWS',
+            screenshots: ['sample-screenshots/mallard-hero.png'],
+            type: 'single'
+        },
+        budgie: {
+            name: 'Budgie',
+            accent: '#9B7ED8',
+            badge: 'ML Framework',
+            description: 'A Python framework for generating structured synthetic datasets using LLMs. Designed for ML engineers who need high-quality training data with precise schema control, validation, and reproducibility.',
+            features: [
+                'Template-driven generation with Pydantic schema validation at every step',
+                'Async pipeline architecture for high-throughput parallel generation',
+                'Automatic retry logic with configurable validation and quality gates',
+                'JSONL export with metadata, provenance tracking, and deduplication'
+            ],
+            tech: 'Python \u00b7 asyncio \u00b7 OpenAI \u00b7 Pydantic',
+            screenshots: [],
+            type: 'budgie'
+        }
+    };
+
+    /* ═══════════════════════════════════════════
+       State
+       ═══════════════════════════════════════════ */
+    let currentProject = null;
+    let isAnimating = false;
+    const panel = document.getElementById('detailPanel');
+    const inner = document.getElementById('detailInner');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ═══════════════════════════════════════════
+       Toggle Detail
+       ═══════════════════════════════════════════ */
+    function toggleDetail(id) {
+        if (isAnimating) return;
+
+        if (currentProject === id) {
+            closeDetail();
+            return;
+        }
+
+        if (currentProject !== null) {
+            closeDetail(function() { openDetail(id); });
+            return;
+        }
+
+        openDetail(id);
+    }
+
+    function openDetail(id) {
+        isAnimating = true;
+        currentProject = id;
+        const proj = projects[id];
+
+        document.querySelectorAll('.project-card').forEach(function(c) { c.classList.remove('active'); });
+        var activeCard = document.querySelector('[data-project="' + id + '"]');
+        if (activeCard) activeCard.classList.add('active');
+
+        panel.style.setProperty('--detail-accent', proj.accent);
+        inner.style.borderTopColor = proj.accent;
+
+        renderDetail(id, proj);
+
+        if (proj.type === 'gallery') {
+            initGallery(id);
+        }
+
+        if (reducedMotion) {
+            panel.style.height = 'auto';
+            panel.style.overflow = 'visible';
+            isAnimating = false;
+            scrollToPanel();
+            return;
+        }
+
+        panel.style.transition = 'none';
+        panel.style.height = 'auto';
+        var targetHeight = panel.scrollHeight;
+        panel.style.height = '0px';
+        void panel.offsetHeight;
+        panel.style.transition = 'height 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        panel.style.height = targetHeight + 'px';
+
+        function onOpen() {
+            panel.removeEventListener('transitionend', onOpen);
+            panel.style.height = 'auto';
+            panel.style.overflow = 'visible';
+            isAnimating = false;
+        }
+        panel.addEventListener('transitionend', onOpen);
+
+        scrollToPanel();
+    }
+
+    function closeDetail(callback) {
+        isAnimating = true;
+
+        document.querySelectorAll('.project-card').forEach(function(c) { c.classList.remove('active'); });
+
+        if (reducedMotion) {
+            panel.style.height = '0';
+            panel.style.overflow = 'hidden';
+            currentProject = null;
+            isAnimating = false;
+            if (callback) callback();
+            return;
+        }
+
+        var currentHeight = panel.scrollHeight;
+        panel.style.overflow = 'hidden';
+        panel.style.transition = 'none';
+        panel.style.height = currentHeight + 'px';
+        void panel.offsetHeight;
+        panel.style.transition = 'height 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        panel.style.height = '0px';
+
+        function onClose() {
+            panel.removeEventListener('transitionend', onClose);
+            currentProject = null;
+            isAnimating = false;
+            if (callback) callback();
+        }
+        panel.addEventListener('transitionend', onClose);
+    }
+
+    function scrollToPanel() {
+        setTimeout(function() {
+            var gridRect = document.getElementById('projectGrid').getBoundingClientRect();
+            var target = gridRect.bottom + window.scrollY - 40;
+            window.scrollTo({ top: target, behavior: reducedMotion ? 'auto' : 'smooth' });
+        }, 100);
+    }
+
+    /* ═══════════════════════════════════════════
+       Render Detail (DOM-based, no innerHTML)
+       ═══════════════════════════════════════════ */
+    function renderDetail(id, proj) {
+        while (inner.firstChild) inner.removeChild(inner.firstChild);
+
+        var layout = document.createElement('div');
+        layout.className = 'detail-layout';
+
+        // Visual area
+        var visualArea = document.createElement('div');
+        visualArea.className = 'visual-area';
+
+        if (proj.type === 'gallery') {
+            visualArea.appendChild(buildGalleryDOM(id, proj));
+        } else if (proj.type === 'single') {
+            visualArea.appendChild(buildSingleDOM(proj));
+        } else if (proj.type === 'budgie') {
+            visualArea.appendChild(buildBudgieDOM());
+        }
+
+        // Text area
+        var textArea = buildTextDOM(proj);
+
+        layout.appendChild(visualArea);
+        layout.appendChild(textArea);
+        inner.appendChild(layout);
+    }
+
+    function buildGalleryDOM(id, proj) {
+        var container = document.createElement('div');
+        container.className = 'screenshot-container';
+
+        var gallery = document.createElement('div');
+        gallery.className = 'screenshot-gallery';
+        gallery.id = 'gallery-' + id;
+
+        proj.screenshots.forEach(function(src) {
+            var slide = document.createElement('div');
+            slide.className = 'screenshot-slide';
+            slide.style.setProperty('--slide-accent', proj.accent + '26');
+            slide.style.cssText += '; --after-bg: linear-gradient(to top, ' + proj.accent + '26, transparent);';
+
+            // We need the ::after pseudo-element styled per-accent. Use a style attr on the slide.
+            var afterStyle = document.createElement('style');
+            afterStyle.textContent = '#gallery-' + id + ' .screenshot-slide::after { background: linear-gradient(to top, ' + proj.accent + '26, transparent); }';
+            slide.appendChild(afterStyle);
+
+            var img = document.createElement('img');
+            img.src = src;
+            img.alt = proj.name + ' screenshot';
+            img.loading = 'lazy';
+            slide.appendChild(img);
+            gallery.appendChild(slide);
+        });
+
+        container.appendChild(gallery);
+
+        var frag = document.createDocumentFragment();
+        frag.appendChild(container);
+
+        // Dots
+        if (proj.screenshots.length > 1) {
+            var dotsWrap = document.createElement('div');
+            dotsWrap.className = 'gallery-dots';
+            dotsWrap.id = 'dots-' + id;
+
+            proj.screenshots.forEach(function(_, i) {
+                var dot = document.createElement('button');
+                dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('data-gallery', id);
+                dot.setAttribute('data-index', i);
+                dot.addEventListener('click', function() { scrollGallery(id, i); });
+                dotsWrap.appendChild(dot);
+            });
+
+            frag.appendChild(dotsWrap);
+        }
+
+        var wrapper = document.createElement('div');
+        wrapper.appendChild(frag);
+        return wrapper;
+    }
+
+    function buildSingleDOM(proj) {
+        var container = document.createElement('div');
+        container.className = 'screenshot-container';
+
+        var single = document.createElement('div');
+        single.className = 'screenshot-single';
+
+        // Inject scoped style for the accent overlay
+        var uniqueClass = 'single-' + Math.random().toString(36).substring(2, 8);
+        single.classList.add(uniqueClass);
+        var overlayStyle = document.createElement('style');
+        overlayStyle.textContent = '.' + uniqueClass + '::after { background: linear-gradient(to top, ' + proj.accent + '26, transparent); }';
+        single.appendChild(overlayStyle);
+
+        var img = document.createElement('img');
+        img.src = proj.screenshots[0];
+        img.alt = proj.name + ' screenshot';
+        img.loading = 'lazy';
+        single.appendChild(img);
+        container.appendChild(single);
+        return container;
+    }
+
+    function buildBudgieDOM() {
+        var vis = document.createElement('div');
+        vis.className = 'budgie-visual';
+
+        var title = document.createElement('div');
+        title.className = 'pipeline-title';
+        title.textContent = 'Generation Pipeline';
+        vis.appendChild(title);
+
+        var stages = [
+            { icon: '{ }', label: 'Define Template', sublabel: 'Pydantic schema' },
+            { icon: '\u2b50', label: 'Generate via LLM', sublabel: 'async batches' },
+            { icon: '\u2713', label: 'Validate Output', sublabel: 'schema check' },
+            { icon: '\u21bb', label: 'Retry / Accumulate', sublabel: 'quality gates' },
+            { icon: '\u25bc', label: 'JSONL Export', sublabel: 'with metadata' }
+        ];
+
+        var stagesWrap = document.createElement('div');
+        stagesWrap.className = 'pipeline-stages';
+
+        stages.forEach(function(s, i) {
+            if (i > 0) {
+                var conn = document.createElement('div');
+                conn.className = 'pipeline-connector';
+                stagesWrap.appendChild(conn);
+            }
+            var node = document.createElement('div');
+            node.className = 'pipeline-node';
+
+            var iconEl = document.createElement('div');
+            iconEl.className = 'pipeline-icon';
+            iconEl.textContent = s.icon;
+            node.appendChild(iconEl);
+
+            var labelEl = document.createElement('div');
+            labelEl.className = 'pipeline-label';
+            labelEl.textContent = s.label;
+            node.appendChild(labelEl);
+
+            var subEl = document.createElement('div');
+            subEl.className = 'pipeline-sublabel';
+            subEl.textContent = s.sublabel;
+            node.appendChild(subEl);
+
+            stagesWrap.appendChild(node);
+        });
+
+        vis.appendChild(stagesWrap);
+
+        // Code snippet
+        var code = document.createElement('div');
+        code.className = 'budgie-code';
+
+        var lines = [
+            ['kw', 'async def '], ['fn', 'generate_batch'], ['', '(template, n'], ['op', '='], ['st', '100'], ['', '):'],
+            null,
+            ['', '    '], ['cm', '# Parallel generation with validation'],
+            null,
+            ['', '    tasks '], ['op', '= '], ['', '['], ['fn', 'generate_one'], ['', '(template) '], ['kw', 'for'], ['', ' _ '], ['kw', 'in'], ['', ' '], ['fn', 'range'], ['', '(n)]'],
+            null,
+            ['', '    results '], ['op', '= '], ['aw', 'await'], ['', ' asyncio.'], ['fn', 'gather'], ['op', '(*'], ['', 'tasks'], ['op', ')'],
+            null,
+            ['', '    '], ['kw', 'return'], ['', ' [r '], ['kw', 'for'], ['', ' r '], ['kw', 'in'], ['', ' results '], ['kw', 'if'], ['', ' r.'], ['fn', 'is_valid'], ['', '()]']
+        ];
+
+        lines.forEach(function(token) {
+            if (token === null) {
+                code.appendChild(document.createElement('br'));
+                return;
+            }
+            if (token[0] === '') {
+                code.appendChild(document.createTextNode(token[1]));
+            } else {
+                var span = document.createElement('span');
+                span.className = token[0];
+                span.textContent = token[1];
+                code.appendChild(span);
+            }
+        });
+
+        vis.appendChild(code);
+        return vis;
+    }
+
+    function buildTextDOM(proj) {
+        var textArea = document.createElement('div');
+        textArea.className = 'detail-text';
+
+        // Close button
+        var closeBtn = document.createElement('button');
+        closeBtn.className = 'detail-close';
+        closeBtn.setAttribute('aria-label', 'Close detail');
+        closeBtn.textContent = '\u00d7';
+        closeBtn.addEventListener('click', function() { closeDetail(); });
+        textArea.appendChild(closeBtn);
+
+        // Name
+        var name = document.createElement('div');
+        name.className = 'detail-name';
+        name.style.color = proj.accent;
+        name.textContent = proj.name;
+        textArea.appendChild(name);
+
+        // Badge
+        var badge = document.createElement('div');
+        badge.className = 'detail-badge';
+        badge.textContent = proj.badge;
+        textArea.appendChild(badge);
+
+        // Description
+        var desc = document.createElement('p');
+        desc.className = 'detail-desc';
+        desc.textContent = proj.description;
+        textArea.appendChild(desc);
+
+        // Features
+        var featuresList = document.createElement('ul');
+        featuresList.className = 'detail-features';
+        proj.features.forEach(function(f) {
+            var li = document.createElement('li');
+            li.textContent = f;
+            featuresList.appendChild(li);
+        });
+        textArea.appendChild(featuresList);
+
+        // Tech label
+        var techLabel = document.createElement('div');
+        techLabel.className = 'detail-tech-label';
+        techLabel.textContent = 'Technology';
+        textArea.appendChild(techLabel);
+
+        // Tech list
+        var techList = document.createElement('div');
+        techList.className = 'detail-tech-list';
+        var techs = proj.tech.split(' \u00b7 ');
+        techs.forEach(function(t, i) {
+            techList.appendChild(document.createTextNode(t));
+            if (i < techs.length - 1) {
+                var sep = document.createElement('span');
+                sep.textContent = '\u00b7';
+                techList.appendChild(sep);
+            }
+        });
+        textArea.appendChild(techList);
+
+        return textArea;
+    }
+
+    /* ═══════════════════════════════════════════
+       Gallery Scroll
+       ═══════════════════════════════════════════ */
+    function initGallery(id) {
+        var gallery = document.getElementById('gallery-' + id);
+        if (!gallery) return;
+
+        gallery.addEventListener('scroll', function() {
+            var scrollLeft = gallery.scrollLeft;
+            var slideWidth = gallery.offsetWidth;
+            var activeIndex = Math.round(scrollLeft / slideWidth);
+            var dots = document.querySelectorAll('[data-gallery="' + id + '"]');
+            dots.forEach(function(d, i) {
+                if (i === activeIndex) {
+                    d.classList.add('active');
+                } else {
+                    d.classList.remove('active');
+                }
+            });
+        });
+    }
+
+    function scrollGallery(id, index) {
+        var gallery = document.getElementById('gallery-' + id);
+        if (!gallery) return;
+        var slideWidth = gallery.offsetWidth;
+        gallery.scrollTo({ left: slideWidth * index, behavior: reducedMotion ? 'auto' : 'smooth' });
+    }
+
+    /* ═══════════════════════════════════════════
+       Keyboard: Escape closes
+       ═══════════════════════════════════════════ */
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && currentProject !== null) {
+            closeDetail();
+        }
+    });
+    </script>
+
+</body>
+</html>

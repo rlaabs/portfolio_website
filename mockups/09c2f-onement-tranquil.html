@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Laabs — Portfolio (Tranquil — Vertical Stack Nav)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A12;
+            --bg-field: #0E0E18;
+            --bg-card: #12121E;
+            --text-primary: #E0E0EC;
+            --text-secondary: #8888A0;
+            --text-muted: #55556A;
+            --rule: #1E1E30;
+            --zip-color: #C84040;
+            --zip-glow: rgba(200, 64, 64, 0.35);
+            --amber: #D4A843;
+            --blue: #4A9EF5;
+            --terracotta: #C85A3A;
+            --teal: #2EA77A;
+            --mint: #3CC9A8;
+            --purple: #9B7ED8;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ——— THE CENTRAL ZIP — persistent vertical line ——— */
+
+        .central-zip {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            z-index: 50;
+            pointer-events: none;
+            background: var(--zip-color);
+            box-shadow: 0 0 12px var(--zip-glow), 0 0 30px rgba(200, 64, 64, 0.15);
+            transition: background 0.8s ease, box-shadow 0.8s ease;
+        }
+
+        /* Painterly texture on the zip — subtle gradient variation */
+        .central-zip::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255, 255, 255, 0.15) 5%,
+                transparent 10%,
+                rgba(255, 255, 255, 0.1) 25%,
+                transparent 30%,
+                rgba(255, 255, 255, 0.08) 50%,
+                transparent 55%,
+                rgba(255, 255, 255, 0.12) 75%,
+                transparent 80%,
+                rgba(255, 255, 255, 0.1) 95%,
+                transparent 100%
+            );
+        }
+
+        /* Color states for the zip */
+        .central-zip.color-amber { background: var(--amber); box-shadow: 0 0 12px rgba(212, 168, 67, 0.4), 0 0 30px rgba(212, 168, 67, 0.15); }
+        .central-zip.color-blue { background: var(--blue); box-shadow: 0 0 12px rgba(74, 158, 245, 0.4), 0 0 30px rgba(74, 158, 245, 0.15); }
+        .central-zip.color-terracotta { background: var(--terracotta); box-shadow: 0 0 12px rgba(200, 90, 58, 0.4), 0 0 30px rgba(200, 90, 58, 0.15); }
+        .central-zip.color-teal { background: var(--teal); box-shadow: 0 0 12px rgba(46, 167, 122, 0.4), 0 0 30px rgba(46, 167, 122, 0.15); }
+        .central-zip.color-mint { background: var(--mint); box-shadow: 0 0 12px rgba(60, 201, 168, 0.4), 0 0 30px rgba(60, 201, 168, 0.15); }
+        .central-zip.color-purple { background: var(--purple); box-shadow: 0 0 12px rgba(155, 126, 216, 0.4), 0 0 30px rgba(155, 126, 216, 0.15); }
+
+        /* ——— Navigation ——— */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ——— Hero Section — split by central zip ——— */
+
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 3px 1fr;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-left {
+            padding: 8rem 4rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .hero-zip-space {
+            /* Space for the fixed central zip */
+        }
+
+        .hero-right {
+            padding: 8rem 4rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .hero-name .first {
+            display: block;
+            font-size: clamp(4rem, 7vw, 7rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            line-height: 0.95;
+            opacity: 0;
+            animation: fadeLeft 1s ease 0.3s forwards;
+        }
+
+        .hero-name .last {
+            display: block;
+            font-size: clamp(4rem, 7vw, 7rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            line-height: 0.95;
+            opacity: 0;
+            animation: fadeLeft 1s ease 0.5s forwards;
+        }
+
+        @keyframes fadeLeft {
+            from { opacity: 0; transform: translateX(15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeRight {
+            from { opacity: 0; transform: translateX(-15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-subtitle {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeRight 1s ease 0.8s forwards;
+        }
+
+        .hero-tagline {
+            font-size: 1.05rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 400px;
+            opacity: 0;
+            animation: fadeRight 1s ease 1s forwards;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeRight 1s ease 1.4s forwards;
+            z-index: 60;
+        }
+
+        /* ——— Section Header ——— */
+
+        .section-header {
+            padding: 4rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .section-rule {
+            height: 1px;
+            background: var(--rule);
+            margin-bottom: 3rem;
+        }
+
+        /* ——— Project Cards — split layout ——— */
+
+        .projects-index {
+            padding: 0 0 2rem;
+        }
+
+        .project-row {
+            display: grid;
+            grid-template-columns: 1fr 3px 1fr;
+            min-height: 180px;
+            cursor: pointer;
+            transition: background 0.4s ease;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .project-row:hover {
+            background: var(--bg-field);
+        }
+
+        .project-row.active {
+            background: var(--bg-field);
+        }
+
+        .project-left {
+            padding: 2rem 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .project-zip-space {}
+
+        .project-right {
+            padding: 2rem 3rem;
+        }
+
+        .card-number {
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .card-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-name { color: var(--text-primary); }
+
+        .card-type {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .card-tagline {
+            font-size: 1rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .card-tech {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.01em;
+        }
+
+        .card-tech span { color: var(--text-secondary); }
+
+        /* ——— Detail Panel ——— */
+
+        .detail-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 0;
+            background: var(--bg);
+            position: relative;
+            z-index: 55;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .detail-panel.open {
+            max-height: 1200px;
+            opacity: 1;
+        }
+
+        .detail-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--zip-color);
+            background: transparent;
+            color: var(--zip-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .detail-close:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        .detail-panel[data-color="amber"] .detail-close { color: var(--amber); border-color: var(--amber); }
+        .detail-panel[data-color="blue"] .detail-close { color: var(--blue); border-color: var(--blue); }
+        .detail-panel[data-color="terracotta"] .detail-close { color: var(--terracotta); border-color: var(--terracotta); }
+        .detail-panel[data-color="teal"] .detail-close { color: var(--teal); border-color: var(--teal); }
+        .detail-panel[data-color="mint"] .detail-close { color: var(--mint); border-color: var(--mint); }
+        .detail-panel[data-color="purple"] .detail-close { color: var(--purple); border-color: var(--purple); }
+
+        /* Gallery — spans full width */
+        .gallery-container {
+            position: relative;
+            background: var(--bg-card);
+            border-top: 2px solid var(--rule);
+        }
+
+        .detail-panel[data-color="amber"] .gallery-container { border-top-color: var(--amber); }
+        .detail-panel[data-color="blue"] .gallery-container { border-top-color: var(--blue); }
+        .detail-panel[data-color="terracotta"] .gallery-container { border-top-color: var(--terracotta); }
+        .detail-panel[data-color="teal"] .gallery-container { border-top-color: var(--teal); }
+        .detail-panel[data-color="mint"] .gallery-container { border-top-color: var(--mint); }
+        .detail-panel[data-color="purple"] .gallery-container { border-top-color: var(--purple); }
+
+        .detail-panel[data-color="amber"] .detail-split-zip { background: var(--amber); box-shadow: 0 0 12px rgba(212,168,67,0.35); }
+        .detail-panel[data-color="blue"] .detail-split-zip { background: var(--blue); box-shadow: 0 0 12px rgba(74,158,245,0.35); }
+        .detail-panel[data-color="terracotta"] .detail-split-zip { background: var(--terracotta); box-shadow: 0 0 12px rgba(200,90,58,0.35); }
+        .detail-panel[data-color="teal"] .detail-split-zip { background: var(--teal); box-shadow: 0 0 12px rgba(46,167,122,0.35); }
+        .detail-panel[data-color="mint"] .detail-split-zip { background: var(--mint); box-shadow: 0 0 12px rgba(60,201,168,0.35); }
+        .detail-panel[data-color="purple"] .detail-split-zip { background: var(--purple); box-shadow: 0 0 12px rgba(155,126,216,0.35); }
+
+        .gallery-track {
+            position: relative;
+            max-height: 420px;
+            min-height: 380px;
+        }
+
+        .gallery-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 4rem 1rem;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            pointer-events: none;
+        }
+
+        .gallery-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .gallery-slide img {
+            max-height: 340px;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 2px;
+        }
+
+        .gallery-caption {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .gallery-thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.8rem 1rem 1.2rem;
+            background: var(--bg-card);
+        }
+
+        .gallery-thumb {
+            height: 60px;
+            width: auto;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+            border: none;
+            border-bottom: 2px solid var(--rule);
+            padding: 0;
+            padding-bottom: 4px;
+            background: none;
+            display: block;
+            position: relative;
+        }
+
+        .gallery-thumb:hover { opacity: 0.6; }
+        .gallery-thumb.active { opacity: 1; }
+
+        .gallery-thumb::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            transition: none;
+        }
+
+        .detail-panel[data-color="amber"] .gallery-thumb::after { background: var(--amber); }
+        .detail-panel[data-color="blue"] .gallery-thumb::after { background: var(--blue); }
+        .detail-panel[data-color="terracotta"] .gallery-thumb::after { background: var(--terracotta); }
+        .detail-panel[data-color="teal"] .gallery-thumb::after { background: var(--teal); }
+        .detail-panel[data-color="mint"] .gallery-thumb::after { background: var(--mint); }
+        .detail-panel[data-color="purple"] .gallery-thumb::after { background: var(--purple); }
+
+        .gallery-thumb.active.filling::after {
+            width: 100%;
+            transition: width 4s linear;
+        }
+
+        .gallery-thumb.viewed::after {
+            width: 100%;
+            transition: none;
+        }
+
+        .gallery-thumb img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            border-radius: 2px;
+            display: block;
+        }
+
+        /* Detail info — split by a local zip that cuts through text only */
+        .detail-info-split {
+            display: grid;
+            grid-template-columns: 1fr 3px 1fr;
+            padding: 2.5rem 0 3rem;
+            position: relative;
+        }
+
+        .detail-split-left {
+            padding: 0 1.2rem 0 3rem;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .detail-split-zip {
+            background: var(--zip-color);
+            box-shadow: 0 0 12px var(--zip-glow), 0 0 30px rgba(200, 64, 64, 0.15);
+            transition: background 0.8s ease, box-shadow 0.8s ease;
+        }
+
+        .detail-split-right {
+            padding: 0 3rem 0 1.2rem;
+        }
+
+        .detail-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-panel[data-color="amber"] .detail-title { color: var(--amber); }
+        .detail-panel[data-color="blue"] .detail-title { color: var(--blue); }
+        .detail-panel[data-color="terracotta"] .detail-title { color: var(--terracotta); }
+        .detail-panel[data-color="teal"] .detail-title { color: var(--teal); }
+        .detail-panel[data-color="mint"] .detail-title { color: var(--mint); }
+        .detail-panel[data-color="purple"] .detail-title { color: var(--purple); }
+
+        .detail-tagline {
+            font-size: 1rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-description {
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .detail-split-left .detail-description {
+            text-align: right;
+            margin-left: auto;
+        }
+
+        .detail-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .detail-features li {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .detail-features li::before {
+            content: '\2014';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .detail-tech-stack {
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .detail-tech-stack span { color: var(--text-secondary); }
+
+        .detail-meta {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* Budgie text-only */
+        .budgie-text-panel {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2.5rem 3rem 3rem;
+            border-top: 2px solid var(--purple);
+        }
+
+        .budgie-text-panel .detail-title { color: var(--purple); }
+        .budgie-text-panel .detail-tagline { margin-bottom: 1.5rem; }
+        .budgie-text-panel .detail-description { margin-bottom: 2rem; text-align: left; margin-left: 0; }
+        .budgie-text-panel .detail-features { margin-bottom: 2rem; }
+        .budgie-text-panel .detail-tech-stack { margin-bottom: 1rem; }
+
+        /* ——— Footer ——— */
+
+        .footer {
+            display: grid;
+            grid-template-columns: 1fr 3px 1fr;
+            padding: 4rem 0 3rem;
+            max-width: 100%;
+        }
+
+        .footer-left {
+            padding: 0 3rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .footer-zip-space {}
+
+        .footer-right {
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover { color: var(--text-secondary); }
+
+        /* Top rule for footer */
+        .footer-rule-container {
+            padding: 0 4rem;
+        }
+
+        .footer-rule {
+            height: 1px;
+            background: var(--rule);
+        }
+
+        /* ——— Tranquil Shimmer — slow, meditative pulse within 3px zip ——— */
+        .zip-pulse {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            z-index: 51;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .zip-pulse-inner {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.15) 25%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.15) 75%, transparent 100%);
+            animation: pulseDescend 22s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+            opacity: 0;
+        }
+
+        .zip-pulse-inner:nth-child(2) {
+            animation-delay: 11s;
+            height: 250px;
+            background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 70%, transparent 100%);
+        }
+
+        @keyframes pulseDescend {
+            0% { top: -350px; opacity: 0; }
+            3% { opacity: 0.8; }
+            50% { opacity: 1; }
+            90% { opacity: 0.4; }
+            100% { top: calc(100vh + 350px); opacity: 0; }
+        }
+
+        /* ——— Reduced Motion ——— */
+
+        @media (prefers-reduced-motion: reduce) {
+            .gallery-slide { transition: none; }
+            .gallery-thumb::after { transition: none !important; }
+            .gallery-thumb.active.filling::after { width: 100%; transition: none; }
+            .central-zip { transition: none; }
+            .hero-name .first, .hero-name .last, .hero-subtitle, .hero-tagline, .scroll-hint {
+                animation: none; opacity: 1;
+            }
+            .zip-pulse { display: none; }
+        }
+
+        /* ——— Responsive ——— */
+
+        @media (max-width: 900px) {
+            nav { padding: 1.5rem 2rem; }
+            .central-zip { display: none; }
+            .zip-pulse { display: none; }
+
+            .hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                padding-top: 6rem;
+            }
+            .hero-left {
+                align-items: flex-start;
+                text-align: left;
+                padding: 6rem 2rem 1rem;
+            }
+            .hero-zip-space { display: none; }
+            .hero-right { padding: 0 2rem 4rem; }
+
+            .section-header { padding: 3rem 2rem 0; }
+
+            .project-row {
+                grid-template-columns: 1fr;
+            }
+            .project-left {
+                align-items: flex-start;
+                text-align: left;
+                padding: 2rem 2rem 0.5rem;
+            }
+            .project-zip-space { display: none; }
+            .project-right { padding: 0 2rem 2rem; }
+
+            .detail-info-split { grid-template-columns: 1fr; padding: 2rem 0; }
+            .detail-split-left {
+                text-align: left;
+                align-items: flex-start;
+                padding: 0 2rem;
+                margin-bottom: 2rem;
+            }
+            .detail-split-left .detail-description { text-align: left; margin-left: 0; }
+            .detail-split-zip { display: none; }
+            .detail-split-right { padding: 0 2rem; }
+
+            .gallery-slide { padding: 2rem 2rem 1rem; }
+            .budgie-text-panel { padding: 2rem; }
+
+            .footer { grid-template-columns: 1fr; padding: 3rem 0 2rem; }
+            .footer-left { justify-content: flex-start; padding: 0 2rem; margin-bottom: 1rem; }
+            .footer-zip-space { display: none; }
+            .footer-right { padding: 0 2rem; }
+            .footer-rule-container { padding: 0 2rem; }
+        }
+
+        @media (max-width: 600px) {
+            nav .nav-links { gap: 1.5rem; }
+            nav .nav-links a { font-size: 0.7rem; }
+            .hero-name .first, .hero-name .last {
+                font-size: clamp(2.5rem, 12vw, 4rem);
+            }
+            .gallery-track { max-height: 300px; min-height: 260px; }
+            .gallery-slide img { max-height: 240px; }
+            .gallery-thumb { height: 44px; }
+        }
+        /* ——— Fixed Project Index — right of zip ——— */
+        .project-index {
+            position: fixed;
+            top: 50%;
+            left: calc(50% + 20px);
+            transform: translateY(-50%);
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .project-index.visible {
+            opacity: 1;
+        }
+
+        .project-index-item {
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            padding: 0.15rem 0;
+            white-space: nowrap;
+        }
+
+        .project-index-item:hover {
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .project-index-item.active {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .project-index-item .idx-num {
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            margin-right: 0.4rem;
+            opacity: 0.5;
+        }
+
+        .project-index-item.active .idx-num {
+            color: var(--zip-color);
+            opacity: 1;
+        }
+
+        @media (max-width: 900px) {
+            .project-index { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THE CENTRAL ZIP -->
+    <div class="central-zip" id="centralZip"></div>
+    <div class="zip-pulse">
+        <div class="zip-pulse-inner"></div>
+        <div class="zip-pulse-inner"></div>
+    </div>
+
+    <!-- Fixed Project Index — right of zip -->
+    <div class="project-index" id="projectIndex">
+        <div class="project-index-item" data-target="ibis"><span class="idx-num">01</span>Ibis</div>
+        <div class="project-index-item" data-target="strix"><span class="idx-num">02</span>Strix</div>
+        <div class="project-index-item" data-target="sparrow"><span class="idx-num">03</span>Sparrow</div>
+        <div class="project-index-item" data-target="magpie"><span class="idx-num">04</span>Magpie</div>
+        <div class="project-index-item" data-target="mallard"><span class="idx-num">05</span>Mallard</div>
+        <div class="project-index-item" data-target="budgie"><span class="idx-num">06</span>Budgie</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">RL</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section — split by the zip -->
+    <section class="hero">
+        <div class="hero-left">
+            <div class="hero-name">
+                <span class="first">Robert</span>
+                <span class="last">Laabs</span>
+            </div>
+        </div>
+        <div class="hero-zip-space"></div>
+        <div class="hero-right">
+            <p class="hero-subtitle">Software Engineer</p>
+            <p class="hero-tagline">Building production tools that ship — from desktop apps to ML infrastructure</p>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <div class="section-header" id="work">
+        <p class="section-label">Selected Work</p>
+        <div class="section-rule"></div>
+    </div>
+
+    <section class="projects-index">
+
+        <!-- Ibis -->
+        <div class="project-row" data-color="amber" data-project="ibis" onclick="toggleDetail('ibis')">
+            <div class="project-left">
+                <p class="card-number">01</p>
+                <h3 class="card-name">Ibis</h3>
+                <p class="card-type">Desktop App</p>
+            </div>
+            <div class="project-zip-space"></div>
+            <div class="project-right">
+                <p class="card-tagline">Enterprise AI Desktop Assistant</p>
+                <p class="card-tech"><span>TypeScript</span> · <span>Electron</span> · <span>React</span> · <span>Python</span></p>
+            </div>
+        </div>
+
+        <div class="detail-panel" id="detail-ibis" data-color="amber">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="ibis">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/ibis-hero.png" alt="Ibis chat conversation">
+                        <p class="gallery-caption">Chat conversation</p>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="sample-screenshots/ibis-02.png" alt="Ibis welcome screen">
+                        <p class="gallery-caption">Welcome screen</p>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="sample-screenshots/ibis-03.png" alt="Ibis tool execution">
+                        <p class="gallery-caption">Tool execution</p>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-thumbnails" data-thumbs="ibis">
+                <button class="gallery-thumb active" onclick="galleryGoTo(event, 'ibis', 0)">
+                    <img src="sample-screenshots/ibis-hero.png" alt="Chat conversation">
+                </button>
+                <button class="gallery-thumb" onclick="galleryGoTo(event, 'ibis', 1)">
+                    <img src="sample-screenshots/ibis-02.png" alt="Welcome screen">
+                </button>
+                <button class="gallery-thumb" onclick="galleryGoTo(event, 'ibis', 2)">
+                    <img src="sample-screenshots/ibis-03.png" alt="Tool execution">
+                </button>
+            </div>
+            <div class="detail-info-split">
+                <div class="detail-split-left">
+                    <h2 class="detail-title">Ibis</h2>
+                    <p class="detail-tagline">Enterprise AI Desktop Assistant</p>
+                    <p class="detail-description">A cross-platform desktop application providing enterprise-grade AI capabilities for professional workflows. Built on Electron with a React frontend and Python backend, prioritizing privacy, speed, and deep system integration.</p>
+                </div>
+                <div class="detail-split-zip"></div>
+                <div class="detail-split-right">
+                    <ul class="detail-features">
+                        <li>Local-first architecture with optional cloud sync</li>
+                        <li>Multi-model support with context management</li>
+                        <li>Custom plugin system for workflow automation</li>
+                        <li>Encrypted conversation history and data export</li>
+                    </ul>
+                    <p class="detail-tech-stack"><span>TypeScript</span> · <span>Electron</span> · <span>React</span> · <span>Python</span></p>
+                    <p class="detail-meta">2024 — Lead Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Strix -->
+        <div class="project-row" data-color="blue" data-project="strix" onclick="toggleDetail('strix')">
+            <div class="project-left">
+                <p class="card-number">02</p>
+                <h3 class="card-name">Strix</h3>
+                <p class="card-type">macOS App</p>
+            </div>
+            <div class="project-zip-space"></div>
+            <div class="project-right">
+                <p class="card-tagline">Native macOS SQLite Browser</p>
+                <p class="card-tech"><span>Swift</span> · <span>SwiftUI</span> · <span>GRDB</span> · <span>AppKit</span></p>
+            </div>
+        </div>
+
+        <div class="detail-panel" id="detail-strix" data-color="blue">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="strix">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/strix-hero.png" alt="Strix data grid view">
+                        <p class="gallery-caption">Data grid view</p>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="sample-screenshots/strix-02.png" alt="Strix query editor">
+                        <p class="gallery-caption">Query editor</p>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="sample-screenshots/strix-03.png" alt="Strix change tracking">
+                        <p class="gallery-caption">Change tracking</p>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-thumbnails" data-thumbs="strix">
+                <button class="gallery-thumb active" onclick="galleryGoTo(event, 'strix', 0)">
+                    <img src="sample-screenshots/strix-hero.png" alt="Data grid view">
+                </button>
+                <button class="gallery-thumb" onclick="galleryGoTo(event, 'strix', 1)">
+                    <img src="sample-screenshots/strix-02.png" alt="Query editor">
+                </button>
+                <button class="gallery-thumb" onclick="galleryGoTo(event, 'strix', 2)">
+                    <img src="sample-screenshots/strix-03.png" alt="Change tracking">
+                </button>
+            </div>
+            <div class="detail-info-split">
+                <div class="detail-split-left">
+                    <h2 class="detail-title">Strix</h2>
+                    <p class="detail-tagline">Native macOS SQLite Browser</p>
+                    <p class="detail-description">A fast, native macOS application for browsing and managing SQLite databases. Built entirely in Swift with SwiftUI, designed around performance and a clean, distraction-free interface.</p>
+                </div>
+                <div class="detail-split-zip"></div>
+                <div class="detail-split-right">
+                    <ul class="detail-features">
+                        <li>Instant schema visualization and table browsing</li>
+                        <li>Live query editor with syntax highlighting</li>
+                        <li>GRDB-powered data layer for high performance</li>
+                        <li>Full drag-and-drop and Spotlight integration</li>
+                    </ul>
+                    <p class="detail-tech-stack"><span>Swift</span> · <span>SwiftUI</span> · <span>GRDB</span> · <span>AppKit</span></p>
+                    <p class="detail-meta">2024 — Solo Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Sparrow -->
+        <div class="project-row" data-color="terracotta" data-project="sparrow" onclick="toggleDetail('sparrow')">
+            <div class="project-left">
+                <p class="card-number">03</p>
+                <h3 class="card-name">Sparrow</h3>
+                <p class="card-type">Web Platform</p>
+            </div>
+            <div class="project-zip-space"></div>
+            <div class="project-right">
+                <p class="card-tagline">AI Market Research Platform</p>
+                <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>Google GenAI</span> · <span>Docker</span></p>
+            </div>
+        </div>
+
+        <div class="detail-panel" id="detail-sparrow" data-color="terracotta">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="sparrow">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/sparrow-hero.png" alt="Sparrow chat conversation">
+                        <p class="gallery-caption">Chat conversation</p>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-info-split">
+                <div class="detail-split-left">
+                    <h2 class="detail-title">Sparrow</h2>
+                    <p class="detail-tagline">AI Market Research Platform</p>
+                    <p class="detail-description">A web platform that leverages generative AI to automate and enhance market research workflows. Built with Django and Google's GenAI APIs, containerized with Docker for reliable deployment.</p>
+                </div>
+                <div class="detail-split-zip"></div>
+                <div class="detail-split-right">
+                    <ul class="detail-features">
+                        <li>Automated competitor analysis and trend detection</li>
+                        <li>AI-powered report generation with citations</li>
+                        <li>Customizable research templates and workflows</li>
+                        <li>Team collaboration with role-based access</li>
+                    </ul>
+                    <p class="detail-tech-stack"><span>Python</span> · <span>Django</span> · <span>Google GenAI</span> · <span>Docker</span></p>
+                    <p class="detail-meta">2024 — Lead Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Magpie -->
+        <div class="project-row" data-color="teal" data-project="magpie" onclick="toggleDetail('magpie')">
+            <div class="project-left">
+                <p class="card-number">04</p>
+                <h3 class="card-name">Magpie</h3>
+                <p class="card-type">Web Platform</p>
+            </div>
+            <div class="project-zip-space"></div>
+            <div class="project-right">
+                <p class="card-tagline">Survey Response Quality Analyzer</p>
+                <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>OpenAI</span> · <span>Polars</span></p>
+            </div>
+        </div>
+
+        <div class="detail-panel" id="detail-magpie" data-color="teal">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="magpie">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/magpie-hero.png" alt="Magpie dashboard overview">
+                        <p class="gallery-caption">Dashboard overview</p>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-info-split">
+                <div class="detail-split-left">
+                    <h2 class="detail-title">Magpie</h2>
+                    <p class="detail-tagline">Survey Response Quality Analyzer</p>
+                    <p class="detail-description">An intelligent platform that uses AI to evaluate and score survey response quality, identifying low-effort, inconsistent, or fraudulent responses. Built on Django with Polars for high-performance data processing.</p>
+                </div>
+                <div class="detail-split-zip"></div>
+                <div class="detail-split-right">
+                    <ul class="detail-features">
+                        <li>AI-powered quality scoring with explainability</li>
+                        <li>Real-time response stream analysis</li>
+                        <li>Polars-based data pipeline for large datasets</li>
+                        <li>Configurable quality thresholds and rules</li>
+                    </ul>
+                    <p class="detail-tech-stack"><span>Python</span> · <span>Django</span> · <span>OpenAI</span> · <span>Polars</span></p>
+                    <p class="detail-meta">2024 — Lead Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Mallard -->
+        <div class="project-row" data-color="mint" data-project="mallard" onclick="toggleDetail('mallard')">
+            <div class="project-left">
+                <p class="card-number">05</p>
+                <h3 class="card-name">Mallard</h3>
+                <p class="card-type">Web Platform</p>
+            </div>
+            <div class="project-zip-space"></div>
+            <div class="project-right">
+                <p class="card-tagline">Behavioral Analytics Platform</p>
+                <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>Spark</span> · <span>AWS</span></p>
+            </div>
+        </div>
+
+        <div class="detail-panel" id="detail-mallard" data-color="mint">
+            <div class="gallery-container">
+                <div class="gallery-track" data-gallery="mallard">
+                    <div class="gallery-slide active">
+                        <img src="sample-screenshots/mallard-hero.png" alt="Mallard data exploration">
+                        <p class="gallery-caption">Data exploration</p>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-info-split">
+                <div class="detail-split-left">
+                    <h2 class="detail-title">Mallard</h2>
+                    <p class="detail-tagline">Behavioral Analytics Platform</p>
+                    <p class="detail-description">A scalable behavioral analytics platform processing large volumes of user interaction data. Built on Django with Apache Spark for distributed computation and AWS infrastructure for reliable scale.</p>
+                </div>
+                <div class="detail-split-zip"></div>
+                <div class="detail-split-right">
+                    <ul class="detail-features">
+                        <li>Real-time event ingestion and processing</li>
+                        <li>Spark-powered behavioral segmentation</li>
+                        <li>Custom dashboard builder with live metrics</li>
+                        <li>AWS-native deployment with auto-scaling</li>
+                    </ul>
+                    <p class="detail-tech-stack"><span>Python</span> · <span>Django</span> · <span>Spark</span> · <span>AWS</span></p>
+                    <p class="detail-meta">2023 — Lead Developer</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+        <!-- Budgie -->
+        <div class="project-row" data-color="purple" data-project="budgie" onclick="toggleDetail('budgie')">
+            <div class="project-left">
+                <p class="card-number">06</p>
+                <h3 class="card-name">Budgie</h3>
+                <p class="card-type">ML Framework</p>
+            </div>
+            <div class="project-zip-space"></div>
+            <div class="project-right">
+                <p class="card-tagline">Synthetic Data Generation Framework</p>
+                <p class="card-tech"><span>Python</span> · <span>asyncio</span> · <span>OpenAI</span> · <span>Pydantic</span></p>
+            </div>
+        </div>
+
+        <div class="detail-panel" id="detail-budgie" data-color="purple">
+            <div class="budgie-text-panel">
+                <h2 class="detail-title">Budgie</h2>
+                <p class="detail-tagline">Synthetic Data Generation Framework</p>
+                <p class="detail-description">A Python framework — not a UI tool — for generating high-quality synthetic datasets using LLMs. Designed as a developer library, it leverages async concurrency for throughput, Pydantic for schema enforcement, and built-in validation with automatic retry logic. The framework handles the full pipeline from template definition to validated output.</p>
+                <ul class="detail-features">
+                    <li>Schema-first design with Pydantic models</li>
+                    <li>Async pipeline with configurable concurrency</li>
+                    <li>Automatic validation and retry on malformed output</li>
+                    <li>Pluggable LLM backends with cost tracking</li>
+                    <li>CLI and programmatic API interfaces</li>
+                </ul>
+                <p class="detail-tech-stack"><span>Python</span> · <span>asyncio</span> · <span>OpenAI</span> · <span>Pydantic</span></p>
+                <p class="detail-meta">2024 — Framework Author</p>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <div class="footer-rule-container">
+        <div class="footer-rule"></div>
+    </div>
+    <footer class="footer">
+        <div class="footer-left">
+            <p class="footer-text">&copy; 2026 Robert Laabs</p>
+        </div>
+        <div class="footer-zip-space"></div>
+        <div class="footer-right">
+            <ul class="footer-links">
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Email</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        let activeProject = null;
+        const autoplayTimers = {};
+        const resumeTimers = {};
+        const currentSlideIndex = {};
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const centralZip = document.getElementById('centralZip');
+
+        function updateZipColor(colorName) {
+            // Remove all color classes
+            centralZip.className = 'central-zip';
+            if (colorName) {
+                centralZip.classList.add('color-' + colorName);
+            }
+        }
+
+        function getSlideCount(projectId) {
+            const track = document.querySelector('[data-gallery="' + projectId + '"]');
+            return track ? track.querySelectorAll('.gallery-slide').length : 0;
+        }
+
+        function isSingleSlide(projectId) {
+            return getSlideCount(projectId) <= 1;
+        }
+
+        function toggleDetail(projectId) {
+            const panel = document.getElementById('detail-' + projectId);
+            const row = document.querySelector('.project-row[data-project="' + projectId + '"]');
+            const color = row.dataset.color;
+
+            if (activeProject === projectId) {
+                closeAllDetails();
+                return;
+            }
+
+            closeAllDetails();
+
+            requestAnimationFrame(() => {
+                panel.classList.add('open');
+                row.classList.add('active');
+                activeProject = projectId;
+                updateZipColor(color);
+                resetGallery(projectId);
+
+                if (!prefersReducedMotion && !isSingleSlide(projectId)) {
+                    setTimeout(() => { startAutoplay(projectId); }, 800);
+                }
+
+                setTimeout(() => {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 150);
+            });
+        }
+
+        function closeDetail(event) {
+            event.stopPropagation();
+            closeAllDetails();
+        }
+
+        function closeAllDetails() {
+            if (activeProject) stopAutoplay(activeProject);
+            document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+            document.querySelectorAll('.project-row').forEach(r => r.classList.remove('active'));
+            activeProject = null;
+            updateZipColor(null);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAllDetails();
+        });
+
+        function getGalleryElements(projectId) {
+            const track = document.querySelector('[data-gallery="' + projectId + '"]');
+            const thumbsContainer = document.querySelector('[data-thumbs="' + projectId + '"]');
+            const thumbs = thumbsContainer ? thumbsContainer.querySelectorAll('.gallery-thumb') : [];
+            const slides = track ? track.querySelectorAll('.gallery-slide') : [];
+            return { track, thumbs, slides };
+        }
+
+        function goToSlide(projectId, targetIndex, isAutoplay) {
+            const { slides, thumbs } = getGalleryElements(projectId);
+            if (!slides.length) return;
+            const prevIndex = currentSlideIndex[projectId] || 0;
+            if (targetIndex === prevIndex && slides[prevIndex].classList.contains('active')) return;
+            const totalSlides = slides.length;
+            const isLoopReset = (targetIndex === 0 && prevIndex === totalSlides - 1);
+
+            slides.forEach((slide, i) => { slide.classList.toggle('active', i === targetIndex); });
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.remove('active', 'filling');
+                if (isLoopReset) thumb.classList.remove('viewed');
+                if (i === targetIndex) {
+                    thumb.classList.add('active');
+                    if (!prefersReducedMotion && !isSingleSlide(projectId) && autoplayTimers[projectId]) {
+                        void thumb.offsetWidth;
+                        thumb.classList.add('filling');
+                    }
+                } else if (i < targetIndex || thumb.classList.contains('viewed')) {
+                    if (!isLoopReset || i < targetIndex) thumb.classList.add('viewed');
+                }
+            });
+            if (!isLoopReset && prevIndex !== targetIndex && thumbs[prevIndex]) thumbs[prevIndex].classList.add('viewed');
+            currentSlideIndex[projectId] = targetIndex;
+        }
+
+        function galleryGoTo(event, projectId, targetIndex) {
+            event.stopPropagation();
+            pauseAutoplay(projectId);
+            goToSlide(projectId, targetIndex, false);
+            if (!prefersReducedMotion && !isSingleSlide(projectId)) {
+                resumeTimers[projectId] = setTimeout(() => { startAutoplay(projectId); }, 6000);
+            }
+        }
+
+        function resetGallery(projectId) {
+            const { slides, thumbs } = getGalleryElements(projectId);
+            currentSlideIndex[projectId] = 0;
+            slides.forEach((slide, i) => { slide.classList.toggle('active', i === 0); });
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.remove('active', 'filling', 'viewed');
+                if (i === 0) thumb.classList.add('active');
+            });
+        }
+
+        function startAutoplay(projectId) {
+            stopAutoplay(projectId);
+            const { slides, thumbs } = getGalleryElements(projectId);
+            if (slides.length <= 1) return;
+            const idx = currentSlideIndex[projectId] || 0;
+            if (thumbs[idx]) {
+                thumbs[idx].classList.remove('filling');
+                void thumbs[idx].offsetWidth;
+                thumbs[idx].classList.add('filling');
+            }
+            autoplayTimers[projectId] = setInterval(() => {
+                const current = currentSlideIndex[projectId] || 0;
+                const next = (current + 1) % slides.length;
+                goToSlide(projectId, next, true);
+            }, 4000);
+        }
+
+        function stopAutoplay(projectId) {
+            if (autoplayTimers[projectId]) { clearInterval(autoplayTimers[projectId]); delete autoplayTimers[projectId]; }
+            if (resumeTimers[projectId]) { clearTimeout(resumeTimers[projectId]); delete resumeTimers[projectId]; }
+        }
+
+        function pauseAutoplay(projectId) {
+            if (autoplayTimers[projectId]) { clearInterval(autoplayTimers[projectId]); delete autoplayTimers[projectId]; }
+            if (resumeTimers[projectId]) { clearTimeout(resumeTimers[projectId]); delete resumeTimers[projectId]; }
+            const { thumbs } = getGalleryElements(projectId);
+            thumbs.forEach(t => t.classList.remove('filling'));
+        }
+
+        ['ibis', 'strix', 'sparrow', 'magpie', 'mallard'].forEach(id => { resetGallery(id); });
+
+        // Project Index
+        (function() {
+            const idx = document.getElementById('projectIndex');
+            const items = idx.querySelectorAll('.project-index-item');
+            const workSection = document.getElementById('work');
+
+            items.forEach(item => {
+                item.addEventListener('click', () => {
+                    const id = item.dataset.target;
+                    const row = document.querySelector('.project-row[data-project="' + id + '"]');
+                    if (row) {
+                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        setTimeout(() => toggleDetail(id), 400);
+                    }
+                });
+            });
+
+            function updateIndex() {
+                const workTop = workSection ? workSection.getBoundingClientRect().top : 999;
+                idx.classList.toggle('visible', workTop < window.innerHeight * 0.5);
+
+                const rows = document.querySelectorAll('.project-row');
+                let closest = null;
+                let closestDist = Infinity;
+                rows.forEach(row => {
+                    const rect = row.getBoundingClientRect();
+                    const dist = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
+                    if (dist < closestDist) { closestDist = dist; closest = row.dataset.project; }
+                });
+                items.forEach(item => {
+                    item.classList.toggle('active', item.dataset.target === closest || item.dataset.target === activeProject);
+                });
+            }
+
+            window.addEventListener('scroll', updateIndex, { passive: true });
+            updateIndex();
+        })();
+    </script>
+
+</body>
+</html>
