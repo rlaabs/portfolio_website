@@ -6,6 +6,29 @@
     <title>Robert Laabs — Director of Data Science | Full Stack Developer</title>
     <meta name="description" content="Portfolio of Robert Laabs: Director of Data Science and full stack developer with six tools in production.">
     <meta name="author" content="Robert Laabs">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://rlaabs.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Robert Laabs — Director of Data Science | Full Stack Developer">
+    <meta property="og:description" content="Portfolio of Robert Laabs: Director of Data Science and full stack developer with six tools in production.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rlaabs.com/">
+    <meta property="og:image" content="https://rlaabs.com/apple-touch-icon.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Robert Laabs — Director of Data Science | Full Stack Developer">
+    <meta name="twitter:description" content="Portfolio of Robert Laabs: Director of Data Science and full stack developer with six tools in production.">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -788,7 +811,7 @@
 
     <!-- Navigation -->
     <nav>
-        <div class="logo"></div>
+        <div class="logo">RL</div>
         <ul class="nav-links">
             <li><a href="#work">Work</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -828,7 +851,7 @@
     <section class="projects-index">
 
         <!-- Ibis -->
-        <div class="project-row" data-color="amber" data-project="ibis" onclick="toggleDetail('ibis')">
+        <div class="project-row" data-color="amber" data-project="ibis" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail('ibis')">
             <div class="project-left">
                 <p class="card-number">2026</p>
                 <h3 class="card-name">Ibis</h3>
@@ -877,11 +900,11 @@
                     <p class="detail-meta">2026</p>
                 </div>
             </div>
-            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+            <button class="detail-close" onclick="closeDetail(event)" aria-label="Close">&times;</button>
         </div>
 
         <!-- Strix -->
-        <div class="project-row" data-color="blue" data-project="strix" onclick="toggleDetail('strix')">
+        <div class="project-row" data-color="blue" data-project="strix" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail('strix')">
             <div class="project-left">
                 <p class="card-number">2025</p>
                 <h3 class="card-name">Strix</h3>
@@ -934,11 +957,11 @@
                     <p class="detail-meta"><a href="https://strixeditor.com/" target="_blank" rel="noopener">strixeditor.com</a> · 2025</p>
                 </div>
             </div>
-            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+            <button class="detail-close" onclick="closeDetail(event)" aria-label="Close">&times;</button>
         </div>
 
         <!-- Sparrow -->
-        <div class="project-row" data-color="terracotta" data-project="sparrow" onclick="toggleDetail('sparrow')">
+        <div class="project-row" data-color="terracotta" data-project="sparrow" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail('sparrow')">
             <div class="project-left">
                 <p class="card-number">2025</p>
                 <h3 class="card-name">Sparrow</h3>
@@ -982,11 +1005,11 @@
                     <p class="detail-meta">2025</p>
                 </div>
             </div>
-            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+            <button class="detail-close" onclick="closeDetail(event)" aria-label="Close">&times;</button>
         </div>
 
         <!-- Budgie -->
-        <div class="project-row" data-color="purple" data-project="budgie" onclick="toggleDetail('budgie')">
+        <div class="project-row" data-color="purple" data-project="budgie" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail('budgie')">
             <div class="project-left">
                 <p class="card-number">2025</p>
                 <h3 class="card-name">Budgie</h3>
@@ -1013,11 +1036,11 @@
                 <p class="detail-tech-stack"><span>Python</span> · <span>asyncio</span> · <span>OpenAI</span> · <span>Pydantic</span> · <span>Jinja2</span> · <span>MLX</span> · <span>Polars</span></p>
                 <p class="detail-meta">2025</p>
             </div>
-            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+            <button class="detail-close" onclick="closeDetail(event)" aria-label="Close">&times;</button>
         </div>
 
         <!-- Magpie -->
-        <div class="project-row" data-color="teal" data-project="magpie" onclick="toggleDetail('magpie')">
+        <div class="project-row" data-color="teal" data-project="magpie" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail('magpie')">
             <div class="project-left">
                 <p class="card-number">2024</p>
                 <h3 class="card-name">Magpie</h3>
@@ -1064,11 +1087,11 @@
                     <p class="detail-meta">2024</p>
                 </div>
             </div>
-            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+            <button class="detail-close" onclick="closeDetail(event)" aria-label="Close">&times;</button>
         </div>
 
         <!-- Mallard -->
-        <div class="project-row" data-color="mint" data-project="mallard" onclick="toggleDetail('mallard')">
+        <div class="project-row" data-color="mint" data-project="mallard" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail('mallard')">
             <div class="project-left">
                 <p class="card-number">2020</p>
                 <h3 class="card-name">Mallard</h3>
@@ -1112,7 +1135,7 @@
                     <p class="detail-meta">2020</p>
                 </div>
             </div>
-            <button class="detail-close" onclick="closeDetail(event)">&times;</button>
+            <button class="detail-close" onclick="closeDetail(event)" aria-label="Close">&times;</button>
         </div>
 
     </section>
@@ -1123,14 +1146,14 @@
     </div>
     <footer class="footer">
         <div class="footer-left">
-            <p class="footer-text">&copy; 2025 Robert Laabs</p>
+            <p class="footer-text">&copy; 2026 Robert Laabs</p>
         </div>
         <div class="footer-zip-space"></div>
         <div class="footer-right">
             <ul class="footer-links">
                 <li><a href="https://github.com/rlaabs" target="_blank" rel="noopener">GitHub</a></li>
                 <li><a href="https://www.linkedin.com/in/robert-laabs-71526969/" target="_blank" rel="noopener">LinkedIn</a></li>
-                <li><a href="mailto:robert@rlaabs.com">Email</a></li>
+                <li><a href="mailto:portfolio@rlaabs.com">Email</a></li>
             </ul>
         </div>
     </footer>
@@ -1175,6 +1198,7 @@
             requestAnimationFrame(() => {
                 panel.classList.add('open');
                 row.classList.add('active');
+                row.setAttribute('aria-expanded', 'true');
                 activeProject = projectId;
                 updateZipColor(color);
                 resetGallery(projectId);
@@ -1197,13 +1221,17 @@
         function closeAllDetails() {
             if (activeProject) stopAutoplay(activeProject);
             document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
-            document.querySelectorAll('.project-row').forEach(r => r.classList.remove('active'));
+            document.querySelectorAll('.project-row').forEach(r => { r.classList.remove('active'); r.setAttribute('aria-expanded', 'false'); });
             activeProject = null;
             updateZipColor(null);
         }
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeAllDetails();
+            if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('project-row')) {
+                e.preventDefault();
+                toggleDetail(e.target.dataset.project);
+            }
         });
 
         function getGalleryElements(projectId) {
