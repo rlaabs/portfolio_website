@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zip-Framed Screenshot Options</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0A0A12;
+            --bg-field: #0E0E18;
+            --bg-card: #12121E;
+            --text-primary: #E0E0EC;
+            --text-secondary: #8888A0;
+            --text-muted: #55556A;
+            --rule: #1E1E30;
+            --amber: #D4A843;
+            --blue: #4A9EF5;
+            --teal: #2EA77A;
+            --terracotta: #C85A3A;
+            --mint: #3CC9A8;
+            --purple: #9B7ED8;
+        }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-header {
+            padding: 4rem 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            line-height: 1.7;
+        }
+
+        .option-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 4rem 3rem;
+            border-top: 1px solid var(--rule);
+        }
+        .option-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .option-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        .option-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 650px;
+            line-height: 1.7;
+        }
+
+        /* Shared gallery area (no border-top) */
+        .gallery-area {
+            background: var(--bg-field);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-img {
+            display: block;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        /* Demo containers */
+        .demos {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+        .demo-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+        .demo-single {
+            max-width: 800px;
+        }
+        .demo-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-top: 0.8rem;
+            text-align: center;
+        }
+
+        /* ═══════════════════════════════════════
+           OPTION A — Flanking Zips
+           Two vertical accent lines framing the screenshot,
+           extending full height of the gallery area.
+           Like Newman's "Who's Afraid of Red, Yellow and Blue"
+           ═══════════════════════════════════════ */
+
+        .flanking-zips {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .flanking-zips .flank-zip {
+            width: 3px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .flanking-zips .flank-zip::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255,255,255,0.12) 5%,
+                transparent 10%,
+                rgba(255,255,255,0.08) 50%,
+                transparent 55%,
+                rgba(255,255,255,0.1) 95%,
+                transparent 100%
+            );
+        }
+
+        .flanking-zips[data-accent="amber"] .flank-zip { background: var(--amber); box-shadow: 0 0 10px rgba(212,168,67,0.3); }
+        .flanking-zips[data-accent="blue"] .flank-zip { background: var(--blue); box-shadow: 0 0 10px rgba(74,158,245,0.3); }
+        .flanking-zips[data-accent="teal"] .flank-zip { background: var(--teal); box-shadow: 0 0 10px rgba(46,167,122,0.3); }
+        .flanking-zips[data-accent="terracotta"] .flank-zip { background: var(--terracotta); box-shadow: 0 0 10px rgba(200,90,58,0.3); }
+        .flanking-zips[data-accent="mint"] .flank-zip { background: var(--mint); box-shadow: 0 0 10px rgba(60,201,168,0.3); }
+
+        .flanking-zips .flank-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 3rem;
+            background: var(--bg-field);
+        }
+
+        .flanking-zips .flank-content img {
+            max-height: 380px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        /* ═══════════════════════════════════════
+           OPTION B — Single Left Zip (Asymmetric)
+           One accent line on the left edge only.
+           More like Newman's "Onement" series —
+           the zip divides the field asymmetrically.
+           ═══════════════════════════════════════ */
+
+        .single-zip {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .single-zip .sz-line {
+            width: 3px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .single-zip .sz-line::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255,255,255,0.15) 10%,
+                transparent 20%,
+                rgba(255,255,255,0.08) 50%,
+                transparent 60%,
+                rgba(255,255,255,0.1) 90%,
+                transparent 100%
+            );
+        }
+
+        .single-zip[data-accent="amber"] .sz-line { background: var(--amber); box-shadow: 0 0 10px rgba(212,168,67,0.3); }
+        .single-zip[data-accent="blue"] .sz-line { background: var(--blue); box-shadow: 0 0 10px rgba(74,158,245,0.3); }
+        .single-zip[data-accent="teal"] .sz-line { background: var(--teal); box-shadow: 0 0 10px rgba(46,167,122,0.3); }
+        .single-zip[data-accent="terracotta"] .sz-line { background: var(--terracotta); box-shadow: 0 0 10px rgba(200,90,58,0.3); }
+        .single-zip[data-accent="mint"] .sz-line { background: var(--mint); box-shadow: 0 0 10px rgba(60,201,168,0.3); }
+
+        .single-zip .sz-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 3rem;
+            background: var(--bg-field);
+        }
+
+        .single-zip .sz-content img {
+            max-height: 380px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        /* ═══════════════════════════════════════
+           OPTION C — Center Zip Continuity
+           The screenshot area is split by the central
+           zip continuing through it — the image sits
+           on one side (right), and a dark field on
+           the left holds the caption. The zip never
+           breaks.
+           ═══════════════════════════════════════ */
+
+        .center-zip-gallery {
+            display: grid;
+            grid-template-columns: 1fr 3px 1fr;
+            min-height: 420px;
+            background: var(--bg-field);
+        }
+
+        .czg-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 2rem 2.5rem;
+            text-align: right;
+        }
+
+        .czg-left .czg-caption {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .czg-left .czg-number {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .czg-left .czg-of {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            margin-top: 0.3rem;
+        }
+
+        .center-zip-gallery[data-accent="amber"] .czg-number { color: var(--amber); }
+        .center-zip-gallery[data-accent="blue"] .czg-number { color: var(--blue); }
+        .center-zip-gallery[data-accent="teal"] .czg-number { color: var(--teal); }
+        .center-zip-gallery[data-accent="terracotta"] .czg-number { color: var(--terracotta); }
+        .center-zip-gallery[data-accent="mint"] .czg-number { color: var(--mint); }
+
+        .czg-zip {
+            position: relative;
+        }
+        .czg-zip::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255,255,255,0.12) 5%,
+                transparent 10%,
+                rgba(255,255,255,0.08) 50%,
+                transparent 55%,
+                rgba(255,255,255,0.1) 95%,
+                transparent 100%
+            );
+        }
+
+        .center-zip-gallery[data-accent="amber"] .czg-zip { background: var(--amber); box-shadow: 0 0 10px rgba(212,168,67,0.3); }
+        .center-zip-gallery[data-accent="blue"] .czg-zip { background: var(--blue); box-shadow: 0 0 10px rgba(74,158,245,0.3); }
+        .center-zip-gallery[data-accent="teal"] .czg-zip { background: var(--teal); box-shadow: 0 0 10px rgba(46,167,122,0.3); }
+        .center-zip-gallery[data-accent="terracotta"] .czg-zip { background: var(--terracotta); box-shadow: 0 0 10px rgba(200,90,58,0.3); }
+        .center-zip-gallery[data-accent="mint"] .czg-zip { background: var(--mint); box-shadow: 0 0 10px rgba(60,201,168,0.3); }
+
+        .czg-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 2.5rem;
+        }
+
+        .czg-right img {
+            max-height: 380px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        /* ═══════════════════════════════════════
+           OPTION D — Field Bands
+           Screenshot fills the area edge-to-edge.
+           Thin vertical accent lines overlay at
+           fixed positions like Newman's multi-zip
+           paintings (e.g., "The Name II").
+           The zips bleed over the image content.
+           ═══════════════════════════════════════ */
+
+        .field-bands {
+            position: relative;
+            background: var(--bg-field);
+            overflow: hidden;
+        }
+
+        .field-bands img {
+            width: 100%;
+            display: block;
+            max-height: 420px;
+            object-fit: contain;
+            padding: 1.5rem 4rem;
+        }
+
+        .field-bands .band {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            pointer-events: none;
+        }
+
+        .field-bands .band::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255,255,255,0.1) 15%,
+                transparent 25%,
+                rgba(255,255,255,0.06) 50%,
+                transparent 65%,
+                rgba(255,255,255,0.08) 85%,
+                transparent 100%
+            );
+        }
+
+        /* Position bands at golden-ratio-ish points */
+        .field-bands .band:nth-child(1) { left: 8%; }
+        .field-bands .band:nth-child(2) { right: 8%; }
+
+        .field-bands[data-accent="amber"] .band { background: var(--amber); box-shadow: 0 0 8px rgba(212,168,67,0.25); }
+        .field-bands[data-accent="blue"] .band { background: var(--blue); box-shadow: 0 0 8px rgba(74,158,245,0.25); }
+        .field-bands[data-accent="teal"] .band { background: var(--teal); box-shadow: 0 0 8px rgba(46,167,122,0.25); }
+        .field-bands[data-accent="terracotta"] .band { background: var(--terracotta); box-shadow: 0 0 8px rgba(200,90,58,0.25); }
+        .field-bands[data-accent="mint"] .band { background: var(--mint); box-shadow: 0 0 8px rgba(60,201,168,0.25); }
+
+        /* ═══════════════════════════════════════
+           OPTION E — Zip Margin
+           Screenshot is pushed to the right with a
+           generous left margin. A single vertical
+           zip sits in that left margin space — the
+           negative space becomes the "field" and
+           the screenshot becomes the other "field".
+           Newman-like asymmetric field division.
+           ═══════════════════════════════════════ */
+
+        .zip-margin {
+            display: flex;
+            align-items: stretch;
+            background: var(--bg-field);
+            min-height: 420px;
+        }
+
+        .zm-field {
+            width: 18%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .zm-zip {
+            width: 3px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .zm-zip::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255,255,255,0.12) 5%,
+                transparent 10%,
+                rgba(255,255,255,0.08) 50%,
+                transparent 55%,
+                rgba(255,255,255,0.1) 95%,
+                transparent 100%
+            );
+        }
+
+        .zip-margin[data-accent="amber"] .zm-zip { background: var(--amber); box-shadow: 0 0 10px rgba(212,168,67,0.3); }
+        .zip-margin[data-accent="blue"] .zm-zip { background: var(--blue); box-shadow: 0 0 10px rgba(74,158,245,0.3); }
+        .zip-margin[data-accent="teal"] .zm-zip { background: var(--teal); box-shadow: 0 0 10px rgba(46,167,122,0.3); }
+        .zip-margin[data-accent="terracotta"] .zm-zip { background: var(--terracotta); box-shadow: 0 0 10px rgba(200,90,58,0.3); }
+        .zip-margin[data-accent="mint"] .zm-zip { background: var(--mint); box-shadow: 0 0 10px rgba(60,201,168,0.3); }
+
+        .zm-image-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 3rem 2rem 2.5rem;
+        }
+
+        .zm-image-area img {
+            max-height: 380px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        /* ═══════════════════════════════════════
+           Comparison summary
+           ═══════════════════════════════════════ */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .summary-grid h3 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .summary-grid p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>Zip-Framed Screenshots</h1>
+        <p>Each option uses vertical lines as the framing device, consistent with the Barnett Newman zip motif. The horizontal border-top in the gallery is removed in all options — the zip line(s) alone define the transition. Each shows a light-UI screenshot (Magpie) and a dark-UI screenshot (Ibis) to test both extremes.</p>
+    </div>
+
+    <!-- ——— OPTION A — Flanking Zips ——— -->
+    <div class="option-section">
+        <p class="option-label">Option A</p>
+        <h2 class="option-title">Flanking Zips</h2>
+        <p class="option-desc">Two vertical accent-colored zips frame the screenshot on both sides, extending the full height of the gallery. The image floats between them like a color field between two zips in "Who's Afraid of Red, Yellow and Blue." No horizontal lines anywhere.</p>
+        <div class="demos">
+            <div class="demo-pair">
+                <div>
+                    <div class="flanking-zips" data-accent="teal">
+                        <div class="flank-zip"></div>
+                        <div class="flank-content">
+                            <img src="../assets/images/magpie/01-dashboard.jpg" alt="Magpie">
+                        </div>
+                        <div class="flank-zip"></div>
+                    </div>
+                    <p class="demo-label">Magpie — light UI</p>
+                </div>
+                <div>
+                    <div class="flanking-zips" data-accent="amber">
+                        <div class="flank-zip"></div>
+                        <div class="flank-content">
+                            <img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Ibis">
+                        </div>
+                        <div class="flank-zip"></div>
+                    </div>
+                    <p class="demo-label">Ibis — dark UI</p>
+                </div>
+            </div>
+            <div class="demo-pair">
+                <div>
+                    <div class="flanking-zips" data-accent="mint">
+                        <div class="flank-zip"></div>
+                        <div class="flank-content">
+                            <img src="../assets/images/mallard/01-query-form.jpg" alt="Mallard">
+                        </div>
+                        <div class="flank-zip"></div>
+                    </div>
+                    <p class="demo-label">Mallard — light UI</p>
+                </div>
+                <div>
+                    <div class="flanking-zips" data-accent="blue">
+                        <div class="flank-zip"></div>
+                        <div class="flank-content">
+                            <img src="../assets/images/strix/01-data-grid.jpg" alt="Strix">
+                        </div>
+                        <div class="flank-zip"></div>
+                    </div>
+                    <p class="demo-label">Strix — dark UI</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ——— OPTION B — Single Left Zip ——— -->
+    <div class="option-section">
+        <p class="option-label">Option B</p>
+        <h2 class="option-title">Single Left Zip</h2>
+        <p class="option-desc">One accent zip on the left edge only — asymmetric, like Newman's "Onement" series. The single line is enough to claim the image as belonging to this project. The right edge bleeds into the dark background naturally.</p>
+        <div class="demos">
+            <div class="demo-pair">
+                <div>
+                    <div class="single-zip" data-accent="teal">
+                        <div class="sz-line"></div>
+                        <div class="sz-content">
+                            <img src="../assets/images/magpie/01-dashboard.jpg" alt="Magpie">
+                        </div>
+                    </div>
+                    <p class="demo-label">Magpie — light UI</p>
+                </div>
+                <div>
+                    <div class="single-zip" data-accent="amber">
+                        <div class="sz-line"></div>
+                        <div class="sz-content">
+                            <img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Ibis">
+                        </div>
+                    </div>
+                    <p class="demo-label">Ibis — dark UI</p>
+                </div>
+            </div>
+            <div class="demo-pair">
+                <div>
+                    <div class="single-zip" data-accent="terracotta">
+                        <div class="sz-line"></div>
+                        <div class="sz-content">
+                            <img src="../assets/images/sparrow/01-chat-conversation.jpg" alt="Sparrow">
+                        </div>
+                    </div>
+                    <p class="demo-label">Sparrow — light UI</p>
+                </div>
+                <div>
+                    <div class="single-zip" data-accent="blue">
+                        <div class="sz-line"></div>
+                        <div class="sz-content">
+                            <img src="../assets/images/strix/01-data-grid.jpg" alt="Strix">
+                        </div>
+                    </div>
+                    <p class="demo-label">Strix — dark UI</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ——— OPTION C — Center Zip Continuity ——— -->
+    <div class="option-section">
+        <p class="option-label">Option C</p>
+        <h2 class="option-title">Center Zip Continuity</h2>
+        <p class="option-desc">The central zip never breaks — it runs straight through the gallery area. The screenshot sits in the right field, and the left field holds a large slide number in the accent color. This mirrors the split-layout already used in the hero and project rows, making the gallery feel native to the design rather than bolted on.</p>
+        <div class="demos">
+            <div>
+                <div class="center-zip-gallery" data-accent="teal">
+                    <div class="czg-left">
+                        <p class="czg-caption">Dashboard overview</p>
+                        <p class="czg-number">01</p>
+                        <p class="czg-of">of 04</p>
+                    </div>
+                    <div class="czg-zip"></div>
+                    <div class="czg-right">
+                        <img src="../assets/images/magpie/01-dashboard.jpg" alt="Magpie">
+                    </div>
+                </div>
+                <p class="demo-label">Magpie — light UI, center zip maintained</p>
+            </div>
+            <div style="margin-top: 2.5rem;">
+                <div class="center-zip-gallery" data-accent="amber">
+                    <div class="czg-left">
+                        <p class="czg-caption">Chat conversation</p>
+                        <p class="czg-number">01</p>
+                        <p class="czg-of">of 04</p>
+                    </div>
+                    <div class="czg-zip"></div>
+                    <div class="czg-right">
+                        <img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Ibis">
+                    </div>
+                </div>
+                <p class="demo-label">Ibis — dark UI, center zip maintained</p>
+            </div>
+            <div style="margin-top: 2.5rem;">
+                <div class="center-zip-gallery" data-accent="mint">
+                    <div class="czg-left">
+                        <p class="czg-caption">Query form</p>
+                        <p class="czg-number">01</p>
+                        <p class="czg-of">of 04</p>
+                    </div>
+                    <div class="czg-zip"></div>
+                    <div class="czg-right">
+                        <img src="../assets/images/mallard/01-query-form.jpg" alt="Mallard">
+                    </div>
+                </div>
+                <p class="demo-label">Mallard — light UI, center zip maintained</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ——— OPTION D — Field Bands (overlay) ——— -->
+    <div class="option-section">
+        <p class="option-label">Option D</p>
+        <h2 class="option-title">Field Bands</h2>
+        <p class="option-desc">Two thin accent zips overlay the screenshot at fixed positions near the edges — like Newman's multi-zip paintings ("The Name II", "Anna's Light"). The lines bleed over the image content itself, asserting the portfolio's visual language over the app's own UI. More aggressive, but unmistakably ties every screenshot to the design system.</p>
+        <div class="demos">
+            <div class="demo-pair">
+                <div>
+                    <div class="field-bands" data-accent="teal">
+                        <div class="band"></div>
+                        <div class="band"></div>
+                        <img src="../assets/images/magpie/01-dashboard.jpg" alt="Magpie">
+                    </div>
+                    <p class="demo-label">Magpie — light UI</p>
+                </div>
+                <div>
+                    <div class="field-bands" data-accent="amber">
+                        <div class="band"></div>
+                        <div class="band"></div>
+                        <img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Ibis">
+                    </div>
+                    <p class="demo-label">Ibis — dark UI</p>
+                </div>
+            </div>
+            <div class="demo-pair">
+                <div>
+                    <div class="field-bands" data-accent="mint">
+                        <div class="band"></div>
+                        <div class="band"></div>
+                        <img src="../assets/images/mallard/03-explore-data.jpg" alt="Mallard">
+                    </div>
+                    <p class="demo-label">Mallard — data exploration</p>
+                </div>
+                <div>
+                    <div class="field-bands" data-accent="terracotta">
+                        <div class="band"></div>
+                        <div class="band"></div>
+                        <img src="../assets/images/sparrow/01-chat-conversation.jpg" alt="Sparrow">
+                    </div>
+                    <p class="demo-label">Sparrow — light UI</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ——— OPTION E — Zip Margin ——— -->
+    <div class="option-section">
+        <p class="option-label">Option E</p>
+        <h2 class="option-title">Zip Margin</h2>
+        <p class="option-desc">The screenshot is pushed right, leaving a generous empty dark field on the left. A single zip divides the empty field from the image — two color fields separated by a zip, the most literal Newman interpretation. The negative space breathes and gives the screenshot room. The left field could later hold thumbnail navigation vertically if needed.</p>
+        <div class="demos">
+            <div>
+                <div class="zip-margin" data-accent="teal">
+                    <div class="zm-field"></div>
+                    <div class="zm-zip"></div>
+                    <div class="zm-image-area">
+                        <img src="../assets/images/magpie/01-dashboard.jpg" alt="Magpie">
+                    </div>
+                </div>
+                <p class="demo-label">Magpie — light UI</p>
+            </div>
+            <div style="margin-top: 2.5rem;">
+                <div class="zip-margin" data-accent="amber">
+                    <div class="zm-field"></div>
+                    <div class="zm-zip"></div>
+                    <div class="zm-image-area">
+                        <img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Ibis">
+                    </div>
+                </div>
+                <p class="demo-label">Ibis — dark UI</p>
+            </div>
+            <div style="margin-top: 2.5rem;">
+                <div class="zip-margin" data-accent="blue">
+                    <div class="zm-field"></div>
+                    <div class="zm-zip"></div>
+                    <div class="zm-image-area">
+                        <img src="../assets/images/strix/01-data-grid.jpg" alt="Strix">
+                    </div>
+                </div>
+                <p class="demo-label">Strix — dark UI</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ——— Summary ——— -->
+    <div class="option-section">
+        <p class="option-label">Comparison</p>
+        <div class="summary-grid" style="grid-template-columns: 1fr 1fr; margin-top: 1.5rem;">
+            <div>
+                <h3>A — Flanking Zips</h3>
+                <p>Symmetric. Two zips create a bounded field. Clear containment. Slightly formal — feels like the screenshot is exhibited between two pillars.</p>
+            </div>
+            <div>
+                <h3>B — Single Left Zip</h3>
+                <p>Asymmetric, minimal. One zip is enough to mark ownership. The open right edge lets the image dissolve into the background. Lightest touch.</p>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <h3>C — Center Zip Continuity</h3>
+                <p>Structural. The central zip runs through everything — hero, project rows, gallery, detail text, footer. Nothing interrupts it. Most architecturally consistent, and gives the gallery the same split-layout DNA as the rest of the page.</p>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <h3>D — Field Bands</h3>
+                <p>Assertive. The zips lay over the image, not beside it. The portfolio's language dominates the screenshot's own UI. Bold but potentially distracting if the bands cross important content.</p>
+            </div>
+        </div>
+        <div style="margin-top: 1.5rem;">
+            <h3 style="font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-primary);">E — Zip Margin</h3>
+            <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.7; max-width: 600px;">Most literal Newman. Two fields (empty dark + screenshot) divided by a zip. The negative space is the design. The left field could hold vertical thumbnail navigation later.</p>
+        </div>
+    </div>
+
+</body>
+</html>

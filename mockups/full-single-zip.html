@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robert Laabs — Software Engineer & Data Science Manager</title>
+    <title>Robert Laabs — Full Mockup (Single Left Zip)</title>
     <meta name="description" content="Portfolio of Robert Laabs: Full-stack engineer building production tools from desktop apps to ML infrastructure.">
-    <meta name="author" content="Robert Laabs">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -49,7 +48,7 @@
             overflow-x: hidden;
         }
 
-        /* ——— THE CENTRAL ZIP — persistent vertical line ——— */
+        /* ——— THE CENTRAL ZIP ——— */
 
         .central-zip {
             position: fixed;
@@ -65,7 +64,6 @@
             transition: background 0.8s ease, box-shadow 0.8s ease;
         }
 
-        /* Painterly texture on the zip — subtle gradient variation */
         .central-zip::before {
             content: '';
             position: absolute;
@@ -86,7 +84,6 @@
             );
         }
 
-        /* Color states for the zip */
         .central-zip.color-amber { background: var(--amber); box-shadow: 0 0 12px rgba(212, 168, 67, 0.4), 0 0 30px rgba(212, 168, 67, 0.15); }
         .central-zip.color-blue { background: var(--blue); box-shadow: 0 0 12px rgba(74, 158, 245, 0.4), 0 0 30px rgba(74, 158, 245, 0.15); }
         .central-zip.color-terracotta { background: var(--terracotta); box-shadow: 0 0 12px rgba(200, 90, 58, 0.4), 0 0 30px rgba(200, 90, 58, 0.15); }
@@ -137,7 +134,7 @@
             color: var(--text-primary);
         }
 
-        /* ——— Hero Section — split by central zip ——— */
+        /* ——— Hero Section ——— */
 
         .hero {
             min-height: 80vh;
@@ -155,9 +152,7 @@
             text-align: right;
         }
 
-        .hero-zip-space {
-            /* Space for the fixed central zip */
-        }
+        .hero-zip-space {}
 
         .hero-right {
             padding: 8rem 4rem 4rem;
@@ -202,6 +197,22 @@
             max-width: 400px;
         }
 
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            z-index: 60;
+        }
+
         /* ——— Section Header ——— */
 
         .section-header {
@@ -225,7 +236,7 @@
             margin-bottom: 3rem;
         }
 
-        /* ——— Project Cards — split layout ——— */
+        /* ——— Project Rows ——— */
 
         .projects-index {
             padding: 0 0 2rem;
@@ -276,6 +287,7 @@
             letter-spacing: -0.01em;
             line-height: 1.2;
             margin-bottom: 0.3rem;
+            color: var(--text-primary);
         }
 
         .card-type {
@@ -294,6 +306,16 @@
             margin-bottom: 1rem;
             line-height: 1.5;
         }
+
+        .card-tech {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.01em;
+            display: none;
+        }
+
+        .card-tech span { color: var(--text-secondary); }
 
         /* ——— Detail Panel ——— */
 
@@ -343,115 +365,157 @@
         .detail-panel[data-color="mint"] .detail-close { color: var(--mint); border-color: var(--mint); }
         .detail-panel[data-color="purple"] .detail-close { color: var(--purple); border-color: var(--purple); }
 
-        .detail-panel[data-color="amber"] .detail-split-zip { background: var(--amber); box-shadow: 0 0 12px rgba(212,168,67,0.35); }
-        .detail-panel[data-color="blue"] .detail-split-zip { background: var(--blue); box-shadow: 0 0 12px rgba(74,158,245,0.35); }
-        .detail-panel[data-color="terracotta"] .detail-split-zip { background: var(--terracotta); box-shadow: 0 0 12px rgba(200,90,58,0.35); }
-        .detail-panel[data-color="teal"] .detail-split-zip { background: var(--teal); box-shadow: 0 0 12px rgba(46,167,122,0.35); }
-        .detail-panel[data-color="mint"] .detail-split-zip { background: var(--mint); box-shadow: 0 0 12px rgba(60,201,168,0.35); }
-        .detail-panel[data-color="purple"] .detail-split-zip { background: var(--purple); box-shadow: 0 0 12px rgba(155,126,216,0.35); }
+        /* ——— Gallery — Single Left Zip (unbroken) ——— */
 
-        /* ——— Gallery — Center Zip: View List ——— */
-
-        .gallery-track {
-            display: grid;
-            grid-template-columns: 1fr 3px 1fr;
+        /*
+         * The zip is an absolutely-positioned element inside a
+         * position:relative wrapper. It spans the full height of
+         * both the slides area and the thumbnails below it —
+         * one unbroken vertical line.
+         */
+        .gallery-wrap {
+            position: relative;
             background: var(--bg-field);
         }
 
-        .gallery-left-field {
-            grid-column: 1;
-            grid-row: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-end;
-            padding: 2.5rem 2rem;
-            gap: 0;
+        .gallery-zip {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 3px;
+            z-index: 2;
         }
 
-        .gallery-view-link {
-            display: block;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-align: right;
-            padding: 0.55rem 0;
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.78rem;
-            font-weight: 300;
-            letter-spacing: 0.06em;
-            color: var(--text-muted);
-            transition: color 0.3s ease, opacity 0.3s ease;
-            position: relative;
-        }
-
-        .gallery-view-link:hover {
-            color: var(--text-secondary);
-        }
-
-        .gallery-view-link.active {
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .detail-panel[data-color="amber"] .gallery-view-link.active { color: var(--amber); }
-        .detail-panel[data-color="blue"] .gallery-view-link.active { color: var(--blue); }
-        .detail-panel[data-color="terracotta"] .gallery-view-link.active { color: var(--terracotta); }
-        .detail-panel[data-color="teal"] .gallery-view-link.active { color: var(--teal); }
-        .detail-panel[data-color="mint"] .gallery-view-link.active { color: var(--mint); }
-        .detail-panel[data-color="purple"] .gallery-view-link.active { color: var(--purple); }
-
-        .gallery-center-zip {
-            grid-column: 2;
-            grid-row: 1;
-            position: relative;
-        }
-
-        .gallery-center-zip::after {
+        .gallery-zip::after {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(
                 to bottom,
-                transparent 0%, rgba(255,255,255,0.12) 5%, transparent 10%,
-                rgba(255,255,255,0.08) 50%, transparent 55%,
-                rgba(255,255,255,0.1) 95%, transparent 100%
+                transparent 0%,
+                rgba(255, 255, 255, 0.15) 10%,
+                transparent 20%,
+                rgba(255, 255, 255, 0.08) 50%,
+                transparent 60%,
+                rgba(255, 255, 255, 0.1) 90%,
+                transparent 100%
             );
         }
 
-        .detail-panel[data-color="amber"] .gallery-center-zip { background: var(--amber); box-shadow: 0 0 10px rgba(212,168,67,0.3); }
-        .detail-panel[data-color="blue"] .gallery-center-zip { background: var(--blue); box-shadow: 0 0 10px rgba(74,158,245,0.3); }
-        .detail-panel[data-color="terracotta"] .gallery-center-zip { background: var(--terracotta); box-shadow: 0 0 10px rgba(200,90,58,0.3); }
-        .detail-panel[data-color="teal"] .gallery-center-zip { background: var(--teal); box-shadow: 0 0 10px rgba(46,167,122,0.3); }
-        .detail-panel[data-color="mint"] .gallery-center-zip { background: var(--mint); box-shadow: 0 0 10px rgba(60,201,168,0.3); }
-        .detail-panel[data-color="purple"] .gallery-center-zip { background: var(--purple); box-shadow: 0 0 10px rgba(155,126,216,0.3); }
+        .detail-panel[data-color="amber"] .gallery-zip { background: var(--amber); box-shadow: 0 0 10px rgba(212,168,67,0.3); }
+        .detail-panel[data-color="blue"] .gallery-zip { background: var(--blue); box-shadow: 0 0 10px rgba(74,158,245,0.3); }
+        .detail-panel[data-color="terracotta"] .gallery-zip { background: var(--terracotta); box-shadow: 0 0 10px rgba(200,90,58,0.3); }
+        .detail-panel[data-color="teal"] .gallery-zip { background: var(--teal); box-shadow: 0 0 10px rgba(46,167,122,0.3); }
+        .detail-panel[data-color="mint"] .gallery-zip { background: var(--mint); box-shadow: 0 0 10px rgba(60,201,168,0.3); }
+        .detail-panel[data-color="purple"] .gallery-zip { background: var(--purple); box-shadow: 0 0 10px rgba(155,126,216,0.3); }
 
-        .gallery-right-field {
-            grid-column: 3;
-            grid-row: 1;
+        /* Slides area */
+        .gallery-track {
             position: relative;
-            min-height: 420px;
+            max-height: 420px;
+            min-height: 380px;
         }
 
         .gallery-slide {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            padding: 2rem 2.5rem;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 4rem 1rem;
             opacity: 0;
             transition: opacity 1.2s ease-in-out;
             pointer-events: none;
         }
-        .gallery-slide.active { opacity: 1; pointer-events: auto; }
+
+        .gallery-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
         .gallery-slide img {
-            max-height: 380px;
+            max-height: 340px;
             max-width: 100%;
             object-fit: contain;
             border-radius: 2px;
         }
 
-        /* Detail info — split by a local zip that cuts through text only */
+        .gallery-caption {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Thumbnails */
+        .gallery-thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.8rem 4rem 1.2rem;
+        }
+
+        .gallery-thumb {
+            height: 60px;
+            width: auto;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+            border: none;
+            border-bottom: 2px solid var(--rule);
+            padding: 0;
+            padding-bottom: 4px;
+            background: none;
+            display: block;
+            position: relative;
+        }
+
+        .gallery-thumb:hover { opacity: 0.6; }
+        .gallery-thumb.active { opacity: 1; }
+
+        .gallery-thumb::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            transition: none;
+        }
+
+        .detail-panel[data-color="amber"] .gallery-thumb::after { background: var(--amber); }
+        .detail-panel[data-color="blue"] .gallery-thumb::after { background: var(--blue); }
+        .detail-panel[data-color="terracotta"] .gallery-thumb::after { background: var(--terracotta); }
+        .detail-panel[data-color="teal"] .gallery-thumb::after { background: var(--teal); }
+        .detail-panel[data-color="mint"] .gallery-thumb::after { background: var(--mint); }
+        .detail-panel[data-color="purple"] .gallery-thumb::after { background: var(--purple); }
+
+        .gallery-thumb.active.filling::after {
+            width: 100%;
+            transition: width 4s linear;
+        }
+
+        .gallery-thumb.viewed::after {
+            width: 100%;
+            transition: none;
+        }
+
+        .gallery-thumb img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            border-radius: 2px;
+            display: block;
+        }
+
+        /* ——— Detail info — split layout ——— */
+
         .detail-info-split {
             display: grid;
             grid-template-columns: 1fr 3px 1fr;
@@ -469,7 +533,7 @@
 
         .detail-split-zip {
             background: var(--zip-color);
-            box-shadow: 0 0 12px var(--zip-glow);
+            box-shadow: 0 0 12px var(--zip-glow), 0 0 30px rgba(200, 64, 64, 0.15);
             transition: background 0.8s ease, box-shadow 0.8s ease;
         }
 
@@ -491,6 +555,13 @@
         .detail-panel[data-color="teal"] .detail-title { color: var(--teal); }
         .detail-panel[data-color="mint"] .detail-title { color: var(--mint); }
         .detail-panel[data-color="purple"] .detail-title { color: var(--purple); }
+
+        .detail-panel[data-color="amber"] .detail-split-zip { background: var(--amber); box-shadow: 0 0 12px rgba(212,168,67,0.35); }
+        .detail-panel[data-color="blue"] .detail-split-zip { background: var(--blue); box-shadow: 0 0 12px rgba(74,158,245,0.35); }
+        .detail-panel[data-color="terracotta"] .detail-split-zip { background: var(--terracotta); box-shadow: 0 0 12px rgba(200,90,58,0.35); }
+        .detail-panel[data-color="teal"] .detail-split-zip { background: var(--teal); box-shadow: 0 0 12px rgba(46,167,122,0.35); }
+        .detail-panel[data-color="mint"] .detail-split-zip { background: var(--mint); box-shadow: 0 0 12px rgba(60,201,168,0.35); }
+        .detail-panel[data-color="purple"] .detail-split-zip { background: var(--purple); box-shadow: 0 0 12px rgba(155,126,216,0.35); }
 
         .detail-tagline {
             font-size: 1rem;
@@ -563,6 +634,7 @@
         .budgie-text-panel .detail-tagline { margin-bottom: 1.5rem; }
         .budgie-text-panel .detail-description { margin-bottom: 2rem; text-align: left; margin-left: 0; }
         .budgie-text-panel .detail-features { margin-bottom: 2rem; }
+        .budgie-text-panel .detail-tech-stack { margin-bottom: 1rem; }
 
         /* ——— Footer ——— */
 
@@ -612,7 +684,6 @@
 
         .footer-links a:hover { color: var(--text-secondary); }
 
-        /* Top rule for footer */
         .footer-rule-container {
             padding: 0 4rem;
         }
@@ -622,7 +693,8 @@
             background: var(--rule);
         }
 
-        /* ——— Tranquil Shimmer — slow, meditative pulse within 3px zip ——— */
+        /* ——— Zip Pulse ——— */
+
         .zip-pulse {
             position: fixed;
             top: 0;
@@ -659,83 +731,7 @@
             100% { top: calc(100vh + 350px); opacity: 0; }
         }
 
-        /* ——— Reduced Motion ——— */
-
-        @media (prefers-reduced-motion: reduce) {
-            .gallery-slide { transition: none; }
-            .gallery-view-link::after { transition: none !important; }
-            .gallery-view-link.active.filling::after { width: 100%; transition: none; }
-            .central-zip { transition: none; }
-            .zip-pulse { display: none; }
-        }
-
-        /* ——— Responsive ——— */
-
-        @media (max-width: 900px) {
-            nav { padding: 1.5rem 2rem; }
-
-            .hero {
-                grid-template-columns: 1fr 3px 1fr;
-                min-height: auto;
-                padding-top: 6rem;
-            }
-            .hero-left {
-                padding: 6rem 1rem 1rem;
-            }
-            .hero-right { padding: 1rem 1rem 4rem; }
-            .hero-name .first, .hero-name .last {
-                font-size: clamp(1.8rem, 8vw, 3rem);
-            }
-            .hero-subtitle { font-size: 0.6rem; letter-spacing: 0.15em; }
-            .hero-tagline { font-size: 0.85rem; }
-
-            .section-header { padding: 3rem 1rem 0; }
-
-            .project-row {
-                grid-template-columns: 1fr 3px 1fr;
-                min-height: 140px;
-            }
-            .project-left { padding: 1.5rem 1rem; }
-            .project-right { padding: 1.5rem 1rem; }
-            .card-number { font-size: 0.6rem; }
-            .card-name { font-size: 1rem; }
-            .card-type { font-size: 0.6rem; }
-            .card-tagline { font-size: 0.75rem; }
-
-            .detail-info-split { grid-template-columns: 1fr 3px 1fr; padding: 1.5rem 0; }
-            .detail-split-left { padding: 0 1rem; }
-            .detail-split-left .detail-description { text-align: right; }
-            .detail-split-right { padding: 0 1rem; }
-            .detail-title { font-size: 1.4rem; }
-
-            .gallery-slide { padding: 1.5rem 1rem; }
-            .gallery-left-field { padding: 1.5rem 1rem; }
-            .gallery-view-link { font-size: 0.68rem; padding: 0.4rem 0; }
-            .budgie-text-panel { padding: 1.5rem; }
-
-            .footer { grid-template-columns: 1fr 3px 1fr; padding: 3rem 0 2rem; }
-            .footer-left { padding: 0 1rem; }
-            .footer-right { padding: 0 1rem; }
-            .footer-rule-container { padding: 0 1rem; }
-
-            .project-nav { gap: 0.2rem 0.8rem; }
-            .project-nav a { font-size: 0.65rem; }
-        }
-
-        @media (max-width: 600px) {
-            nav .nav-links { gap: 1.5rem; }
-            nav .nav-links a { font-size: 0.7rem; }
-            .hero-name .first, .hero-name .last {
-                font-size: clamp(1.5rem, 7vw, 2.5rem);
-            }
-            .hero-subtitle { font-size: 0.55rem; }
-            .hero-tagline { font-size: 0.75rem; max-width: none; }
-            .gallery-right-field { min-height: 300px; }
-            .gallery-slide img { max-height: 240px; }
-            .card-name { font-size: 0.85rem; }
-            .card-tagline { font-size: 0.65rem; }
-        }
-        /* ——— Project Nav — horizontal text links in hero right column ——— */
+        /* ——— Project Nav ——— */
         .project-nav {
             display: flex;
             flex-direction: row;
@@ -753,17 +749,53 @@
             cursor: pointer;
         }
 
-        .project-nav a:hover {
-            color: var(--text-primary);
-        }
+        .project-nav a:hover { color: var(--text-primary); }
+        .project-nav a.active { color: var(--text-primary); font-weight: 500; }
 
-        .project-nav a.active {
-            color: var(--text-primary);
-            font-weight: 500;
+        @media (prefers-reduced-motion: reduce) {
+            .gallery-slide { transition: none; }
+            .gallery-thumb::after { transition: none !important; }
+            .gallery-thumb.active.filling::after { width: 100%; transition: none; }
+            .central-zip { transition: none; }
+            .zip-pulse { display: none; }
         }
 
         @media (max-width: 900px) {
+            nav { padding: 1.5rem 2rem; }
+            .hero { grid-template-columns: 1fr 3px 1fr; min-height: auto; padding-top: 6rem; }
+            .hero-left { padding: 6rem 1rem 1rem; }
+            .hero-right { padding: 1rem 1rem 4rem; }
+            .hero-name .first, .hero-name .last { font-size: clamp(1.8rem, 8vw, 3rem); }
+            .hero-subtitle { font-size: 0.6rem; letter-spacing: 0.15em; }
+            .hero-tagline { font-size: 0.85rem; }
+            .section-header { padding: 3rem 1rem 0; }
+            .project-row { grid-template-columns: 1fr 3px 1fr; min-height: 140px; }
+            .project-left { padding: 1.5rem 1rem; }
+            .project-right { padding: 1.5rem 1rem; }
+            .card-name { font-size: 1rem; }
+            .card-tagline { font-size: 0.75rem; }
+            .detail-info-split { grid-template-columns: 1fr 3px 1fr; padding: 1.5rem 0; }
+            .detail-split-left { padding: 0 1rem; }
+            .detail-split-right { padding: 0 1rem; }
+            .detail-title { font-size: 1.4rem; }
+            .gallery-slide { padding: 1.5rem 1rem 1rem; }
+            .budgie-text-panel { padding: 1.5rem; }
+            .footer { grid-template-columns: 1fr 3px 1fr; padding: 3rem 0 2rem; }
+            .footer-left { padding: 0 1rem; }
+            .footer-right { padding: 0 1rem; }
+            .footer-rule-container { padding: 0 1rem; }
             .project-nav { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            nav .nav-links { gap: 1.5rem; }
+            nav .nav-links a { font-size: 0.7rem; }
+            .hero-name .first, .hero-name .last { font-size: clamp(1.5rem, 7vw, 2.5rem); }
+            .gallery-track { max-height: 300px; min-height: 260px; }
+            .gallery-slide img { max-height: 240px; }
+            .gallery-thumb { height: 44px; }
+            .card-name { font-size: 0.85rem; }
+            .card-tagline { font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -786,7 +818,7 @@
         </ul>
     </nav>
 
-    <!-- Hero Section — split by the zip -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-left">
             <div class="hero-name">
@@ -826,25 +858,25 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">Ibis transforms enterprise workflows that required navigating five separate systems and 30-50 manual steps into single conversational requests, achieving 44.7x measured average speedup.</p>
-
+                <p class="card-tagline">Ibis transforms enterprise workflows that required navigating five separate systems (project tracking, documentation, code repositories, file storage, and execution planning) and 30-50 manual steps into single conversational requests, achieving 44.7x measured average speedup.</p>
+                <p class="card-tech"><span>TypeScript</span> · <span>Electron</span> · <span>React</span> · <span>Python</span> · <span>FastAPI</span></p>
             </div>
         </div>
 
         <div class="detail-panel" id="detail-ibis" data-color="amber">
-            <div class="gallery-track" data-gallery="ibis">
-                <div class="gallery-left-field">
-                    <button class="gallery-view-link active" onclick="galleryGoTo(event, 'ibis', 0)">Chat conversation</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'ibis', 1)">Tool blocks</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'ibis', 2)">Approval dialog</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'ibis', 3)">Settings panel</button>
+            <div class="gallery-wrap">
+                <div class="gallery-zip"></div>
+                <div class="gallery-track" data-gallery="ibis">
+                    <div class="gallery-slide active"><img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Chat conversation" loading="lazy"><p class="gallery-caption">Chat conversation</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/ibis/02-tool-blocks.jpg" alt="Tool blocks" loading="lazy"><p class="gallery-caption">Tool blocks</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/ibis/03-approval-dialog.jpg" alt="Approval dialog" loading="lazy"><p class="gallery-caption">Approval dialog</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/ibis/04-settings.jpg" alt="Settings panel" loading="lazy"><p class="gallery-caption">Settings panel</p></div>
                 </div>
-                <div class="gallery-center-zip"></div>
-                <div class="gallery-right-field">
-                    <div class="gallery-slide active"><img src="assets/images/ibis/01-chat-conversation.jpg" alt="Chat conversation" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/ibis/02-tool-blocks.jpg" alt="Tool blocks" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/ibis/03-approval-dialog.jpg" alt="Approval dialog" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/ibis/04-settings.jpg" alt="Settings panel" loading="lazy"></div>
+                <div class="gallery-thumbnails" data-thumbs="ibis">
+                    <button class="gallery-thumb active" onclick="galleryGoTo(event, 'ibis', 0)"><img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Chat"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'ibis', 1)"><img src="../assets/images/ibis/02-tool-blocks.jpg" alt="Tools"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'ibis', 2)"><img src="../assets/images/ibis/03-approval-dialog.jpg" alt="Approval"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'ibis', 3)"><img src="../assets/images/ibis/04-settings.jpg" alt="Settings"></button>
                 </div>
             </div>
             <div class="detail-info-split">
@@ -878,31 +910,31 @@
             <div class="project-zip-space"></div>
             <div class="project-right">
                 <p class="card-tagline">A native macOS SQLite database browser and editor on the Mac App Store with inline cell editing, staged change-tracking, and dual-mode FTS5 search.</p>
-
+                <p class="card-tech"><span>Swift</span> · <span>SwiftUI</span> · <span>GRDB</span> · <span>AppKit</span></p>
             </div>
         </div>
 
         <div class="detail-panel" id="detail-strix" data-color="blue">
-            <div class="gallery-track" data-gallery="strix">
-                <div class="gallery-left-field">
-                    <button class="gallery-view-link active" onclick="galleryGoTo(event, 'strix', 0)">Data grid view</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'strix', 1)">Table navigation</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'strix', 2)">Edit mode</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'strix', 3)">Search highlighting</button>
+            <div class="gallery-wrap">
+                <div class="gallery-zip"></div>
+                <div class="gallery-track" data-gallery="strix">
+                    <div class="gallery-slide active"><img src="../assets/images/strix/01-data-grid.jpg" alt="Data grid" loading="lazy"><p class="gallery-caption">Data grid view</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/strix/02-sidebar.jpg" alt="Sidebar" loading="lazy"><p class="gallery-caption">Table navigation</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/strix/03-edit-mode.jpg" alt="Edit mode" loading="lazy"><p class="gallery-caption">Edit mode</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/strix/04-search.jpg" alt="Search" loading="lazy"><p class="gallery-caption">Search highlighting</p></div>
                 </div>
-                <div class="gallery-center-zip"></div>
-                <div class="gallery-right-field">
-                    <div class="gallery-slide active"><img src="assets/images/strix/01-data-grid.jpg" alt="Data grid" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/strix/02-sidebar.jpg" alt="Sidebar" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/strix/03-edit-mode.jpg" alt="Edit mode" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/strix/04-search.jpg" alt="Search" loading="lazy"></div>
+                <div class="gallery-thumbnails" data-thumbs="strix">
+                    <button class="gallery-thumb active" onclick="galleryGoTo(event, 'strix', 0)"><img src="../assets/images/strix/01-data-grid.jpg" alt="Grid"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'strix', 1)"><img src="../assets/images/strix/02-sidebar.jpg" alt="Sidebar"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'strix', 2)"><img src="../assets/images/strix/03-edit-mode.jpg" alt="Edit"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'strix', 3)"><img src="../assets/images/strix/04-search.jpg" alt="Search"></button>
                 </div>
             </div>
             <div class="detail-info-split">
                 <div class="detail-split-left">
                     <h2 class="detail-title">Strix</h2>
                     <p class="detail-tagline">Native macOS SQLite Browser</p>
-                    <p class="detail-description">Built entirely in Swift with SwiftUI in 6 weeks. Inline cell editing with full undo/redo, FTS5 search with highlighting, and instant 100K+ row loading via GRDB optimization.</p>
+                    <p class="detail-description">Built entirely in Swift with SwiftUI in 6 weeks. Inline cell editing with full undo/redo, FTS5 search with highlighting, and instant 100K+ row loading.</p>
                 </div>
                 <div class="detail-split-zip"></div>
                 <div class="detail-split-right">
@@ -929,37 +961,37 @@
             <div class="project-zip-space"></div>
             <div class="project-right">
                 <p class="card-tagline">An AI-powered market research platform that automates the creation of forced-exposure brand study surveys from video uploads and campaign briefs.</p>
-
+                <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>Google GenAI</span> · <span>Docker</span></p>
             </div>
         </div>
 
         <div class="detail-panel" id="detail-sparrow" data-color="terracotta">
-            <div class="gallery-track" data-gallery="sparrow">
-                <div class="gallery-left-field">
-                    <button class="gallery-view-link active" onclick="galleryGoTo(event, 'sparrow', 0)">Chat conversation</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'sparrow', 1)">Survey body</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'sparrow', 2)">Survey export</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'sparrow', 3)">Video analysis</button>
+            <div class="gallery-wrap">
+                <div class="gallery-zip"></div>
+                <div class="gallery-track" data-gallery="sparrow">
+                    <div class="gallery-slide active"><img src="../assets/images/sparrow/01-chat-conversation.jpg" alt="Chat" loading="lazy"><p class="gallery-caption">Chat conversation</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/sparrow/02-survey-body.jpg" alt="Survey body" loading="lazy"><p class="gallery-caption">Survey body</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/sparrow/03-survey-export.jpg" alt="Export" loading="lazy"><p class="gallery-caption">Survey export</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/sparrow/04-video-analysis.jpg" alt="Video analysis" loading="lazy"><p class="gallery-caption">Video analysis</p></div>
                 </div>
-                <div class="gallery-center-zip"></div>
-                <div class="gallery-right-field">
-                    <div class="gallery-slide active"><img src="assets/images/sparrow/01-chat-conversation.jpg" alt="Chat" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/sparrow/02-survey-body.jpg" alt="Survey body" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/sparrow/03-survey-export.jpg" alt="Export" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/sparrow/04-video-analysis.jpg" alt="Video analysis" loading="lazy"></div>
+                <div class="gallery-thumbnails" data-thumbs="sparrow">
+                    <button class="gallery-thumb active" onclick="galleryGoTo(event, 'sparrow', 0)"><img src="../assets/images/sparrow/01-chat-conversation.jpg" alt="Chat"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'sparrow', 1)"><img src="../assets/images/sparrow/02-survey-body.jpg" alt="Survey"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'sparrow', 2)"><img src="../assets/images/sparrow/03-survey-export.jpg" alt="Export"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'sparrow', 3)"><img src="../assets/images/sparrow/04-video-analysis.jpg" alt="Video"></button>
                 </div>
             </div>
             <div class="detail-info-split">
                 <div class="detail-split-left">
                     <h2 class="detail-title">Sparrow</h2>
-                    <p class="detail-tagline">Automated brand survey generation platform cutting creation from ~4 hours to under 15 minutes</p>
+                    <p class="detail-tagline">Automated brand survey generation — ~4 hours to under 15 minutes</p>
                     <p class="detail-description">An AI-powered pipeline that transforms raw video content into complete brand surveys via dual-pass LLM analysis.</p>
                 </div>
                 <div class="detail-split-zip"></div>
                 <div class="detail-split-right">
                     <ul class="detail-features">
-                        <li>Dual-pass LLM video analysis: broad theme extraction → targeted question generation</li>
-                        <li>Multi-provider LLM routing (Gemini, Claude, GPT) with intelligent fallback and retry</li>
+                        <li>Dual-pass LLM video analysis: broad theme extraction then targeted question generation</li>
+                        <li>Multi-provider LLM routing (Gemini, Claude, GPT) with intelligent fallback</li>
                         <li>Survey state machine enforcing review workflow before deployment</li>
                         <li>Intelligent video processing with automatic chunking and transcript alignment</li>
                     </ul>
@@ -980,7 +1012,7 @@
             <div class="project-zip-space"></div>
             <div class="project-right">
                 <p class="card-tagline">A general-purpose, template-driven framework for generating synthetic AI/ML training data at scale using LLMs.</p>
-
+                <p class="card-tech"><span>Python</span> · <span>asyncio</span> · <span>OpenAI</span> · <span>Pydantic</span></p>
             </div>
         </div>
 
@@ -1011,31 +1043,31 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">An internal survey data quality platform that automates detection of gibberish, low-quality, and fraudulent duplicate responses in brand study surveys.</p>
-
+                <p class="card-tagline">An internal survey data quality platform that automates detection of gibberish, low-quality, and fraudulent duplicate responses.</p>
+                <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>OpenAI</span> · <span>Polars</span></p>
             </div>
         </div>
 
         <div class="detail-panel" id="detail-magpie" data-color="teal">
-            <div class="gallery-track" data-gallery="magpie">
-                <div class="gallery-left-field">
-                    <button class="gallery-view-link active" onclick="galleryGoTo(event, 'magpie', 0)">Dashboard overview</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'magpie', 1)">Upload form</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'magpie', 2)">File detail</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'magpie', 3)">Processing state</button>
+            <div class="gallery-wrap">
+                <div class="gallery-zip"></div>
+                <div class="gallery-track" data-gallery="magpie">
+                    <div class="gallery-slide active"><img src="../assets/images/magpie/01-dashboard.jpg" alt="Dashboard" loading="lazy"><p class="gallery-caption">Dashboard overview</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/magpie/02-upload-form.jpg" alt="Upload" loading="lazy"><p class="gallery-caption">Upload form</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/magpie/03-file-detail.jpg" alt="Detail" loading="lazy"><p class="gallery-caption">File detail</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/magpie/04-processing.jpg" alt="Processing" loading="lazy"><p class="gallery-caption">Processing state</p></div>
                 </div>
-                <div class="gallery-center-zip"></div>
-                <div class="gallery-right-field">
-                    <div class="gallery-slide active"><img src="assets/images/magpie/01-dashboard.jpg" alt="Dashboard" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/magpie/02-upload-form.jpg" alt="Upload" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/magpie/03-file-detail.jpg" alt="Detail" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/magpie/04-processing.jpg" alt="Processing" loading="lazy"></div>
+                <div class="gallery-thumbnails" data-thumbs="magpie">
+                    <button class="gallery-thumb active" onclick="galleryGoTo(event, 'magpie', 0)"><img src="../assets/images/magpie/01-dashboard.jpg" alt="Dashboard"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'magpie', 1)"><img src="../assets/images/magpie/02-upload-form.jpg" alt="Upload"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'magpie', 2)"><img src="../assets/images/magpie/03-file-detail.jpg" alt="Detail"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'magpie', 3)"><img src="../assets/images/magpie/04-processing.jpg" alt="Processing"></button>
                 </div>
             </div>
             <div class="detail-info-split">
                 <div class="detail-split-left">
                     <h2 class="detail-title">Magpie</h2>
-                    <p class="detail-tagline">Survey response quality analyzer cutting data cleaning from ~4 hours to under 20 minutes</p>
+                    <p class="detail-tagline">Survey quality analyzer — ~4 hours to under 20 minutes</p>
                     <p class="detail-description">Automated pipeline detecting low-quality survey responses using fine-tuned ML models and graph-based fraud detection. 92% time reduction.</p>
                 </div>
                 <div class="detail-split-zip"></div>
@@ -1062,32 +1094,32 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">Self-service audience behavioral analytics platform that replaced an aging Adobe Flash-based tool. 5 years in production with zero downtime.</p>
-
+                <p class="card-tagline">Self-service audience behavioral analytics platform replacing an aging Flash-based tool. 5 years in production.</p>
+                <p class="card-tech"><span>Python</span> · <span>Django</span> · <span>Spark</span> · <span>AWS</span></p>
             </div>
         </div>
 
         <div class="detail-panel" id="detail-mallard" data-color="mint">
-            <div class="gallery-track" data-gallery="mallard">
-                <div class="gallery-left-field">
-                    <button class="gallery-view-link active" onclick="galleryGoTo(event, 'mallard', 0)">Query form</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'mallard', 1)">Topic tree search</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'mallard', 2)">Data exploration</button>
-                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'mallard', 3)">Geographic map</button>
+            <div class="gallery-wrap">
+                <div class="gallery-zip"></div>
+                <div class="gallery-track" data-gallery="mallard">
+                    <div class="gallery-slide active"><img src="../assets/images/mallard/01-query-form.jpg" alt="Query form" loading="lazy"><p class="gallery-caption">Query form</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/mallard/02-topic-tree.jpg" alt="Topic tree" loading="lazy"><p class="gallery-caption">Topic tree search</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/mallard/03-explore-data.jpg" alt="Data exploration" loading="lazy"><p class="gallery-caption">Data exploration</p></div>
+                    <div class="gallery-slide"><img src="../assets/images/mallard/04-explore-map.jpg" alt="Map" loading="lazy"><p class="gallery-caption">Geographic map</p></div>
                 </div>
-                <div class="gallery-center-zip"></div>
-                <div class="gallery-right-field">
-                    <div class="gallery-slide active"><img src="assets/images/mallard/01-query-form.jpg" alt="Query form" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/mallard/02-topic-tree.jpg" alt="Topic tree" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/mallard/03-explore-data.jpg" alt="Data exploration" loading="lazy"></div>
-                    <div class="gallery-slide"><img src="assets/images/mallard/04-explore-map.jpg" alt="Map" loading="lazy"></div>
+                <div class="gallery-thumbnails" data-thumbs="mallard">
+                    <button class="gallery-thumb active" onclick="galleryGoTo(event, 'mallard', 0)"><img src="../assets/images/mallard/01-query-form.jpg" alt="Query"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'mallard', 1)"><img src="../assets/images/mallard/02-topic-tree.jpg" alt="Tree"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'mallard', 2)"><img src="../assets/images/mallard/03-explore-data.jpg" alt="Data"></button>
+                    <button class="gallery-thumb" onclick="galleryGoTo(event, 'mallard', 3)"><img src="../assets/images/mallard/04-explore-map.jpg" alt="Map"></button>
                 </div>
             </div>
             <div class="detail-info-split">
                 <div class="detail-split-left">
                     <h2 class="detail-title">Mallard</h2>
-                    <p class="detail-tagline">Self-serve behavioral analytics platform replacing legacy Flash tool — 5 years in production</p>
-                    <p class="detail-description">Scalable platform enabling product teams to query and visualize behavioral data without engineering support. Django + Apache Spark for distributed computation.</p>
+                    <p class="detail-tagline">Self-serve behavioral analytics — 5 years in production</p>
+                    <p class="detail-description">Scalable platform enabling product teams to query and visualize behavioral data without engineering support. Django + Spark.</p>
                 </div>
                 <div class="detail-split-zip"></div>
                 <div class="detail-split-right">
@@ -1133,7 +1165,6 @@
         const centralZip = document.getElementById('centralZip');
 
         function updateZipColor(colorName) {
-            // Remove all color classes
             centralZip.className = 'central-zip';
             if (colorName) {
                 centralZip.classList.add('color-' + colorName);
@@ -1197,13 +1228,14 @@
 
         function getGalleryElements(projectId) {
             const track = document.querySelector('[data-gallery="' + projectId + '"]');
+            const thumbsContainer = document.querySelector('[data-thumbs="' + projectId + '"]');
+            const thumbs = thumbsContainer ? thumbsContainer.querySelectorAll('.gallery-thumb') : [];
             const slides = track ? track.querySelectorAll('.gallery-slide') : [];
-            const viewLinks = track ? track.querySelectorAll('.gallery-view-link') : [];
-            return { track, slides, viewLinks };
+            return { track, thumbs, slides };
         }
 
         function goToSlide(projectId, targetIndex, isAutoplay) {
-            const { slides, viewLinks } = getGalleryElements(projectId);
+            const { slides, thumbs } = getGalleryElements(projectId);
             if (!slides.length) return;
             const prevIndex = currentSlideIndex[projectId] || 0;
             if (targetIndex === prevIndex && slides[prevIndex].classList.contains('active')) return;
@@ -1211,20 +1243,20 @@
             const isLoopReset = (targetIndex === 0 && prevIndex === totalSlides - 1);
 
             slides.forEach((slide, i) => { slide.classList.toggle('active', i === targetIndex); });
-            viewLinks.forEach((link, i) => {
-                link.classList.remove('active', 'filling');
-                if (isLoopReset) link.classList.remove('viewed');
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.remove('active', 'filling');
+                if (isLoopReset) thumb.classList.remove('viewed');
                 if (i === targetIndex) {
-                    link.classList.add('active');
+                    thumb.classList.add('active');
                     if (!prefersReducedMotion && !isSingleSlide(projectId) && autoplayTimers[projectId]) {
-                        void link.offsetWidth;
-                        link.classList.add('filling');
+                        void thumb.offsetWidth;
+                        thumb.classList.add('filling');
                     }
-                } else if (i < targetIndex || link.classList.contains('viewed')) {
-                    if (!isLoopReset || i < targetIndex) link.classList.add('viewed');
+                } else if (i < targetIndex || thumb.classList.contains('viewed')) {
+                    if (!isLoopReset || i < targetIndex) thumb.classList.add('viewed');
                 }
             });
-            if (!isLoopReset && prevIndex !== targetIndex && viewLinks[prevIndex]) viewLinks[prevIndex].classList.add('viewed');
+            if (!isLoopReset && prevIndex !== targetIndex && thumbs[prevIndex]) thumbs[prevIndex].classList.add('viewed');
             currentSlideIndex[projectId] = targetIndex;
         }
 
@@ -1238,24 +1270,24 @@
         }
 
         function resetGallery(projectId) {
-            const { slides, viewLinks } = getGalleryElements(projectId);
+            const { slides, thumbs } = getGalleryElements(projectId);
             currentSlideIndex[projectId] = 0;
             slides.forEach((slide, i) => { slide.classList.toggle('active', i === 0); });
-            viewLinks.forEach((link, i) => {
-                link.classList.remove('active', 'filling', 'viewed');
-                if (i === 0) link.classList.add('active');
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.remove('active', 'filling', 'viewed');
+                if (i === 0) thumb.classList.add('active');
             });
         }
 
         function startAutoplay(projectId) {
             stopAutoplay(projectId);
-            const { slides, viewLinks } = getGalleryElements(projectId);
+            const { slides, thumbs } = getGalleryElements(projectId);
             if (slides.length <= 1) return;
             const idx = currentSlideIndex[projectId] || 0;
-            if (viewLinks[idx]) {
-                viewLinks[idx].classList.remove('filling');
-                void viewLinks[idx].offsetWidth;
-                viewLinks[idx].classList.add('filling');
+            if (thumbs[idx]) {
+                thumbs[idx].classList.remove('filling');
+                void thumbs[idx].offsetWidth;
+                thumbs[idx].classList.add('filling');
             }
             autoplayTimers[projectId] = setInterval(() => {
                 const current = currentSlideIndex[projectId] || 0;
@@ -1272,8 +1304,8 @@
         function pauseAutoplay(projectId) {
             if (autoplayTimers[projectId]) { clearInterval(autoplayTimers[projectId]); delete autoplayTimers[projectId]; }
             if (resumeTimers[projectId]) { clearTimeout(resumeTimers[projectId]); delete resumeTimers[projectId]; }
-            const { viewLinks } = getGalleryElements(projectId);
-            viewLinks.forEach(l => l.classList.remove('filling'));
+            const { thumbs } = getGalleryElements(projectId);
+            thumbs.forEach(t => t.classList.remove('filling'));
         }
 
         ['ibis', 'strix', 'sparrow', 'magpie', 'mallard'].forEach(id => { resetGallery(id); });

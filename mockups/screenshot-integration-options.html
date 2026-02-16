@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Integration Options</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0A0A12;
+            --bg-card: #12121E;
+            --text-primary: #E0E0EC;
+            --text-secondary: #8888A0;
+            --text-muted: #55556A;
+            --rule: #1E1E30;
+            --amber: #D4A843;
+            --blue: #4A9EF5;
+            --teal: #2EA77A;
+            --terracotta: #C85A3A;
+        }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-header {
+            padding: 4rem 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        .option-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 4rem;
+            border-top: 1px solid var(--rule);
+        }
+        .option-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .option-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        .option-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        .demo-row {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        .demo-item {
+            flex: 0 0 auto;
+            width: 520px;
+            text-align: center;
+        }
+        .demo-item-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 1rem;
+        }
+
+        /* ═══════════════════════════════════════
+           OPTION A — Dark Browser Chrome
+           ═══════════════════════════════════════ */
+
+        .browser-frame {
+            border-radius: 8px;
+            overflow: hidden;
+            background: #1a1a2e;
+            box-shadow:
+                0 4px 24px rgba(0,0,0,0.5),
+                0 1px 0 rgba(255,255,255,0.03) inset;
+        }
+
+        .browser-titlebar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 14px;
+            background: #161625;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2a2a40;
+        }
+        .browser-titlebar .browser-url {
+            flex: 1;
+            margin-left: 8px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .browser-frame .screenshot {
+            width: 100%;
+            display: block;
+        }
+
+        /* Color-tinted bottom border */
+        .browser-frame[data-accent="amber"] { border-bottom: 2px solid var(--amber); }
+        .browser-frame[data-accent="blue"] { border-bottom: 2px solid var(--blue); }
+        .browser-frame[data-accent="teal"] { border-bottom: 2px solid var(--teal); }
+        .browser-frame[data-accent="terracotta"] { border-bottom: 2px solid var(--terracotta); }
+
+        /* Subtle accent on dots */
+        .browser-frame[data-accent="amber"] .browser-dot:first-child { background: var(--amber); opacity: 0.6; }
+        .browser-frame[data-accent="blue"] .browser-dot:first-child { background: var(--blue); opacity: 0.6; }
+        .browser-frame[data-accent="teal"] .browser-dot:first-child { background: var(--teal); opacity: 0.6; }
+        .browser-frame[data-accent="terracotta"] .browser-dot:first-child { background: var(--terracotta); opacity: 0.6; }
+
+        /* ═══════════════════════════════════════
+           OPTION B — Perspective Float with Glow
+           ═══════════════════════════════════════ */
+
+        .float-container {
+            perspective: 1200px;
+            padding: 2rem 1rem;
+        }
+
+        .float-frame {
+            position: relative;
+            transform: rotateY(-2deg) rotateX(1deg);
+            transform-style: preserve-3d;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+        .float-frame:hover {
+            transform: rotateY(0) rotateX(0);
+        }
+
+        .float-frame img {
+            width: 100%;
+            display: block;
+            border-radius: 6px;
+        }
+
+        /* Accent glow */
+        .float-frame[data-accent="amber"] {
+            box-shadow:
+                0 8px 40px rgba(212, 168, 67, 0.2),
+                0 0 0 1px rgba(212, 168, 67, 0.15),
+                0 20px 60px rgba(0,0,0,0.4);
+        }
+        .float-frame[data-accent="blue"] {
+            box-shadow:
+                0 8px 40px rgba(74, 158, 245, 0.2),
+                0 0 0 1px rgba(74, 158, 245, 0.15),
+                0 20px 60px rgba(0,0,0,0.4);
+        }
+        .float-frame[data-accent="teal"] {
+            box-shadow:
+                0 8px 40px rgba(46, 167, 122, 0.2),
+                0 0 0 1px rgba(46, 167, 122, 0.15),
+                0 20px 60px rgba(0,0,0,0.4);
+        }
+        .float-frame[data-accent="terracotta"] {
+            box-shadow:
+                0 8px 40px rgba(200, 90, 58, 0.2),
+                0 0 0 1px rgba(200, 90, 58, 0.15),
+                0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        /* Vignette overlay to darken edges */
+        .float-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 6px;
+            box-shadow: inset 0 0 60px rgba(10, 10, 18, 0.4);
+            pointer-events: none;
+        }
+
+        /* ═══════════════════════════════════════
+           OPTION C — Recessed Panel (inset shadow)
+           ═══════════════════════════════════════ */
+
+        .recessed-panel {
+            background: #0d0d17;
+            border-radius: 4px;
+            padding: 1.5rem;
+            position: relative;
+            box-shadow:
+                inset 0 2px 8px rgba(0,0,0,0.5),
+                inset 0 0 1px rgba(0,0,0,0.8);
+        }
+
+        .recessed-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .recessed-panel[data-accent="amber"]::before { background: linear-gradient(90deg, transparent, var(--amber), transparent); }
+        .recessed-panel[data-accent="blue"]::before { background: linear-gradient(90deg, transparent, var(--blue), transparent); }
+        .recessed-panel[data-accent="teal"]::before { background: linear-gradient(90deg, transparent, var(--teal), transparent); }
+        .recessed-panel[data-accent="terracotta"]::before { background: linear-gradient(90deg, transparent, var(--terracotta), transparent); }
+
+        .recessed-panel img {
+            width: 100%;
+            display: block;
+            border-radius: 2px;
+            /* The key treatment: slightly reduce brightness and add contrast
+               so light screenshots blend with the dark theme */
+            filter: brightness(0.88) contrast(1.05);
+            transition: filter 0.4s ease;
+        }
+
+        .recessed-panel:hover img {
+            filter: brightness(1) contrast(1);
+        }
+
+        .recessed-corner-tag {
+            position: absolute;
+            bottom: 0.6rem;
+            right: 0.8rem;
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* ═══════════════════════════════════════
+           Current (for comparison)
+           ═══════════════════════════════════════ */
+        .current-raw {
+            background: var(--bg-card);
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 340px;
+        }
+        .current-raw img {
+            max-height: 300px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>Screenshot Integration Options</h1>
+        <p>Three approaches to better integrate project screenshots with the dark portfolio aesthetic. Each row shows the same screenshots treated differently. Scroll horizontally to compare.</p>
+    </div>
+
+    <!-- ——— CURRENT (baseline) ——— -->
+    <div class="option-section">
+        <p class="option-label">Current</p>
+        <h2 class="option-title">Raw Screenshots (Baseline)</h2>
+        <p class="option-desc">How it looks now — bare images on a dark card background. Light-UI screenshots (Magpie, Mallard) feel disconnected from the dark palette.</p>
+        <div class="demo-row">
+            <div class="demo-item">
+                <div class="current-raw">
+                    <img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Ibis">
+                </div>
+                <p class="demo-item-label">Ibis — dark UI, fits OK</p>
+            </div>
+            <div class="demo-item">
+                <div class="current-raw">
+                    <img src="../assets/images/magpie/01-dashboard.jpg" alt="Magpie">
+                </div>
+                <p class="demo-item-label">Magpie — white UI, jarring</p>
+            </div>
+            <div class="demo-item">
+                <div class="current-raw">
+                    <img src="../assets/images/mallard/01-query-form.jpg" alt="Mallard">
+                </div>
+                <p class="demo-item-label">Mallard — light UI, jarring</p>
+            </div>
+            <div class="demo-item">
+                <div class="current-raw">
+                    <img src="../assets/images/strix/01-data-grid.jpg" alt="Strix">
+                </div>
+                <p class="demo-item-label">Strix — dark UI, fits OK</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ——— OPTION A ——— -->
+    <div class="option-section">
+        <p class="option-label">Option A</p>
+        <h2 class="option-title">Dark Browser Chrome</h2>
+        <p class="option-desc">Wraps each screenshot in a styled dark browser/app window frame. The chrome acts as a visual buffer between the bright content and the dark background, making the screenshots feel like apps running inside the portfolio. The accent color appears on the first dot and as a bottom border.</p>
+        <div class="demo-row">
+            <div class="demo-item">
+                <div class="browser-frame" data-accent="amber">
+                    <div class="browser-titlebar">
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <span class="browser-url">ibis — enterprise workflow assistant</span>
+                    </div>
+                    <img class="screenshot" src="../assets/images/ibis/01-chat-conversation.jpg" alt="Ibis">
+                </div>
+                <p class="demo-item-label">Ibis</p>
+            </div>
+            <div class="demo-item">
+                <div class="browser-frame" data-accent="teal">
+                    <div class="browser-titlebar">
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <span class="browser-url">magpie — survey quality analyzer</span>
+                    </div>
+                    <img class="screenshot" src="../assets/images/magpie/01-dashboard.jpg" alt="Magpie">
+                </div>
+                <p class="demo-item-label">Magpie — white UI contained</p>
+            </div>
+            <div class="demo-item">
+                <div class="browser-frame" data-accent="terracotta">
+                    <div class="browser-titlebar">
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <span class="browser-url">mallard — behavioral analytics</span>
+                    </div>
+                    <img class="screenshot" src="../assets/images/mallard/01-query-form.jpg" alt="Mallard">
+                </div>
+                <p class="demo-item-label">Mallard — white UI contained</p>
+            </div>
+            <div class="demo-item">
+                <div class="browser-frame" data-accent="blue">
+                    <div class="browser-titlebar">
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <span class="browser-url">strix — sqlite database browser</span>
+                    </div>
+                    <img class="screenshot" src="../assets/images/strix/01-data-grid.jpg" alt="Strix">
+                </div>
+                <p class="demo-item-label">Strix</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ——— OPTION B ——— -->
+    <div class="option-section">
+        <p class="option-label">Option B</p>
+        <h2 class="option-title">Perspective Float with Accent Glow</h2>
+        <p class="option-desc">Screenshots float at a subtle angle with a colored glow matching the project's accent color. A vignette overlay darkens the edges to bleed into the background. Hover straightens them. More dramatic and "designed" — but might feel heavy with many screenshots.</p>
+        <div class="demo-row">
+            <div class="demo-item">
+                <div class="float-container">
+                    <div class="float-frame" data-accent="amber">
+                        <img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Ibis">
+                    </div>
+                </div>
+                <p class="demo-item-label">Ibis</p>
+            </div>
+            <div class="demo-item">
+                <div class="float-container">
+                    <div class="float-frame" data-accent="teal">
+                        <img src="../assets/images/magpie/01-dashboard.jpg" alt="Magpie">
+                    </div>
+                </div>
+                <p class="demo-item-label">Magpie</p>
+            </div>
+            <div class="demo-item">
+                <div class="float-container">
+                    <div class="float-frame" data-accent="terracotta">
+                        <img src="../assets/images/mallard/01-query-form.jpg" alt="Mallard">
+                    </div>
+                </div>
+                <p class="demo-item-label">Mallard</p>
+            </div>
+            <div class="demo-item">
+                <div class="float-container">
+                    <div class="float-frame" data-accent="blue">
+                        <img src="../assets/images/strix/01-data-grid.jpg" alt="Strix">
+                    </div>
+                </div>
+                <p class="demo-item-label">Strix</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ——— OPTION C ——— -->
+    <div class="option-section">
+        <p class="option-label">Option C</p>
+        <h2 class="option-title">Recessed Panel with Dimming</h2>
+        <p class="option-desc">Screenshots sit in a recessed "well" with an inset shadow, slightly dimmed (brightness reduced to 88%). This pulls bright screenshots closer to the dark palette without distorting them. The accent color appears as a thin gradient line across the top. Hover restores full brightness — inviting interaction. The most subtle option.</p>
+        <div class="demo-row">
+            <div class="demo-item">
+                <div class="recessed-panel" data-accent="amber">
+                    <img src="../assets/images/ibis/01-chat-conversation.jpg" alt="Ibis">
+                    <span class="recessed-corner-tag">hover to brighten</span>
+                </div>
+                <p class="demo-item-label">Ibis</p>
+            </div>
+            <div class="demo-item">
+                <div class="recessed-panel" data-accent="teal">
+                    <img src="../assets/images/magpie/01-dashboard.jpg" alt="Magpie">
+                    <span class="recessed-corner-tag">hover to brighten</span>
+                </div>
+                <p class="demo-item-label">Magpie — dimmed to match</p>
+            </div>
+            <div class="demo-item">
+                <div class="recessed-panel" data-accent="terracotta">
+                    <img src="../assets/images/mallard/01-query-form.jpg" alt="Mallard">
+                    <span class="recessed-corner-tag">hover to brighten</span>
+                </div>
+                <p class="demo-item-label">Mallard — dimmed to match</p>
+            </div>
+            <div class="demo-item">
+                <div class="recessed-panel" data-accent="blue">
+                    <img src="../assets/images/strix/01-data-grid.jpg" alt="Strix">
+                    <span class="recessed-corner-tag">hover to brighten</span>
+                </div>
+                <p class="demo-item-label">Strix</p>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding: 4rem; max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--rule);">
+        <p class="option-label">Summary</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; margin-top: 1rem;">
+            <div>
+                <h3 style="font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-primary);">A — Browser Chrome</h3>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7;">Best for: framing the screenshots as real software. The dark titlebar creates a natural transition zone between bright content and dark background. Works especially well for Strix (already has macOS chrome) and web apps.</p>
+            </div>
+            <div>
+                <h3 style="font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-primary);">B — Perspective Glow</h3>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7;">Best for: visual drama. The accent glow ties each screenshot to its project color, and the vignette helps blend edges. But might feel heavy in a gallery with 4 thumbnails auto-cycling.</p>
+            </div>
+            <div>
+                <h3 style="font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-primary);">C — Recessed + Dim</h3>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7;">Best for: minimal treatment. The dimming solves the brightness mismatch without adding visual weight. The hover-to-brighten creates a subtle interactive moment. Lightest touch on the existing design.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
