@@ -1317,6 +1317,42 @@
 
         ['ibis', 'strix', 'sparrow', 'magpie', 'mallard'].forEach(id => { resetGallery(id); });
 
+        // Update URL hash when projects open/close
+        const projectIds = ['ibis', 'strix', 'sparrow', 'budgie', 'magpie', 'mallard'];
+
+        const origToggle = toggleDetail;
+        toggleDetail = function(projectId) {
+            origToggle(projectId);
+            if (activeProject) {
+                history.replaceState(null, '', '#project-' + activeProject);
+            } else {
+                history.replaceState(null, '', window.location.pathname);
+            }
+        };
+
+        const origCloseAll = closeAllDetails;
+        closeAllDetails = function() {
+            origCloseAll();
+            history.replaceState(null, '', window.location.pathname);
+        };
+
+        // Open project from URL hash on load and on hash change
+        function openFromHash() {
+            const hash = window.location.hash;
+            const match = hash.match(/^#project-(\w+)$/);
+            if (match && projectIds.includes(match[1])) {
+                const id = match[1];
+                const row = document.querySelector('.project-row[data-project="' + id + '"]');
+                if (row) {
+                    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    setTimeout(() => origToggle(id), 400);
+                }
+            }
+        }
+
+        window.addEventListener('hashchange', openFromHash);
+        openFromHash();
+
         // Project Nav
         (function() {
             const links = document.querySelectorAll('.project-nav a');
