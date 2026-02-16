@@ -552,6 +552,16 @@
             text-transform: uppercase;
         }
 
+        .detail-meta a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .detail-meta a:hover {
+            color: var(--text-primary);
+        }
+
         /* Budgie text-only */
         .budgie-text-panel {
             max-width: 700px;
@@ -826,7 +836,7 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">Ibis transforms enterprise workflows that required navigating five separate systems and 30-50 manual steps into single conversational requests, achieving 44.7x measured average speedup.</p>
+                <p class="card-tagline">Ibis transforms enterprise workflows that required navigating five separate systems and dozens of manual steps into single conversational requests, achieving 44.7x measured average speedup.</p>
 
             </div>
         </div>
@@ -877,7 +887,7 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">A native macOS SQLite database browser and editor on the Mac App Store with inline cell editing, staged change-tracking, and dual-mode FTS5 search.</p>
+                <p class="card-tagline">Strix is a native macOS SQLite editor. It enables safe database editing without SQL knowledge through visual inline changes, one-click search across any database, and staged review before commit. Published on Mac App Store.</p>
 
             </div>
         </div>
@@ -901,19 +911,19 @@
             <div class="detail-info-split">
                 <div class="detail-split-left">
                     <h2 class="detail-title">Strix</h2>
-                    <p class="detail-tagline">Native macOS SQLite Browser</p>
-                    <p class="detail-description">Built entirely in Swift with SwiftUI in 6 weeks. Inline cell editing with full undo/redo, FTS5 search with highlighting, and instant 100K+ row loading via GRDB optimization.</p>
+                    <p class="detail-tagline">Where traditional database tools require SQL knowledge and risk instant data loss, Strix lets non-technical users safely edit SQLite databases through visual inline editing and staged change review</p>
+                    <p class="detail-description">Double-click a cell to edit it. Insert or delete rows with toolbar buttons. Enter a search term and find it anywhere in your database. No special setup or technical knowledge required. Every change is tracked visually with highlighted cells and a review tab showing the full changeset before you commit. If you make a mistake, undo it. Database opens read-only by default; explicit edit mode toggle prevents accidental overwrites.</p>
                 </div>
                 <div class="detail-split-zip"></div>
                 <div class="detail-split-right">
                     <ul class="detail-features">
-                        <li>Inline cell editing with full undo/redo support using custom command pattern</li>
-                        <li>FTS5 full-text search with real-time highlighting across tables</li>
-                        <li>GRDB performance optimization: instant 100K+ row table loading</li>
-                        <li>Schema inspector with foreign key visualization and index management</li>
+                        <li>Search any database without setup — enter a term and find it instantly, even in databases that weren't built with search indexes</li>
+                        <li>Visual inline editing with staged change tracking — see every modification highlighted before committing</li>
+                        <li>Read-only mode by default: explicit edit toggle required before modifications, preventing accidental overwrites</li>
+                        <li>Change tracker maintains original values — editing a cell back to its original automatically removes it from the pending changes review</li>
                     </ul>
                     <p class="detail-tech-stack"><span>Swift</span> · <span>SwiftUI</span> · <span>GRDB</span> · <span>AppKit</span></p>
-                    <p class="detail-meta">2025</p>
+                    <p class="detail-meta"><a href="https://strixeditor.com/" target="_blank" rel="noopener">strixeditor.com</a> · 2025</p>
                 </div>
             </div>
             <button class="detail-close" onclick="closeDetail(event)">&times;</button>
@@ -928,7 +938,7 @@
             </div>
             <div class="project-zip-space"></div>
             <div class="project-right">
-                <p class="card-tagline">An AI-powered market research platform that automates the creation of forced-exposure brand study surveys from video uploads and campaign briefs.</p>
+                <p class="card-tagline">Sparrow is an AI-powered market research platform that cuts brand survey creation from ~4 hours to under 15 minutes. It replaces manual video transcription, strategic analysis, and question drafting with a single upload-and-generate interaction. Used by the research team for all forced-exposure studies.</p>
 
             </div>
         </div>
@@ -952,16 +962,15 @@
             <div class="detail-info-split">
                 <div class="detail-split-left">
                     <h2 class="detail-title">Sparrow</h2>
-                    <p class="detail-tagline">Automated brand survey generation platform cutting creation from ~4 hours to under 15 minutes</p>
-                    <p class="detail-description">An AI-powered pipeline that transforms raw video content into complete brand surveys via dual-pass LLM analysis.</p>
+                    <p class="detail-tagline">Surveys are grounded in real-world templates from actual studies, producing questions researchers accept without heavy editing.</p>
+                    <p class="detail-description">Before Sparrow, creating a brand study survey meant watching the ad, manually transcribing it, writing a strategic analysis, researching survey best practices, and hand-crafting dozens of questions with answer keys and randomization logic. Each step required different expertise. Sparrow collapses that into one interaction. The generated surveys follow the same conventions as manually-crafted ones because they're grounded in real client templates.</p>
                 </div>
                 <div class="detail-split-zip"></div>
                 <div class="detail-split-right">
                     <ul class="detail-features">
-                        <li>Dual-pass LLM video analysis: broad theme extraction → targeted question generation</li>
-                        <li>Multi-provider LLM routing (Gemini, Claude, GPT) with intelligent fallback and retry</li>
-                        <li>Survey state machine enforcing review workflow before deployment</li>
-                        <li>Intelligent video processing with automatic chunking and transcript alignment</li>
+                        <li>Watches video ads twice: first for transcript and visuals, then for strategic interpretation — survey questions reference specific ad moments</li>
+                        <li>Few-shot prompting with real client survey templates grounds output in market research conventions, not generic LLM knowledge</li>
+                        <li>Researchers describe survey needs conversationally — no rigid forms, parameters accumulate naturally across messages</li>
                     </ul>
                     <p class="detail-tech-stack"><span>Python</span> · <span>Django</span> · <span>Google GenAI</span> · <span>Docker</span></p>
                     <p class="detail-meta">2025</p>
