@@ -944,16 +944,16 @@
             <div class="detail-info-split">
                 <div class="detail-split-left">
                     <h2 class="detail-title">Pelican</h2>
-                    <p class="detail-tagline">Taxonomy changes used to require keyword lists, Excel files, Jira tickets, and manual deployment. Pelican handles the full cycle: classify, propose, screen, review, deploy.</p>
-                    <p class="detail-description">The previous system silently misclassified anything its keyword lists didn't anticipate. Pelican reads the page and recognizes what it's about — and when the taxonomy has no matching category, it proposes one and explains why. A second model scores each proposal on five criteria before a human sees it, so a batch of 200 proposals arrives pre-sorted into agree, disagree, and uncertain rather than dumped on a reviewer unsorted. The pipeline manages its own GPU lifecycle: provisions across multiple zones, deletes the instance after classification finishes but before the review step — because the hardware costs $2–8/hr and a review might take days. If the server restarts mid-review, pending approvals resume without re-running classification.</p>
+                    <p class="detail-tagline">Most classification systems assume a fixed set of categories. Pelican treats the taxonomy itself as a living artifact — proposing new branches, validating them, and deploying changes without manual file editing.</p>
+                    <p class="detail-description">The previous taxonomy only covered what someone had manually anticipated. Pelican closes the gap: it reads the page, recognizes when no category fits, and proposes a new taxonomy node with a parent placement and reasoning. A second model reviews each proposal on five criteria, pre-sorting batches of 200+ into agree, disagree, and uncertain so reviewers inherit a curated queue rather than an unsorted pile. Every approved category immediately propagates to all future classification runs — the taxonomy grows with the content it classifies.</p>
                 </div>
                 <div class="detail-split-zip"></div>
                 <div class="detail-split-right">
                     <ul class="detail-features">
-                        <li>Proposed categories appear in the taxonomy tree as green "NEW" entries — reviewers see exactly where each one slots into the hierarchy before approving</li>
-                        <li>Auto-triage applies the second model's verdicts in one click: agree gets staged, disagree gets rejected, uncertain is left for manual review</li>
-                        <li>Every taxonomy change records a full diff and supports one-click revert — a mistake in category structure compounds across every future classification run</li>
-                        <li>Seven-stage pipeline with crash recovery: GPU provisioning, model health checks, batch classification, proposal extraction, AI screening, human approval, and deployment</li>
+                        <li>Reads the page and recognizes when the taxonomy has no good match — proposes a new category, explains why it's needed, and places it in the hierarchy</li>
+                        <li>Reviewers see proposed categories in context: each new node appears in the tree alongside its siblings before anyone commits to the change</li>
+                        <li>Auto-triage applies the second model's five-criteria scores in one click — agree gets staged, disagree gets rejected, uncertain is left for human judgment</li>
+                        <li>Approved categories immediately improve future runs — the taxonomy grows with the content it classifies, closing gaps that would otherwise recur in every batch</li>
                     </ul>
                     <p class="detail-tech-stack"><span>Python</span> · <span>Litestar</span> · <span>SvelteKit</span> · <span>Tailwind CSS</span> · <span>DaisyUI</span> · <span>Polars</span> · <span>vLLM</span> · <span>Gemini</span> · <span>Google Cloud</span></p>
                     <p class="detail-meta">2026</p>
