@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Robert Laabs — Director of Data Science | Full Stack Developer</title>
-    <meta name="description" content="Portfolio of Robert Laabs: Director of Data Science and full stack developer with six tools in production.">
+    <meta name="description" content="Portfolio of Robert Laabs: Director of Data Science and full stack developer with seven tools in production.">
     <meta name="author" content="Robert Laabs">
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
@@ -19,7 +19,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Robert Laabs — Director of Data Science | Full Stack Developer">
-    <meta property="og:description" content="Portfolio of Robert Laabs: Director of Data Science and full stack developer with six tools in production.">
+    <meta property="og:description" content="Portfolio of Robert Laabs: Director of Data Science and full stack developer with seven tools in production.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rlaabs.com/">
     <meta property="og:image" content="https://rlaabs.com/apple-touch-icon.png">
@@ -27,7 +27,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Robert Laabs — Director of Data Science | Full Stack Developer">
-    <meta name="twitter:description" content="Portfolio of Robert Laabs: Director of Data Science and full stack developer with six tools in production.">
+    <meta name="twitter:description" content="Portfolio of Robert Laabs: Director of Data Science and full stack developer with seven tools in production.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,6 +55,7 @@
             --teal: #2EA77A;
             --mint: #3CC9A8;
             --purple: #9B7ED8;
+            --coral: #2BB5B5;
         }
 
         html {
@@ -116,6 +117,7 @@
         .central-zip.color-teal { background: var(--teal); box-shadow: 0 0 12px rgba(46, 167, 122, 0.4), 0 0 30px rgba(46, 167, 122, 0.15); }
         .central-zip.color-mint { background: var(--mint); box-shadow: 0 0 12px rgba(60, 201, 168, 0.4), 0 0 30px rgba(60, 201, 168, 0.15); }
         .central-zip.color-purple { background: var(--purple); box-shadow: 0 0 12px rgba(155, 126, 216, 0.4), 0 0 30px rgba(155, 126, 216, 0.15); }
+        .central-zip.color-coral { background: var(--coral); box-shadow: 0 0 12px rgba(43, 181, 181, 0.4), 0 0 30px rgba(43, 181, 181, 0.15); }
 
         /* ——— Navigation ——— */
 
@@ -365,6 +367,7 @@
         .detail-panel[data-color="teal"] .detail-close { color: var(--teal); border-color: var(--teal); }
         .detail-panel[data-color="mint"] .detail-close { color: var(--mint); border-color: var(--mint); }
         .detail-panel[data-color="purple"] .detail-close { color: var(--purple); border-color: var(--purple); }
+        .detail-panel[data-color="coral"] .detail-close { color: var(--coral); border-color: var(--coral); }
 
         .detail-panel[data-color="amber"] .detail-split-zip { background: var(--amber); box-shadow: 0 0 12px rgba(212,168,67,0.35); }
         .detail-panel[data-color="blue"] .detail-split-zip { background: var(--blue); box-shadow: 0 0 12px rgba(74,158,245,0.35); }
@@ -372,6 +375,7 @@
         .detail-panel[data-color="teal"] .detail-split-zip { background: var(--teal); box-shadow: 0 0 12px rgba(46,167,122,0.35); }
         .detail-panel[data-color="mint"] .detail-split-zip { background: var(--mint); box-shadow: 0 0 12px rgba(60,201,168,0.35); }
         .detail-panel[data-color="purple"] .detail-split-zip { background: var(--purple); box-shadow: 0 0 12px rgba(155,126,216,0.35); }
+        .detail-panel[data-color="coral"] .detail-split-zip { background: var(--coral); box-shadow: 0 0 12px rgba(43,181,181,0.35); }
 
         /* ——— Gallery — Center Zip: View List ——— */
 
@@ -423,6 +427,7 @@
         .detail-panel[data-color="teal"] .gallery-view-link.active { color: var(--teal); }
         .detail-panel[data-color="mint"] .gallery-view-link.active { color: var(--mint); }
         .detail-panel[data-color="purple"] .gallery-view-link.active { color: var(--purple); }
+        .detail-panel[data-color="coral"] .gallery-view-link.active { color: var(--coral); }
 
         .gallery-center-zip {
             grid-column: 2;
@@ -448,6 +453,7 @@
         .detail-panel[data-color="teal"] .gallery-center-zip { background: var(--teal); box-shadow: 0 0 10px rgba(46,167,122,0.3); }
         .detail-panel[data-color="mint"] .gallery-center-zip { background: var(--mint); box-shadow: 0 0 10px rgba(60,201,168,0.3); }
         .detail-panel[data-color="purple"] .gallery-center-zip { background: var(--purple); box-shadow: 0 0 10px rgba(155,126,216,0.3); }
+        .detail-panel[data-color="coral"] .gallery-center-zip { background: var(--coral); box-shadow: 0 0 10px rgba(43,181,181,0.3); }
 
         .gallery-right-field {
             grid-column: 3;
@@ -514,6 +520,7 @@
         .detail-panel[data-color="teal"] .detail-title { color: var(--teal); }
         .detail-panel[data-color="mint"] .detail-title { color: var(--mint); }
         .detail-panel[data-color="purple"] .detail-title { color: var(--purple); }
+        .detail-panel[data-color="coral"] .detail-title { color: var(--coral); }
 
         .detail-tagline {
             font-size: 1rem;
@@ -829,9 +836,10 @@
         <div class="hero-zip-space"></div>
         <div class="hero-right">
             <p class="hero-subtitle">Director of Data Science | Full Stack Developer</p>
-            <p class="hero-tagline">Six tools in production: from a desktop app on the App Store to an ML framework generating training data</p>
+            <p class="hero-tagline">Seven tools in production: from a desktop app on the App Store to an ML framework generating training data</p>
             <div class="project-nav" id="projectNav">
                 <a data-target="ibis">Ibis</a>
+                <a data-target="pelican">Pelican</a>
                 <a data-target="strix">Strix</a>
                 <a data-target="sparrow">Sparrow</a>
                 <a data-target="budgie">Budgie</a>
@@ -897,6 +905,57 @@
                         <li>Built-in safety guardrails: read-only actions run freely, modifications require explicit approval</li>
                     </ul>
                     <p class="detail-tech-stack"><span>TypeScript</span> · <span>Electron</span> · <span>React</span> · <span>Python</span> · <span>FastAPI</span> · <span>Claude Agent SDK</span> · <span>Zustand</span> · <span>Tailwind CSS</span></p>
+                    <p class="detail-meta">2026</p>
+                </div>
+            </div>
+            <button class="detail-close" onclick="closeDetail(event)" aria-label="Close">&times;</button>
+        </div>
+
+        <!-- Pelican -->
+        <div class="project-row" data-color="coral" data-project="pelican" role="button" tabindex="0" aria-expanded="false" onclick="toggleDetail('pelican')">
+            <div class="project-left">
+                <p class="card-number">2026</p>
+                <h3 class="card-name">Pelican</h3>
+                <p class="card-type">Web App · AI-Powered Classification and Taxonomy Management Platform</p>
+            </div>
+            <div class="project-zip-space"></div>
+            <div class="project-right">
+                <p class="card-tagline">Pelican is an internal AI platform that replaced manual URL classification — hand-curated keyword lists across over 5k taxonomy topics, brittle and error-prone change tracking — with self-hosted LLMs that classify pages, propose new categories the taxonomy doesn't cover yet, and screen each proposal with a second model before human review.</p>
+
+            </div>
+        </div>
+
+        <div class="detail-panel" id="detail-pelican" data-color="coral">
+            <div class="gallery-track" data-gallery="pelican">
+                <div class="gallery-left-field">
+                    <button class="gallery-view-link active" onclick="galleryGoTo(event, 'pelican', 0)">Dashboard</button>
+                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'pelican', 1)">Pipeline</button>
+                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'pelican', 2)">Taxonomy review</button>
+                    <button class="gallery-view-link" onclick="galleryGoTo(event, 'pelican', 3)">Staging review</button>
+                </div>
+                <div class="gallery-center-zip"></div>
+                <div class="gallery-right-field">
+                    <div class="gallery-slide active"><img src="assets/images/pelican/01-dashboard.webp" alt="Dashboard" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="assets/images/pelican/02-pipeline.webp" alt="Pipeline" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="assets/images/pelican/03-ai-review.webp" alt="Taxonomy review" loading="lazy"></div>
+                    <div class="gallery-slide"><img src="assets/images/pelican/04-apply-wizard.webp" alt="Staging review" loading="lazy"></div>
+                </div>
+            </div>
+            <div class="detail-info-split">
+                <div class="detail-split-left">
+                    <h2 class="detail-title">Pelican</h2>
+                    <p class="detail-tagline">Taxonomy changes used to require keyword lists, Excel files, Jira tickets, and manual deployment. Pelican handles the full cycle: classify, propose, screen, review, deploy.</p>
+                    <p class="detail-description">The previous system silently misclassified anything its keyword lists didn't anticipate. Pelican reads the page and recognizes what it's about — and when the taxonomy has no matching category, it proposes one and explains why. A second model scores each proposal on five criteria before a human sees it, so a batch of 200 proposals arrives pre-sorted into agree, disagree, and uncertain rather than dumped on a reviewer unsorted. The pipeline manages its own GPU lifecycle: provisions across multiple zones, deletes the instance after classification finishes but before the review step — because the hardware costs $2–8/hr and a review might take days. If the server restarts mid-review, pending approvals resume without re-running classification.</p>
+                </div>
+                <div class="detail-split-zip"></div>
+                <div class="detail-split-right">
+                    <ul class="detail-features">
+                        <li>Proposed categories appear in the taxonomy tree as green "NEW" entries — reviewers see exactly where each one slots into the hierarchy before approving</li>
+                        <li>Auto-triage applies the second model's verdicts in one click: agree gets staged, disagree gets rejected, uncertain is left for manual review</li>
+                        <li>Every taxonomy change records a full diff and supports one-click revert — a mistake in category structure compounds across every future classification run</li>
+                        <li>Seven-stage pipeline with crash recovery: GPU provisioning, model health checks, batch classification, proposal extraction, AI screening, human approval, and deployment</li>
+                    </ul>
+                    <p class="detail-tech-stack"><span>Python</span> · <span>Litestar</span> · <span>SvelteKit</span> · <span>Tailwind CSS</span> · <span>DaisyUI</span> · <span>Polars</span> · <span>vLLM</span> · <span>Gemini</span> · <span>Google Cloud</span></p>
                     <p class="detail-meta">2026</p>
                 </div>
             </div>
@@ -1315,10 +1374,10 @@
             viewLinks.forEach(l => l.classList.remove('filling'));
         }
 
-        ['ibis', 'strix', 'sparrow', 'magpie', 'mallard'].forEach(id => { resetGallery(id); });
+        ['ibis', 'pelican', 'strix', 'sparrow', 'magpie', 'mallard'].forEach(id => { resetGallery(id); });
 
         // Update URL hash when projects open/close
-        const projectIds = ['ibis', 'strix', 'sparrow', 'budgie', 'magpie', 'mallard'];
+        const projectIds = ['ibis', 'pelican', 'strix', 'sparrow', 'budgie', 'magpie', 'mallard'];
 
         const origToggle = toggleDetail;
         toggleDetail = function(projectId) {
